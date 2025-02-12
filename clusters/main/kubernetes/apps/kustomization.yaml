@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - kubernetes-dashboard/ks.yaml
   - nextcloud/ks.yaml
-  - it-tools.yaml
+  - it-tools/ks.yaml
