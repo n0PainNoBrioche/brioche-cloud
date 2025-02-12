@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: nextcloud
-      version: latest
+      version: "latest"
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -31,5 +31,9 @@ spec:
     keepHistory: false
   values:
     service:
-      tcp:
-        loadBalancerIP: ${TRAEFIK_IP}
+      main:
+        type: LoadBalancer
+        loadBalancerIP: 192.168.1.21
+        ports:
+          main:
+            port: 80
