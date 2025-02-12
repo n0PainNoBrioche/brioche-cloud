@@ -2,8 +2,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: traefik
-  namespace: traefik
+  name: nextcloud
+  namespace: nextcloud
 spec:
   interval: 15m
   chart:
@@ -30,11 +30,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    ## set stopAll to "true" if you do not want to use traefik
-    # and/or disable its service
-    global:
-      stopAll: false
-    defaultCertificate: "domain-0-wildcard"
     service:
       tcp:
         loadBalancerIP: ${TRAEFIK_IP}
