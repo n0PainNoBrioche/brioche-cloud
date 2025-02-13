@@ -45,7 +45,7 @@ spec:
               - websecure
             certManager:
               enabled: true
-              certificateIssuer: domain-1-le-prod
+              certificateIssuer: domain-0-le-prod
           hosts:
             - host: nextcloud.${DOMAIN_1}
               paths:
