@@ -47,7 +47,7 @@ spec:
               enabled: true
               certificateIssuer: domain-0-le-prod
           hosts:
-            - host: nextcloud.${DOMAIN_1}
+            - host: nextcloud.${DOMAIN_0}
               paths:
                 - path: /
                   pathType: Prefix
