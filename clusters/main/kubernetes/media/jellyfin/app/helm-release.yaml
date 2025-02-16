@@ -78,6 +78,7 @@ spec:
           type: nfs
           path: ${STREAM_NFS_PATH}
           server: ${NAS_IP}
+          mountPath: /Media
       workload:
         main:
           podSpec:
