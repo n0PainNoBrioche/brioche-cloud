@@ -10,3 +10,4 @@ resources:
   - kube-system
   - system
   - external
+  - media
