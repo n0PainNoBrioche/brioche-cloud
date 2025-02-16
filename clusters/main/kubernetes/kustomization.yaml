@@ -9,3 +9,4 @@ resources:
   - flux-system
   - kube-system
   - system
+  - external
