@@ -63,7 +63,7 @@ spec:
                 LLDAP_HTTP_URL: https://lldap.${DOMAIN_0}
                 LLDAP_LDAP_BASE_DN: dc=${DN},dc=${DC}
                 LLDAP_LDAP_USER_DN: admin
-                LLDAP_LDAP_USER_EMAIL: admin@${DOMAIN_0}
+                LLDAP_LDAP_USER_EMAIL: ${SMTP_USER}
                 LLDAP_LDAP_USER_PASS: ${LLDAP_PASSWORD}
                 LLDAP_SMTP_OPTIONS__FROM: LLDAP Admin <lldap@${DOMAIN_0}>
                 LLDAP_SMTP_OPTIONS__PASSWORD: ${SMTP_PASSWORD_LLDAP}

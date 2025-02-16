@@ -98,8 +98,8 @@ spec:
         host: ${SMTP_HOST}
         plain_password: ${SMTP_PASSWORD_AUTHELIA}
         port: 587
-        sender: auth@${DOMAIN_0}
-        startup_check_address: auth@${DOMAIN_0}
+        sender: ${SMTP_USER}
+        startup_check_address: ${SMTP_USER}
         username: ${SMTP_USER}
     domain: ${DOMAIN_0}
     authentication_backend:
