@@ -79,14 +79,5 @@ spec:
           path: ${STREAM_NFS_PATH}
           server: ${NAS_IP}
           mountPath: /Media
-      workload:
-        main:
-          podSpec:
-            runtimeClassName: "nvidia"
-            containers:
-              main:
-                resources:
-                  limits:
-                    nvidia.com/gpu: 1
       autodiscovery:
         enabled: true
