@@ -76,7 +76,7 @@ spec:
                 LLDAP_key_file: /data/private_key
     cnpg:
       main:
-        mode: recovery
+        # mode: recovery
         cluster:
           singleNode: true
         backups:
@@ -88,6 +88,10 @@ spec:
               backupOwnerReference: self
               immediate: true
               suspend: false
+        recovery:
+          method: object_store
+          credentials: minio
+
     persistence:
       data:
         volsync:

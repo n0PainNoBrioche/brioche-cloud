@@ -56,7 +56,7 @@ spec:
         main:
           cluster:
             singleNode: true
-          mode: recovery
+          # mode: recovery
           backups:
             enabled: true
             credentials: minio
@@ -66,6 +66,9 @@ spec:
                 backupOwnerReference: self
                 immediate: true
                 suspend: false
+          recovery:
+            method: object_store
+            credentials: minio
       persistence:
         config:
           volsync:
