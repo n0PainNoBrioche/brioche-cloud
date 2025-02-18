@@ -42,7 +42,8 @@ spec:
         enabled: false
     service:
       main:
-        type: ClusterIP
+        type: LoadBalancer
+        loadBalancerIP: ${TRAEFIK_IP_INTERNAL}
       tcp:
         loadBalancerIP: ${TRAEFIK_IP}
         type: LoadBalancer
