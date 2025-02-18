@@ -14,6 +14,7 @@ spec:
         kind: HelmRepository
         name: longhorn
         namespace: flux-system
+      type: LoadBalancer
   install:
     createNamespace: true
     crds: CreateReplace
