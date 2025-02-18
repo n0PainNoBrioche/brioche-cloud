@@ -74,11 +74,11 @@ spec:
                 LLDAP_SMTP_OPTIONS__USER: ${SMTP_USER}
                 LLDAP_VERBOSE: false
                 LLDAP_key_file: /data/private_key
-    cnpg:
-      main:
-        mode: recovery
-        cluster:
-          singleNode: true
+    # cnpg:
+    #   main:
+    #     mode: recovery
+    #     cluster:
+    #       singleNode: true
         # backups:
         #   enabled: true
         #   credentials: minio
