@@ -74,23 +74,23 @@ spec:
                 LLDAP_SMTP_OPTIONS__USER: ${SMTP_USER}
                 LLDAP_VERBOSE: false
                 LLDAP_key_file: /data/private_key
-    # cnpg:
-    #   main:
-    #     mode: recovery
-    #     cluster:
-    #       singleNode: true
-        # backups:
-        #   enabled: true
-        #   credentials: minio
-        #   scheduledBackups:
-        #     - name: daily-backup
-        #       schedule: "0 5 0 * * *"
-        #       backupOwnerReference: self
-        #       immediate: true
-        #       suspend: false
-        # recovery:
-        #   method: object_store
-        #   credentials: minio
+    cnpg:
+      main:
+        mode: recovery
+        cluster:
+          singleNode: true
+        backups:
+          enabled: true
+          credentials: minio
+          scheduledBackups:
+            - name: daily-backup
+              schedule: "0 5 0 * * *"
+              backupOwnerReference: self
+              immediate: true
+              suspend: false
+        recovery:
+          method: object_store
+          credentials: minio
 
     persistence:
       data:
