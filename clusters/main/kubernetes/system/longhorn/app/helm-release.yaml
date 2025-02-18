@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: longhorn
         namespace: flux-system
-      type: LoadBalancer
   install:
     createNamespace: true
     crds: CreateReplace
@@ -44,8 +43,3 @@ spec:
       defaultClassReplicaCount: 1
     longhornUI:
             replicas: 1
-status:
-  loadBalancer:
-    ingress:
-    - ip: 192.168.1.112
-      ipMode: VIP
