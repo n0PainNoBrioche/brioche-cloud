@@ -74,9 +74,9 @@ spec:
             cleanupCachePVC: true
             credentials: minio
             dest:
-              enabled: false
+              enabled: true
             src:
-              enabled: false
+              enabled: true
               trigger:
                 schedule: 10 1 * * *
         data:
