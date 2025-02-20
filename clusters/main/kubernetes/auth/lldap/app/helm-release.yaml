@@ -87,6 +87,9 @@ spec:
               backupOwnerReference: self
               immediate: true
               suspend: false
+        recovery:
+            method: object_store
+            credentials: minio
     persistence:
       data:
         volsync:

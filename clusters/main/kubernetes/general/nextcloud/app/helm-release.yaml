@@ -57,7 +57,7 @@ spec:
           cluster:
             singleNode: true
           backups:
-            enabled: false
+            enabled: true
             credentials: minio
             scheduledBackups:
               - name: daily-backup
@@ -65,6 +65,9 @@ spec:
                 backupOwnerReference: self
                 immediate: true
                 suspend: false
+          recovery:
+              method: object_store
+              credentials: minio
       persistence:
         config:
           volsync:
