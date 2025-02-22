@@ -9,7 +9,7 @@ spec:
         spec:
             # renovate: registryUrl=https://charts.truechartsoci.org
             chart: nextcloud
-            version: 32.9.1
+            version: 32.9.10
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
@@ -68,42 +68,45 @@ spec:
           recovery:
               method: object_store
               credentials: minio
-      # persistence:
-      #   config:
-      #     volsync:
-      #     - name: config
-      #       type: restic
-      #       cleanupTempPVC: true
-      #       cleanupCachePVC: true
-      #       credentials: minio
-      #       dest:
-      #         enabled: true
-      #       src:
-      #         enabled: true
-      #         trigger:
-      #           schedule: 10 1 * * *
+      persistence:
+        config:
+          volsync:
+          - name: config
+            type: restic
+            cleanupTempPVC: true
+            cleanupCachePVC: true
+            credentials: minio
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 10 1 * * *
         data:
           enabled: true
           type: nfs
           path: ${NEXTCLOUD_NFS_PATH}
           server: ${NAS_IP}
-        # html:
-        #   volsync:
-        #   - name: html
-        #     type: restic
-        #     cleanupTempPVC: true
-        #     cleanupCachePVC: true
-        #     credentials: minio
-        #     dest:
-        #       enabled: true
-        #     src:
-        #       enabled: true
-        #       trigger:
-        #         schedule: 20 1 * * *
+        html:
+          volsync:
+          - name: html
+            type: restic
+            cleanupTempPVC: true
+            cleanupCachePVC: true
+            credentials: minio
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 20 1 * * *
       nextcloud:
         general:
           accessIP: ${TRAEFIK_IP}
           default_phone_region: FR
+        credentials:
+          initialAdminPassword: "${NEXTCLOUD_PASSWORD}"
+          initialAdminUser: "${NEXTCLOUD_USER}"
         previews:
           providers:
           - BMP
