@@ -26,8 +26,6 @@ spec:
             retries: 3
     timeout: 20m
     values:
-      global:
-        stopAll: false
       credentials:
         minio:
           type: s3
