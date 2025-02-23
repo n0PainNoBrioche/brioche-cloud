@@ -56,9 +56,6 @@ spec:
         main:
           cluster:
             singleNode: true
-          pgVersion: 15
-          backups:
-            enabled: true
             credentials: minio
             scheduledBackups:
               - name: daily-backup
