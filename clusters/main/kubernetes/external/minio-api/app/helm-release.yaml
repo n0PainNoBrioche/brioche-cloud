@@ -36,7 +36,7 @@ spec:
             main:
               enabled: true
               port: 9000
-              protocol: https
+              protocol: http
           type: ExternalIP
       ingress:
         main:
