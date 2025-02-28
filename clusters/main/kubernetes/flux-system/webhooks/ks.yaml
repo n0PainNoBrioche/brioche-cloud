@@ -5,8 +5,9 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: clusters/main/kubernetes/flux-system/webhook/app
+  path: clusters/main/kubernetes/flux-system/webhooks/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: cluster
+
