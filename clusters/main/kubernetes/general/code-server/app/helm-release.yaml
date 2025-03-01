@@ -31,7 +31,7 @@ spec:
       portal:
         open:
           enabled: false
-    service:
-      main:
-        type: LoadBalancer
-        loadBalancerIP: ${CODE_SERVER_IP}
+      service:
+        main:
+          type: LoadBalancer
+          loadBalancerIP: ${CODE_SERVER_IP}
