@@ -29,6 +29,10 @@ spec:
     values:
       code-server:
         enabled: true
+        service:
+          main:
+            type: LoadBalancer
+            loadBalancerIP: ${CODE_SERVER_IP}
       portal:
         open:
           enabled: false
