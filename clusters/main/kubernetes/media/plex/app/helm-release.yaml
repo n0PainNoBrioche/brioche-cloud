@@ -9,7 +9,7 @@ spec:
     chart:
         spec:
             # renovate: registryUrl=https://charts.truechartsoci.org
-            chart: jellyfin
+            chart: plex
             version: 20.6.10
             sourceRef:
                 kind: HelmRepository
