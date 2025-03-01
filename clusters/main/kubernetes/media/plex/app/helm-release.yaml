@@ -27,6 +27,8 @@ spec:
             retries: 3
     timeout: 20m
     values:
+      code-server:
+        enabled: true
       portal:
         open:
           enabled: false
