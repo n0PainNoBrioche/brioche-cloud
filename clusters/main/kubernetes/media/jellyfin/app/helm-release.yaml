@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-    name: jellyfin
+    name: plex
     namespace: media
 spec:
     interval: 5m
@@ -36,7 +36,7 @@ spec:
         minio:
           type: s3
           url: "${S3_URL_MINIO}"
-          bucket: "${S3_BUCKET}-jellyfin"
+          bucket: "${S3_BUCKET}-plex"
           accessKey: "${S3_ACCESS_KEY}"
           secretKey: "${S3_SECRET_KEY}"
           encrKey: "${S3_ENCRYPTION_KEY}"

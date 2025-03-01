@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: clusters/main/kubernetes/media/jellyfin/app
+  path: clusters/main/kubernetes/media/plex/app
   prune: true
   sourceRef:
     kind: GitRepository
