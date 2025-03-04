@@ -67,7 +67,3 @@ spec:
         main:
           type: LoadBalancer
           loadBalancerIP: ${QBIT_IP}
-          ports:
-            - name: http
-              port: 8080
-              targetPort: 8080
