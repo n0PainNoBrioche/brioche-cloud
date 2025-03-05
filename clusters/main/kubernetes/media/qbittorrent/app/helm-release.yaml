@@ -70,7 +70,7 @@ spec:
           type: gluetun
           killSwitch: true
           excludedNetworks_IPv4:
-          - 192.168.178.0/24
+          - 192.168.1.0/24
           env:
             VPN_TYPE: wireguard
             VPN_PROVIDER: ${WG_VPN_PROVIDER}
