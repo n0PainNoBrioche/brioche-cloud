@@ -73,9 +73,7 @@ spec:
                 schedule: 30 0 * * *
         media:
           enabled: true
-          type: nfs
-          path: ${STREAM_NFS_PATH}
-          server: ${NAS_IP}
+          existingClaim: media-nfs-pvc
           mountPath: /Media
       autodiscovery:
         enabled: true

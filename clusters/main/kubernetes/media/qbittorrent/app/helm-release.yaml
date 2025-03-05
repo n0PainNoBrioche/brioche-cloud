@@ -54,9 +54,7 @@ spec:
                 schedule: 40 0 * * *
         media:
           enabled: true
-          type: nfs
-          path: ${STREAM_NFS_PATH}
-          server: ${NAS_IP}
+          existingClaim: media-nfs-pvc
           mountPath: /Media
       autodiscovery:
         enabled: true
@@ -67,3 +65,20 @@ spec:
         main:
           type: LoadBalancer
           loadBalancerIP: ${QBIT_IP}
+      addons:
+        vpn:
+          type: gluetun
+          killSwitch: true
+          excludedNetworks_IPv4:
+          - 192.168.178.0/24
+          env:
+            VPN_TYPE: wireguard
+            VPN_SERVICE_PROVIDER: ${VPN_PROVIDER}
+            WIREGUARD_ENDPOINT_IP: ${WG_ENDPOINT_IP}
+            WIREGUARD_ENDPOINT_PORT: 1443
+            WIREGUARD_PUBLIC_KEY: ${WG_PUBLIC_KEY}
+            WIREGUARD_PRIVATE_KEY: ${WG_PRIVATE_KEY}
+            FIREWALL_VPN_INPUT_PORTS: ${WG_FIREWALL_INPUT_PORT}
+            WIREGUARD_ADDRESSES: ${WG_ADDRESSES}
+            HTTPPROXY: "on"
+            FIREWALL_INPUT_PORTS: 10095,8888
