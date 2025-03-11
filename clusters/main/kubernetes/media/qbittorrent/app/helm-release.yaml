@@ -65,8 +65,6 @@ spec:
           enabled: true
           existingClaim: media-nfs-pvc
           mountPath: /Media
-      autodiscovery:
-        enabled: true
       workload:
         qbitportforward:
           enabled: false
