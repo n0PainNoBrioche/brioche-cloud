@@ -59,13 +59,6 @@ spec:
       workload:
         qbitportforward:
           enabled: false
-      service:
-        main:
-          type: LoadBalancer
-          loadBalancerIP: ${QBIT_IP}
-          ports:
-            main:
-              port: 80
       addons:
         vpn:
           type: gluetun
