@@ -71,6 +71,14 @@ spec:
         qbitportforward:
           enabled: false
       service:
+        proxy:
+          enabled: true
+          ports:
+            gluetun:
+              enabled: true
+              port: 8888
+              protocol: "http"
+              targetPort: 8888
         main:
           type: LoadBalancer
           loadBalancerIP: ${QBIT_IP}
@@ -89,3 +97,5 @@ spec:
             SERVER_CITIES: ${WG_SERVER_CITIES}
             VPN_ENDPOINT_IP: ${WG_ENDPOINT_IP}
             VPN_ENDPOINT_PORT: ${WG_ENDPOINT_PORT}
+            HTTPPROXY: "on"
+            FIREWALL_INPUT_PORTS: 10095,8888
