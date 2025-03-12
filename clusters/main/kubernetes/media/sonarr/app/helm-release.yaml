@@ -54,10 +54,6 @@ spec:
           enabled: true
           existingClaim: media-nfs-pvc
           mountPath: /Media
-      service:
-        main:
-          type: LoadBalancer
-          loadBalancerIP: ${QBIT_IP}
       metrics:
         main:
           enabled: false
