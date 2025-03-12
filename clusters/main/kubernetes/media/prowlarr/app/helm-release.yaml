@@ -50,10 +50,6 @@ spec:
               enabled: true
               trigger:
                 schedule: 40 0 * * *
-      service:
-        main:
-          type: LoadBalancer
-          loadBalancerIP: ${QBIT_IP}
       metrics:
         main:
           enabled: false
