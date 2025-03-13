@@ -50,6 +50,9 @@ spec:
               enabled: true
               trigger:
                 schedule: 40 0 * * *
+      service:
+        main:
+          type: LoadBalancer
       metrics:
         main:
           enabled: false
