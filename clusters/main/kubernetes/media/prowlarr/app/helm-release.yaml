@@ -53,6 +53,7 @@ spec:
       service:
         main:
           type: LoadBalancer
+          loadBalancerIP: ${prowlarr_IP}
       metrics:
         main:
           enabled: false
