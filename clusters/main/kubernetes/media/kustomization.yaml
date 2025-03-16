@@ -9,3 +9,4 @@ resources:
   - radarr/ks.yaml
   - prowlarr/ks.yaml
   - sonarr/ks.yaml
+  - flaresolverr/ks.yaml
