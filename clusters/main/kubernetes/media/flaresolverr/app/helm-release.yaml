@@ -53,7 +53,7 @@ spec:
       service:
         main:
           type: LoadBalancer
-          loadBalancerIP: ${prowlarr_IP}
+          loadBalancerIP: ${flaresolverr_IP}
       metrics:
         main:
           enabled: false
