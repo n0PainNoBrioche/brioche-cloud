@@ -10,3 +10,4 @@ resources:
   - prowlarr/ks.yaml
   - sonarr/ks.yaml
   - flaresolverr/ks.yaml
+  - tautulli/ks.yaml
