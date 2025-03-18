@@ -62,7 +62,6 @@ spec:
           loadBalancerIP: ${crafty_IP}
         minecraft:
           type: LoadBalancer
-          loadBalancerIP: ${minecraft_IP}
       metrics:
         main:
           enabled: false
