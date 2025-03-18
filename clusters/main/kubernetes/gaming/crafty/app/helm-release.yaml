@@ -26,11 +26,6 @@ spec:
             retries: 3
     timeout: 20m
     values:
-      securityContext:
-        container:
-          readOnlyRootFilesystem: false
-          runAsGroup: 568
-          runAsUser: 568
       portal:
         open:
           enabled: false
