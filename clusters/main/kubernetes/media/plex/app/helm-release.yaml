@@ -63,6 +63,8 @@ spec:
         main:
           type: LoadBalancer
           loadBalancerIP: ${plex_IP}
+      plex:
+        serverIP: ${plex_IP}
       persistence:
         config:
           volsync:
