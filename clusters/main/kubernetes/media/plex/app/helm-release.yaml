@@ -59,6 +59,10 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
+      service:
+        main:
+          type: LoadBalancer
+          loadBalancerIP: ${plex_IP}
       persistence:
         config:
           volsync:
