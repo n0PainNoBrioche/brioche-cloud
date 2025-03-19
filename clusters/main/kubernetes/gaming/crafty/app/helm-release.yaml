@@ -66,6 +66,7 @@ spec:
             voice:
               enabled: true
               port: 24454
+              protocol: UDP
               targetPort: 24454
       metrics:
         main:
