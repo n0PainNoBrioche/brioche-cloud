@@ -51,7 +51,7 @@ spec:
               enabled: true
               trigger:
                 schedule: 30 0 * * *
-        servers:
+        backups:
           enabled: true
           type: nfs
           path: ${MINECRAFT_NFS_PATH}
