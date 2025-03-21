@@ -83,6 +83,4 @@ spec:
           mountPath: /Media
       autodiscovery:
         enabled: true
-      resources:
-        limits:
-          amd.com/gpu: 1
+      
