@@ -83,3 +83,11 @@ spec:
           mountPath: /Media
       autodiscovery:
         enabled: true
+      workload:
+        main:
+          podSpec:
+            containers:
+              main:
+                resources:
+                  limits:
+                    amd.com/gpu: 1
