@@ -83,4 +83,3 @@ spec:
           mountPath: /Media
       autodiscovery:
         enabled: true
-      
