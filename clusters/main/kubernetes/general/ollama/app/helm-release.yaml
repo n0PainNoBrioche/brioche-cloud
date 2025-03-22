@@ -1,0 +1,64 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: ollama
+    namespace: ollama
+spec:
+    interval: 5m
+    chart:
+        spec:
+            # renovate: registryUrl=https://charts.truechartsoci.org
+            chart: ollama
+            version: 7.13.4
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+            interval: 5m
+    install:
+        createNamespace: true
+        crds: CreateReplace
+        remediation:
+            retries: 3
+    upgrade:
+        crds: CreateReplace
+        remediation:
+            retries: 3
+    timeout: 20m
+    values:
+      credentials:
+        minio:
+          type: s3
+          url: "${S3_URL_MINIO}"
+          bucket: "${S3_BUCKET}-ollama"
+          accessKey: "${S3_ACCESS_KEY}"
+          secretKey: "${S3_SECRET_KEY}"
+          encrKey: "${S3_ENCRYPTION_KEY}"
+      ingress:
+        main:
+          enabled: true
+          integrations:
+            traefik:
+              enabled: true
+              entrypoints:
+              - websecure
+            certManager:
+              enabled: true
+              certificateIssuer: domain-0-le-prod
+          hosts:
+            - host: ai.${DOMAIN_0}
+              paths:
+                - path: /
+                  pathType: Prefix
+      persistence:
+        config:
+          volsync:
+          - name: config
+            type: restic
+            credentials: minio
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 10 1 * * *
