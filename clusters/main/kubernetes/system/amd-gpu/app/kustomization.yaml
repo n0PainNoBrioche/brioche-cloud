@@ -1,6 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-    - amd-gpu-device/ks.yaml
-    - amd-gpu-operator/ks.yaml
+    - helm-release.yaml
     - namespace.yaml
