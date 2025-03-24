@@ -39,21 +39,21 @@ spec:
           secretKey: "${S3_SECRET_KEY}"
           encrKey: "${S3_ENCRYPTION_KEY}"
       ingress:
-        main:
-          enabled: true
-          integrations:
-            traefik:
-              enabled: true
-              entrypoints:
-              - websecure
-            certManager:
-              enabled: true
-              certificateIssuer: domain-0-le-prod
-          hosts:
-            - host: ask.${DOMAIN_0}
-              paths:
-                - path: /
-                  pathType: Prefix
+          main:
+            enabled: true
+            integrations:
+              traefik:
+                enabled: true
+                entrypoints:
+                - websecure
+              certManager:
+                enabled: true
+                certificateIssuer: domain-0-le-prod
+            hosts:
+              - host: ask.${DOMAIN_0}
+                paths:
+                  - path: /
+                    pathType: Prefix
       persistence:
         config:
           volsync:
