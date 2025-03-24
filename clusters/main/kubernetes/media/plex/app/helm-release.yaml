@@ -55,7 +55,7 @@ spec:
               enabled: true
               certificateIssuer: domain-0-le-prod
           hosts:
-            - host: stream.${DOMAIN_0}
+            - host: stream1.${DOMAIN_0}
               paths:
                 - path: /
                   pathType: Prefix
