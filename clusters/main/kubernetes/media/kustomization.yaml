@@ -11,3 +11,4 @@ resources:
   - sonarr/ks.yaml
   - tautulli/ks.yaml
   - jellyfin/ks.yaml
+  - jellyseerr/ks.yaml
