@@ -28,6 +28,16 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            JWT_SECRET:
+              secretKeyRef: 
+                key: "${JELLYSTAT_JWT}"
+persistence:
     global:
       stopAll: false
     credentials:
