@@ -9,6 +9,5 @@ resources:
   - flux-system
   - kube-system
   - system
-  - external
   - media
   - gaming

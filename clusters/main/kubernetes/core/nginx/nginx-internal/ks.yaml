@@ -1,11 +1,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: minio-api
+  name: nginx-internal
   namespace: flux-system
 spec:
   interval: 10m
-  path: clusters/main/kubernetes/external/minio-api/app
+  path: clusters/main/kubernetes/core/nginx/nginx-internal/app
   prune: true
   sourceRef:
     kind: GitRepository

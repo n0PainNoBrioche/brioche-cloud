@@ -41,11 +41,10 @@ spec:
       ingress:
         main:
           enabled: true
+          ingressClassName: internal
           integrations:
             traefik:
-              enabled: true
-              entrypoints:
-              - websecure
+              enabled: false
             certManager:
               enabled: true
               certificateIssuer: domain-0-le-prod

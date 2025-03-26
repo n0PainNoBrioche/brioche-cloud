@@ -3,6 +3,5 @@ kind: Kustomization
 resources:
   - it-tools/ks.yaml
   - nextcloud/ks.yaml
-  - code-server/ks.yaml
   - kitchenowl/ks.yaml
   - ollama/ks.yaml

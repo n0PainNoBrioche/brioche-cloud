@@ -1,12 +1,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: code-server
+  name: nginx-external
   namespace: flux-system
 spec:
   interval: 10m
-  path: clusters/main/kubernetes/general/code-server/app
+  path: clusters/main/kubernetes/core/nginx/nginx-external/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: cluster
+
