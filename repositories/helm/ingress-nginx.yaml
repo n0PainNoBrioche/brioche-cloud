@@ -3,8 +3,10 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: rocm
+  name: ingress-nginx
   namespace: flux-system
 spec:
-  interval: 2h
-  url: https://rocm.github.io/gpu-operator
+  ## TODO: move to OCI
+  # type: oci
+  interval: 5m
+  url: 'https://kubernetes.github.io/ingress-nginx'
