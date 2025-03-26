@@ -28,5 +28,5 @@ resources:
   - stakater.yaml
   - topolvm.yaml
   - truecharts.yaml
-  - rocm.yaml
+  - ingress-nginx.yaml
 # more goes here!
