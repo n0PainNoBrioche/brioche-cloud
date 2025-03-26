@@ -38,21 +38,21 @@ spec:
           accessKey: "${S3_ACCESS_KEY}"
           secretKey: "${S3_SECRET_KEY}"
           encrKey: "${S3_ENCRYPTION_KEY}"
-      # ingress:
-      #   main:
-      #     enabled: true
-      #     ingressClassName: internal
-      #     integrations:
-      #       traefik:
-      #         enabled: false
-      #       certManager:
-      #         enabled: true
-      #         certificateIssuer: domain-0-le-prod
-      #     hosts:
-      #       - host: stat.${DOMAIN_0}
-      #         paths:
-      #           - path: /
-      #             pathType: Prefix
+      ingress:
+        main:
+          enabled: true
+          ingressClassName: internal
+          integrations:
+            traefik:
+              enabled: false
+            certManager:
+              enabled: true
+              certificateIssuer: domain-0-le-prod
+          hosts:
+            - host: stat.${DOMAIN_0}
+              paths:
+                - path: /
+                  pathType: Prefix
       cnpg:
         main:
           cluster:
