@@ -39,25 +39,25 @@ spec:
           accessKey: "${S3_ACCESS_KEY}"
           secretKey: "${S3_SECRET_KEY}"
           encrKey: "${S3_ENCRYPTION_KEY}"
-      # ingress:
-      #   main:
-      #     enabled: true
-      #     integrations:
-      #       traefik:
-      #         enabled: true
-      #         entrypoints:
-      #         - websecure
-      #         middlewares:
-      #         - name: real-ip
-      #           namespace: traefik
-      #       certManager:
-      #         enabled: true
-      #         certificateIssuer: domain-0-le-prod
-      #     hosts:
-      #       - host: stream.${DOMAIN_0}
-      #         paths:
-      #           - path: /
-      #             pathType: Prefix
+      ingress:
+        main:
+          enabled: true
+          integrations:
+            traefik:
+              enabled: true
+              entrypoints:
+              - websecure
+              middlewares:
+              - name: real-ip
+                namespace: traefik
+            certManager:
+              enabled: true
+              certificateIssuer: domain-0-le-prod
+          hosts:
+            - host: stream.${DOMAIN_0}
+              paths:
+                - path: /
+                  pathType: Prefix
       persistence:
         config:
           volsync:
