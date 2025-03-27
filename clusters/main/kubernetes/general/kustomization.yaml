@@ -5,3 +5,4 @@ resources:
   - nextcloud/ks.yaml
   - kitchenowl/ks.yaml
   - ollama/ks.yaml
+  - homepage/ks.yaml
