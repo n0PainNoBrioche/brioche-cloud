@@ -39,6 +39,26 @@ spec:
           accessKey: "${S3_ACCESS_KEY}"
           secretKey: "${S3_SECRET_KEY}"
           encrKey: "${S3_ENCRYPTION_KEY}"
+      ingress:
+        main:
+          enabled: true
+          ingressClassName: internal
+          annotations:
+            nginx.ingress.kubernetes.io/auth-method: 'GET'
+            nginx.ingress.kubernetes.io/auth-url: 'http://authelia.authelia.svc.cluster.local:9091/api/verify'
+            nginx.ingress.kubernetes.io/auth-signin: 'https://auth.${DOMAIN_0}?rm=$request_method'
+            nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
+          integrations:
+            traefik:
+              enabled: false
+            certManager:
+              enabled: true
+              certificateIssuer: domain-0-le-prod
+          hosts:
+            - host: crafty.${DOMAIN_0}
+              paths:
+                - path: /
+                  pathType: Prefix
       persistence:
         config:
           volsync:
@@ -57,11 +77,9 @@ spec:
           path: ${MINECRAFT_NFS_PATH}
           server: ${NAS_IP}
       service:
-        main:
-          type: LoadBalancer
-          loadBalancerIP: ${crafty_IP}
         minecraft:
           type: LoadBalancer
+          loadBalancerIP: ${crafty_IP}
           ports:
             voice:
               enabled: true
