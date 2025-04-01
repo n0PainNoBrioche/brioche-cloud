@@ -45,6 +45,7 @@ spec:
       - name: blocked
         lists:
           - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+          - https://dl.red.flag.domains/pihole/red.flag.domains.txt
       clientGroupsBlock:
         - name: default
           groups:
