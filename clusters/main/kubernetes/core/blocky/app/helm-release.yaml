@@ -41,7 +41,14 @@ spec:
         replicas: 1
         strategy: RollingUpdate
     blocking:
-      clientGroupsBlock:  []
+      blacklist:
+      - name: blocked
+        lists:
+          - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+      clientGroupsBlock:
+        - name: default
+          groups:
+            - blocked
     k8sgateway:
       domains:
       - domain: "${DOMAIN_0}"
