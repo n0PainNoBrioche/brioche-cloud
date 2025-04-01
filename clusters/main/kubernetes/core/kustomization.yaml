@@ -7,4 +7,3 @@ resources:
   - metallb-config/ks.yaml
   - system-upgrade-controller-plans/ks.yaml
   - nginx
-  - pihole/ks.yaml
