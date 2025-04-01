@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
   - nas/ks.yaml
   - xo/ks.yaml
-  - minio/ks.yaml
