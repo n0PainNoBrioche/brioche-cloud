@@ -20,6 +20,7 @@ resources:
   - metrics-server.yaml
   - node-feature-discovery.yaml
   - nvidia.yaml
+  - nvdp.yaml
   - openebs.yaml
   - piraeus.yaml
   - postfinance.yaml
