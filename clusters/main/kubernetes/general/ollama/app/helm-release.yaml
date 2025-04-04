@@ -45,7 +45,7 @@ spec:
               enabled: true
               certificateIssuer: domain-0-le-prod
           hosts:
-            - host: ai.${DOMAIN_0}
+            - host: chat.${DOMAIN_0}
               paths:
                 - path: /
                   pathType: Prefix
