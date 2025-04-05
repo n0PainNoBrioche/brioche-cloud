@@ -31,9 +31,9 @@ spec:
     service:
       main:
         ports:
-          http:
+          main:
             enabled: true
-            protocol: tcp
+            protocol: http
             port: 8188
             targetPort: 8188
     ingress:
