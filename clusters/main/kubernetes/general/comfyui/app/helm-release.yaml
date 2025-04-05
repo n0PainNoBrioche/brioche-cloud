@@ -1,0 +1,66 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: comfyui
+  namespace: comfyui
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 14.5.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: yanwk/comfyui-boot
+      tag: cu121
+      pullPolicy: IfNotPresent
+    service:
+      main:
+        ports:
+          - port: 8188
+            targetPort: 8188
+    ingress:
+        main:
+          enabled: true
+          ingressClassName: external
+          integrations:
+            traefik:
+              enabled: false
+            certManager:
+              enabled: true
+              certificateIssuer: domain-0-le-prod
+          hosts:
+            - host: art.${DOMAIN_0}
+              paths:
+                - path: /
+                  pathType: Prefix
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    workload:
+        main:
+          podSpec:
+            runtimeClassName: "nvidia"
+            containers:
+              main:
+                resources:
+                  limits:
+                    nvidia.com/gpu: 1
