@@ -33,7 +33,7 @@ spec:
         ports:
           http:
             enabled: true
-            protocol: TCP
+            protocol: tcp
             port: 8188
             targetPort: 8188
     ingress:
