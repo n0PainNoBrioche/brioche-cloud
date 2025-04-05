@@ -10,7 +10,7 @@ spec:
         spec:
             # renovate: registryUrl=https://charts.truechartsoci.org
             chart: plex
-            version: 19.6.8
+            version: 19.6.9
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
