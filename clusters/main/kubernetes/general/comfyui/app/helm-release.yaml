@@ -31,7 +31,8 @@ spec:
     service:
       main:
         ports:
-          - port: 8188
+          http:
+            port: 8188
             targetPort: 8188
     ingress:
         main:
