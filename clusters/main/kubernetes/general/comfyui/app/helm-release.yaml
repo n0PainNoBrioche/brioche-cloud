@@ -36,6 +36,15 @@ spec:
             protocol: http
             port: 8188
             targetPort: 8188
+    securityContext:
+      container:
+        PUID: 0 # Run as root
+        runAsNonRoot: false # Allow running as root
+        runAsUser: 0 # root user
+        runAsGroup: 0 # root group
+        readOnlyRootFilesystem: false # Needs to write to root FS? Set to false
+      pod:
+        fsGroup: 0 # Use root group for volume permissions
     ingress:
         main:
           enabled: true
