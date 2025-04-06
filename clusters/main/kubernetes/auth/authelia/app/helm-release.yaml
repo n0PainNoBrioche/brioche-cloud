@@ -107,14 +107,20 @@ spec:
           groups_filter: (member={dn})
           user: uid=admin,ou=people,dc=${DN},dc=${DC}  
           password: ${LLDAP_PASSWORD}
-      access_control:                                                                              
+      access_control:   
+        default_policy: deny                                                                           
         rules:                                     
         - domain:                                  
             - ${DOMAIN_0}                       
             - '*.${DOMAIN_0}'                    
           policy: two_factor                       
           subject:                                 
-            - 'group:admin' 
+            - 'group:platform_admin' 
+        - domain:                                                      
+            - 'chat.${DOMAIN_0}'                    
+          policy: one_factor                      
+          subject:                                 
+            - 'group:platform_user'
       session:
         cookies:
           - domain: '${DOMAIN_0}'
