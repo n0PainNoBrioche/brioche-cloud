@@ -26,7 +26,7 @@ spec:
   values:
     image:
       repository: yanwk/comfyui-boot
-      tag: cu121
+      tag: latest
       pullPolicy: IfNotPresent
     service:
       main:
@@ -51,13 +51,6 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
-    resources:
-      requests:
-        memory: "64Mi"
-        cpu: "250m"
-      limits:
-        memory: "128Mi"
-        cpu: "500m"
     workload:
         main:
           podSpec:
