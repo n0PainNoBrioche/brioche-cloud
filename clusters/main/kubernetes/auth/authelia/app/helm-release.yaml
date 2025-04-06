@@ -115,12 +115,22 @@ spec:
             - '*.${DOMAIN_0}'                    
           policy: two_factor                       
           subject:                                 
-            - 'group:platform_admin' 
+            - 'group:admin' 
         - domain:                                                      
             - 'chat.${DOMAIN_0}'                    
           policy: one_factor                      
           subject:                                 
-            - 'group:platform_user'
+            - 'group:ai_user'
+        - domain:                                                      
+            - 'stream.${DOMAIN_0}'                    
+          policy: one_factor                      
+          subject:                                 
+            - 'group:stream_user'
+        - domain:                                                      
+            - 'ask.${DOMAIN_0}'                    
+          policy: one_factor                      
+          subject:                                 
+            - 'group:stream_user'
       session:
         cookies:
           - domain: '${DOMAIN_0}'
