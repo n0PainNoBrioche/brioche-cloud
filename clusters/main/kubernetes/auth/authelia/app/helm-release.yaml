@@ -156,7 +156,7 @@ spec:
           hmac_secret: ${OIDC_HMAC_KEY}
           jwks:
             - algorithm: 'RS256'
-              key: {{ .Values.AUTHELIA_OICD_PRIVATE_KEY | minindent 10 | msquote }}
+              key: {{ .Env.AUTHELIA_OICD_PRIVATE_KEY | minindent 10 | msquote }}
           clients:
             - client_id: 'jellyfin'
               client_name: 'Jellyfin'
