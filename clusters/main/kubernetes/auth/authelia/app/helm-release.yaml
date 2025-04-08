@@ -150,25 +150,25 @@ spec:
           disable_html_emails: true               
           tls:                         
             server_name: ${SMTP_HOST}    
-      # identity_providers:
-      #   oidc:
-      #     hmac_secret: ${OIDC_HMAC_KEY}
-      #     jwks:
-      #       - algorithm: 'RS256'
-      #         key: {{ secret "/config/jwks/rsa.2048.cert" | minindent 10 | msquote }}
-      #     clients:
-      #       - client_id: 'jellyfin'
-      #         client_name: 'Jellyfin'
-      #         client_secret: ${OIDC_JELLYFIN_CLIENT_SECRET}
-      #         public: false
-      #         authorization_policy: 'one_factor'
-      #         require_pkce: true
-      #         pkce_challenge_method: 'S256'
-      #         redirect_uris:
-      #           - 'https://stream.${DOMAIN_0}/sso/OID/redirect/authelia'
-      #         scopes:
-      #           - 'openid'
-      #           - 'profile'
-      #           - 'groups'
-      #         userinfo_signed_response_alg: 'none'
-      #         token_endpoint_auth_method: 'client_secret_post'
+      identity_providers:
+        oidc:
+          hmac_secret: ${OIDC_HMAC_KEY}
+          jwks:
+            - algorithm: 'RS256'
+              key: {{ secret "/config/jwks/rsa.2048.cert" | minindent 10 | msquote }}
+          clients:
+            - client_id: 'jellyfin'
+              client_name: 'Jellyfin'
+              client_secret: ${OIDC_JELLYFIN_CLIENT_SECRET}
+              public: false
+              authorization_policy: 'one_factor'
+              require_pkce: true
+              pkce_challenge_method: 'S256'
+              redirect_uris:
+                - 'https://stream.${DOMAIN_0}/sso/OID/redirect/authelia'
+              scopes:
+                - 'openid'
+                - 'profile'
+                - 'groups'
+              userinfo_signed_response_alg: 'none'
+              token_endpoint_auth_method: 'client_secret_post'
