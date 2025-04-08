@@ -77,7 +77,7 @@ spec:
                 env:
                   ENABLE_OAUTH_SIGNUP: true
                   OAUTH_MERGE_ACCOUNTS_BY_EMAIL: true
-                  OAUTH_CLIENT_ID: "open-webui"
+                  OAUTH_CLIENT_ID: ${OIDC_AI_CLIENT_ID}
                   OAUTH_CLIENT_SECRET: ${OIDC_AI_CLIENT_SECRET_INSECURE}
                   OPENID_PROVIDER_URL: "https://auth.${DOMAIN_0}/.well-known/openid-configuration"
                   OAUTH_PROVIDER_NAME: Authelia
