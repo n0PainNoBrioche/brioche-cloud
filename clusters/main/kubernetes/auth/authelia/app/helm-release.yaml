@@ -89,8 +89,6 @@ spec:
                 AUTHELIA_SESSION_SECRET: ${AUTHELIA_SESSION_KEY}
                 AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET: ${AUTHELIA_JWT_KEY}
                 AUTHELIA_STORAGE_ENCRYPTION_KEY: ${AUTHELIA_ENCRYPTION_KEY}
-                X_AUTHELIA_CONFIG_FILTERS: template
-                AUTHELIA_OICD_PRIVATE_KEY: ${OIDC_JWK_KEY}
     authelia:
       theme: auto
       totp:
@@ -156,7 +154,7 @@ spec:
           hmac_secret: ${OIDC_HMAC_KEY}
           jwks:
             - algorithm: 'RS256'
-              key: {{ .Env.AUTHELIA_OICD_PRIVATE_KEY | minindent 10 | msquote }}
+              key: ${OIDC_JWK_KEY}
           clients:
             - client_id: 'jellyfin'
               client_name: 'Jellyfin'
