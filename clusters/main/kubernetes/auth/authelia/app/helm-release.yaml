@@ -152,7 +152,12 @@ spec:
       identity_providers:
         oidc:
           hmac_secret: ${OIDC_HMAC_KEY}
-          jwks: ${OIDC_JWKS}
+          jwks:
+            - key_id: ${OIDC_JWK_KEY_ID}
+              algorithm: 'RS256'
+              use: 'sig'
+              key: ${OIDC_JWK_KEY}
+              certificate_chain: ${OIDC_JWK_CERT}
           clients:
             - client_id: 'jellyfin'
               client_name: 'Jellyfin'
