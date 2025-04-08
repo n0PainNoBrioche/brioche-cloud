@@ -152,7 +152,7 @@ spec:
       identity_providers:
         oidc:
           hmac_secret: ${OIDC_HMAC_KEY}
-          issuer_private_key: ${OIDC_PRIVATE_KEY}
+          jwks: ${OIDC_JWKS}
           clients:
             - client_id: 'jellyfin'
               client_name: 'Jellyfin'
