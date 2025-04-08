@@ -70,3 +70,19 @@ spec:
                 resources:
                   limits:
                     nvidia.com/gpu: 1
+        ui:
+          podSpec:
+            containers:
+              ui:
+                env:
+                  ENABLE_OAUTH_SIGNUP: true
+                  OAUTH_MERGE_ACCOUNTS_BY_EMAIL: true
+                  OAUTH_CLIENT_ID: open-webui
+                  OAUTH_CLIENT_SECRET: ${OIDC_AI_CLIENT_SECRET_INSECURE}
+                  OPENID_PROVIDER_URL: https://auth.${DOMAIN_0}/.well-known/openid-configuration
+                  OAUTH_PROVIDER_NAME: Authelia
+                  OAUTH_SCOPES: "openid email profile groups"
+                  ENABLE_OAUTH_ROLE_MANAGEMENT: true
+                  OAUTH_ALLOWED_ROLES: "ai_user,admin"
+                  OAUTH_ADMIN_ROLES: "admin"
+                  OAUTH_ROLES_CLAIM: "groups"
