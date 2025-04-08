@@ -171,3 +171,16 @@ spec:
                 - 'groups'
               userinfo_signed_response_alg: 'none'
               token_endpoint_auth_method: 'client_secret_post'
+            - client_id: 'open-webui'
+              client_name: 'Open WebUI'
+              client_secret: ${OIDC_AI_CLIENT_SECRET}
+              public: false
+              authorization_policy: 'one_factor'
+              redirect_uris:
+                - 'https://chat.${DOMAIN_0}/oauth/oidc/callback'
+              scopes:
+                - 'openid'
+                - 'profile'
+                - 'groups'
+                - 'email'
+              userinfo_signed_response_alg: 'RS256'
