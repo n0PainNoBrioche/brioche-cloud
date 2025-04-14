@@ -156,9 +156,9 @@ spec:
           jwks:
             - key: {{ secret "/config/jwks/rsa.2048.cert" | minindent 10 | msquote }}
           clients:
-            - client_id: ${OIDC_JELLYFIN_CLIENT_ID}
+            - client_id: '${OIDC_JELLYFIN_CLIENT_ID}'
               client_name: 'Jellyfin'
-              client_secret: ${OIDC_JELLYFIN_CLIENT_SECRET}
+              client_secret: '${OIDC_JELLYFIN_CLIENT_SECRET}'
               public: false
               authorization_policy: 'one_factor'
               require_pkce: true
