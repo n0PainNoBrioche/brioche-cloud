@@ -80,4 +80,4 @@ spec:
         type: pvc
         accessMode: ReadWriteOnce
         size: 10Gi
-        mountPath: /home/runner/ComfyUI
+        mountPath: /home/runner
