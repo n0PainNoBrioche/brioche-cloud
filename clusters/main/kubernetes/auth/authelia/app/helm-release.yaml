@@ -172,6 +172,7 @@ spec:
                 - 'groups'
               userinfo_signed_response_alg: 'none'
               token_endpoint_auth_method: 'client_secret_post'
+
             - client_id: ${OIDC_AI_CLIENT_ID}
               client_name: 'Open WebUI'
               client_secret: ${OIDC_AI_CLIENT_SECRET}
@@ -184,4 +185,4 @@ spec:
                 - 'profile'
                 - 'groups'
                 - 'email'
-              userinfo_signed_response_alg: 'RS256'
+              userinfo_signed_response_alg: 'none'
