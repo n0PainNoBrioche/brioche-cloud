@@ -74,3 +74,10 @@ spec:
                 resources:
                   limits:
                     nvidia.com/gpu: 1
+    persistence:
+      comfyui-data:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        mountPath: /home/runner/ComfyUI
