@@ -159,7 +159,7 @@ spec:
           clients:
             - client_id: ${OIDC_JELLYFIN_CLIENT_ID}
               client_name: 'Jellyfin'
-              client_secret: ${OIDC_JELLYFIN_CLIENT_SECRET_INSECURE}
+              client_secret: ${OIDC_JELLYFIN_CLIENT_SECRET}
               public: false
               require_pkce: true
               pkce_challenge_method: 'S256'
