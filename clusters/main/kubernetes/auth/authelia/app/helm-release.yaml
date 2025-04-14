@@ -164,7 +164,7 @@ spec:
               require_pkce: true
               pkce_challenge_method: 'S256'
               redirect_uris:
-                - 'http://stream.${DOMAIN_0}/sso/OID/redirect/authelia'
+                - 'https://stream.${DOMAIN_0}/sso/OID/redirect/authelia'
               scopes:
                 - 'openid'
                 - 'profile'
