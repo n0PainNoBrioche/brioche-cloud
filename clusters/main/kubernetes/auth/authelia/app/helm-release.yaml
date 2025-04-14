@@ -154,7 +154,8 @@ spec:
         oidc:
           hmac_secret: ${OIDC_HMAC_KEY}
           jwks:
-            - key: {{ secret "/config/secrets/oidc/jwks/rsa.2048.key" | mindent 10 "|" | msquote }}
+            - key: |
+                {{- fileContent "/config/jwks/rsa.2048.cert" | nindent 8 }}
           clients:
             - client_id: ${OIDC_JELLYFIN_CLIENT_ID}
               client_name: 'Jellyfin'
