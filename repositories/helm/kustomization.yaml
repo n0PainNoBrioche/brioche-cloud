@@ -30,4 +30,5 @@ resources:
   - topolvm.yaml
   - truecharts.yaml
   - ingress-nginx.yaml
+  - home-ops-mirror.yaml
 # more goes here!
