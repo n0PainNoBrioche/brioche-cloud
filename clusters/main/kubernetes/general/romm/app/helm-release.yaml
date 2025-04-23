@@ -31,6 +31,14 @@ spec:
           enabled: false
       global:
         stopAll: false
+      workload:
+        main:
+          podSpec:
+            containers:
+              main:
+                env:
+                  IGDB_CLIENT_ID: ${IGDB_CLIENT_ID}
+                  IGDB_CLIENT_SECRET: ${IGDB_CLIENT_SECRET}
       credentials:
         minio:
           type: s3
@@ -76,14 +84,6 @@ spec:
           type: nfs
           path: ${GAMES_NFS_PATH}
           server: ${NAS_IP}
-      workload:
-        main:
-          podSpec:
-            containers:
-              main:
-                env:
-                  IGDB_CLIENT_ID: ${IGDB_CLIENT_ID}
-                  IGDB_CLIENT_SECRET: ${IGDB_CLIENT_SECRET}
       metrics:
         main:
           enabled: false
