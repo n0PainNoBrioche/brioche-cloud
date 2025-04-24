@@ -79,11 +79,11 @@ spec:
               enabled: true
               trigger:
                 schedule: 30 0 * * *
-        library:
-          enabled: true
-          type: nfs
-          path: ${GAMES_NFS_PATH}
-          server: ${NAS_IP}
+        # library:
+        #   enabled: true
+        #   type: nfs
+        #   path: ${GAMES_NFS_PATH}
+        #   server: ${NAS_IP}
       metrics:
         main:
           enabled: false
