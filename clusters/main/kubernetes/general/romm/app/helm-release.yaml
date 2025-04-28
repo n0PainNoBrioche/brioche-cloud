@@ -87,4 +87,3 @@ spec:
       metrics:
         main:
           enabled: false
-          
