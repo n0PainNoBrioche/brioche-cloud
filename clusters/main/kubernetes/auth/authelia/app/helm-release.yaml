@@ -132,6 +132,11 @@ spec:
           policy: one_factor                      
           subject:                                 
             - 'group:stream_user'
+        - domain:
+            - 'games.${DOMAIN_0}'                    
+          policy: one_factor                      
+          subject:                                 
+            - 'group:game_user'
       session:
         cookies:
           - domain: '${DOMAIN_0}'
@@ -182,3 +187,18 @@ spec:
                 - 'groups'
                 - 'email'
               userinfo_signed_response_alg: 'none'
+
+            - client_id: ${OIDC_ROMM_CLIENT_ID}
+              client_name: 'RomM'
+              client_secret: ${OIDC_ROMM_CLIENT_SECRET}
+              public: false
+              grant_types:
+                - authorization_code
+              redirect_uris:
+                - https://games.${DOMAIN_0}/api/oauth/openid
+              scopes:
+                - 'openid'
+                - 'email'
+                - 'profile'
+              userinfo_signed_response_alg: 'none'
+              token_endpoint_auth_method: 'client_secret_basic'

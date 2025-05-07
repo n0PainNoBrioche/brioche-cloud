@@ -39,6 +39,12 @@ spec:
                 env:
                   IGDB_CLIENT_ID: ${IGDB_CLIENT_ID}
                   IGDB_CLIENT_SECRET: ${IGDB_CLIENT_SECRET}
+                  OIDC_ENABLED: "true"
+                  OIDC_PROVIDER: "authelia"
+                  OIDC_CLIENT_ID: ${OIDC_ROMM_CLIENT_ID}
+                  OIDC_CLIENT_SECRET: ${OIDC_ROMM_CLIENT_SECRET_INSECURE}
+                  OIDC_REDIRECT_URI: "https://games.${DOMAIN_0}/api/oauth/openid"
+                  OIDC_SERVER_APPLICATION_URL: "https://auth.${DOMAIN_0}"
       credentials:
         minio:
           type: s3
@@ -51,11 +57,6 @@ spec:
         main:
           enabled: true
           ingressClassName: external
-          annotations:
-            nginx.ingress.kubernetes.io/auth-method: 'GET'
-            nginx.ingress.kubernetes.io/auth-url: 'http://authelia.authelia.svc.cluster.local:9091/api/verify'
-            nginx.ingress.kubernetes.io/auth-signin: 'https://auth.${DOMAIN_0}?rm=$request_method'
-            nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
           integrations:
             traefik:
               enabled: false
