@@ -169,6 +169,7 @@ spec:
               client_name: 'Jellyfin'
               client_secret: ${OIDC_JELLYFIN_CLIENT_SECRET}
               public: false
+              authorization_policy: "one_factor"
               redirect_uris:
                 - https://stream.${DOMAIN_0}/sso/OID/redirect/authelia
               scopes:
@@ -182,6 +183,7 @@ spec:
               client_name: 'Open WebUI'
               client_secret: ${OIDC_AI_CLIENT_SECRET}
               public: false
+              authorization_policy: "one_factor"
               redirect_uris:
                 - https://chat.${DOMAIN_0}/oauth/oidc/callback
               scopes:
@@ -195,6 +197,7 @@ spec:
               client_name: 'RomM'
               client_secret: ${OIDC_ROMM_CLIENT_SECRET}
               public: false
+              authorization_policy: "one_factor"
               grant_types:
                 - authorization_code
               redirect_uris:
