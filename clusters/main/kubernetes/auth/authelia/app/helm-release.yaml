@@ -118,6 +118,9 @@ spec:
           subject:                                 
             - 'group:admin' 
         - domain:                                                      
+            - 'auth.${DOMAIN_0}'                    
+          policy: one_factor                      
+        - domain:                                                      
             - 'chat.${DOMAIN_0}'                    
           policy: one_factor                      
           subject:                                 
