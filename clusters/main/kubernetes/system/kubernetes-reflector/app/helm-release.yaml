@@ -31,4 +31,4 @@ spec:
     keepHistory: false
   values:
     securityContext:
-      readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: false
