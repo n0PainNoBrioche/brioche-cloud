@@ -28,8 +28,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    podOptions:
-      hostUsers: true
     credentials:
       minio:
           type: s3
