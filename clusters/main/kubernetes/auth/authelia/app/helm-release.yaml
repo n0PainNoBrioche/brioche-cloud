@@ -167,9 +167,9 @@ spec:
             - key: |
                 {{- fileContent "/config/jwks/rsa.2048.cert" | nindent 8 }}
           claims_policies:
-          with_email: # You can name this however you want
-            id_token:
-              ["email", "email_verified", "alt_emails", "preferred_username", "name"]
+            with_email: # You can name this however you want
+              id_token:
+                ["email", "email_verified", "alt_emails", "preferred_username", "name"]
           clients:
             - client_id: ${OIDC_JELLYFIN_CLIENT_ID}
               client_name: 'Jellyfin'
