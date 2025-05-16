@@ -178,11 +178,6 @@ spec:
               authorization_policy: "one_factor"
               redirect_uris:
                 - https://stream.${DOMAIN_0}/sso/OID/redirect/authelia
-              scopes:
-                - 'openid'
-                - 'profile'
-                - 'groups'
-              userinfo_signed_response_alg: 'none'
               token_endpoint_auth_method: 'client_secret_post'
 
             - client_id: ${OIDC_AI_CLIENT_ID}
