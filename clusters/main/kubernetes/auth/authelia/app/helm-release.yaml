@@ -176,6 +176,8 @@ spec:
               client_secret: ${OIDC_JELLYFIN_CLIENT_SECRET}
               public: false
               authorization_policy: "one_factor"
+              require_pkce: true
+              pkce_challenge_method: 'S256'
               redirect_uris:
                 - https://stream.${DOMAIN_0}/sso/OID/redirect/authelia
               scopes:
