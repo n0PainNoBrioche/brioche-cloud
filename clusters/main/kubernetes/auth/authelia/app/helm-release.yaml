@@ -166,6 +166,10 @@ spec:
           jwks:
             - key: |
                 {{- fileContent "/config/jwks/rsa.2048.cert" | nindent 8 }}
+          claims_policies:
+          with_email: # You can name this however you want
+            id_token:
+              ["email", "email_verified", "alt_emails", "preferred_username", "name"]
           clients:
             - client_id: ${OIDC_JELLYFIN_CLIENT_ID}
               client_name: 'Jellyfin'
@@ -204,9 +208,10 @@ spec:
                 - authorization_code
               redirect_uris:
                 - https://games.${DOMAIN_0}/api/oauth/openid
+              claims_policy: "with_email"
               scopes:
                 - 'openid'
-                - 'email'
                 - 'profile'
+                - 'email'
               userinfo_signed_response_alg: 'none'
               token_endpoint_auth_method: 'client_secret_basic'
