@@ -142,6 +142,11 @@ spec:
           policy: one_factor                      
           subject:                                 
             - 'group:game_user'
+        - domain:
+            - 'coolify.${DOMAIN_0}'                    
+          policy: one_factor                      
+          subject:                                 
+            - 'group:coolify_user'
       session:
         cookies:
           - domain: '${DOMAIN_0}'
