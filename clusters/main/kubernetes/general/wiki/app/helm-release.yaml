@@ -24,9 +24,9 @@ spec:
         crds: CreateReplace
         remediation:
             retries: 3
-    driftDetection:
-      mode: warn
     values:
+      podOptions:
+        hostUsers: true
       credentials:
         minio:
           type: s3
