@@ -9,3 +9,4 @@ resources:
   - wiki/ks.yaml
   - comfyui/ks.yaml
   - romm/ks.yaml
+  - n8n/ks.yaml
