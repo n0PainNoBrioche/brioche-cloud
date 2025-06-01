@@ -29,34 +29,31 @@ spec:
   uninstall:
     keepHistory: false
   values:
-
     clusterIssuer:
       selfSigned:
         enabled: true
         name: "selfsigned"
-      ## Remove these if you do NOT want to use clusterissuer
       ACME:
         - name: domain-0-le-staging
-          # Used for both logging in to the DNS provider AND ACME registration
           email: "${DOMAIN_0_EMAIL}"
           server: 'https://acme-staging-v02.api.letsencrypt.org/directory'
-          # Options: HTTP01, cloudflare, route53, akamai, digitalocean, rfc2136, acmedns
           type: "cloudflare"
-          # for cloudflare
           cfapitoken: "${DOMAIN_0_CLOUDFLARE_TOKEN}"
         - name: domain-0-le-prod
-          # Used for both logging in to the DNS provider AND ACME registration
           email: "${DOMAIN_0_EMAIL}"
           server: 'https://acme-v02.api.letsencrypt.org/directory'
-          # Options: HTTP01, cloudflare, route53, akamai, digitalocean, rfc2136, acmedns
           type: "cloudflare"
-          # for cloudflare
           cfapitoken: "${DOMAIN_0_CLOUDFLARE_TOKEN}"
+        - name: domain-1-le-prod
+          email: "${DOMAIN_1_EMAIL}"
+          server: 'https://acme-v02.api.letsencrypt.org/directory'
+          type: "ovh"
+          ovhEndpoint: "ovh-eu" # or ovh-ca, ovh-us depending on region
+          applicationKey: "${DOMAIN_1_OVH_APPLICATION_KEY}"
+          applicationSecret: "${DOMAIN_1_OVH_APPLICATION_SECRET}"
+          consumerKey: "${DOMAIN_1_OVH_CONSUMER_KEY}"
 
-    ## Remove these if you do NOT want to use clusterissuer
     clusterCertificates:
-      # Namespaces in which the certificates must be available
-      # Accepts comma-separated regex expressions
       replicationNamespaces: '.*'
       certificates:
         - name: domain-0-wildcard
@@ -65,3 +62,9 @@ spec:
           hosts:
             - ${DOMAIN_0}
             - '*.${DOMAIN_0}'
+        - name: domain-1-wildcard
+          enabled: true
+          certificateIssuer: domain-1-le-prod
+          hosts:
+            - ${DOMAIN_1}
+            - '*.${DOMAIN_1}'
