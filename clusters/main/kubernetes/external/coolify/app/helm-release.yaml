@@ -58,7 +58,7 @@ spec:
               pathType: Prefix
           integrations:
             certManager:
-              certificateIssuer: domain-0-le-prod
+              certificateIssuer: domain-1-le-prod
               enabled: true
             traefik:
               enabled: false
