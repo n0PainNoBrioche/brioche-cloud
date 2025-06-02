@@ -47,11 +47,8 @@ spec:
         - name: domain-1-le-prod
           email: "${DOMAIN_1_EMAIL}"
           server: 'https://acme-v02.api.letsencrypt.org/directory'
-          type: "ovh"
-          ovhEndpoint: "ovh-eu" # or ovh-ca, ovh-us depending on region
-          applicationKey: "${DOMAIN_1_OVH_APPLICATION_KEY}"
-          applicationSecret: "${DOMAIN_1_OVH_APPLICATION_SECRET}"
-          consumerKey: "${DOMAIN_1_OVH_CONSUMER_KEY}"
+          type: "cloudflare"
+          cfapitoken: "${DOMAIN_1_CLOUDFLARE_TOKEN}"
 
     clusterCertificates:
       replicationNamespaces: '.*'
