@@ -38,8 +38,40 @@ spec:
               port: 8000
               protocol: http
           type: ExternalIP
+        websocket:
+          enabled: true
+          externalIP: ${COOLIFY_IP}
+          ports:
+            main:
+              enabled: true
+              port: 6001
+              protocol: http
+          type: ExternalIP
+        terminal:
+          enabled: true
+          externalIP: ${COOLIFY_IP}
+          ports:
+            main:
+              enabled: true
+              port: 6002
+              protocol: http
+          type: ExternalIP
       ingress:
         main:
+          enabled: true
+          ingressClassName: external
+          hosts:
+          - host: '${DOMAIN_1}'
+            paths:
+            - path: /
+              pathType: Prefix
+          integrations:
+            certManager:
+              certificateIssuer: domain-1-le-prod
+              enabled: true
+            traefik:
+              enabled: false
+        app:
           enabled: true
           ingressClassName: external
           hosts:
