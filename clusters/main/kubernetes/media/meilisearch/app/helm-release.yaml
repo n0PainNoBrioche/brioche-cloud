@@ -1,0 +1,55 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: meilisearch
+  namespace: meilisearch
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 14.5.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: getmeili/meilisearch
+      tag: latest
+      pullPolicy: IfNotPresent
+    service:
+      main:
+        ports:
+          main:
+            enabled: true
+            protocol: http
+            port: 7700
+            targetPort: 7700
+    securityContext:
+      container:
+        PUID: 0 # Run as root
+        runAsNonRoot: false # Allow running as root
+        runAsUser: 0 # root user
+        runAsGroup: 0 # root group
+        readOnlyRootFilesystem: false # Needs to write to root FS? Set to false
+      pod:
+        fsGroup: 0 # Use root group for volume permissions
+  
+    persistence:
+      comfyui-data:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        mountPath: /meili_data

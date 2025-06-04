@@ -10,3 +10,7 @@ resources:
   - jellyfin/ks.yaml
   - jellyseerr/ks.yaml
   - jellystat/ks.yaml
+  - overseerr/ks.yaml
+  - plex/ks.yaml
+  - tautulli/ks.yaml
+  - meilisearch/ks.yaml
