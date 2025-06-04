@@ -10,4 +10,4 @@ resources:
   - comfyui/ks.yaml
   - romm/ks.yaml
   - n8n/ks.yaml
-
+  - meilisearch/ks.yaml
