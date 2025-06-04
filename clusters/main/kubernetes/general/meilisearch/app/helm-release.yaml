@@ -65,7 +65,6 @@ spec:
         readOnlyRootFilesystem: false # Needs to write to root FS? Set to false
       pod:
         fsGroup: 0 # Use root group for volume permissions
-  
     persistence:
       comfyui-data:
         enabled: true
