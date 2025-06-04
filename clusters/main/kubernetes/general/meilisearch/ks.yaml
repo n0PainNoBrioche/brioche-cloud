@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: clusters/main/kubernetes/media/meilisearch/app
+  path: clusters/main/kubernetes/general/meilisearch/app
   prune: true
   sourceRef:
     kind: GitRepository
