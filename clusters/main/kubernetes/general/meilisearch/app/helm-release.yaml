@@ -73,9 +73,10 @@ spec:
         size: 10Gi
         mountPath: /meili_data
     workload:
-      ui:
+      main:
         podSpec:
           containers:
-            ui:
+            main:
               env:
+                MEILI_ENV: production
                 MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
