@@ -30,6 +30,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    podOptions:
+      hostUsers: true
     service:
       main:
         type: LoadBalancer
