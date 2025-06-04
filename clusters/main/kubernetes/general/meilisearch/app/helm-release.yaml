@@ -72,3 +72,10 @@ spec:
         accessMode: ReadWriteOnce
         size: 10Gi
         mountPath: /meili_data
+    workload:
+      ui:
+        podSpec:
+          containers:
+            ui:
+              env:
+                MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
