@@ -34,7 +34,7 @@ spec:
         minio:
           type: s3
           url: "${S3_URL_MINIO}"
-          bucket: "${S3_BUCKET}-notifarr"
+          bucket: "${S3_BUCKET}-notifiarr"
           accessKey: "${S3_ACCESS_KEY}"
           secretKey: "${S3_SECRET_KEY}"
           encrKey: "${S3_ENCRYPTION_KEY}"
@@ -54,7 +54,7 @@ spec:
               enabled: true
               certificateIssuer: domain-0-le-prod
           hosts:
-            - host: notifarr.${DOMAIN_0}
+            - host: notifiarr.${DOMAIN_0}
               paths:
                 - path: /
                   pathType: Prefix
