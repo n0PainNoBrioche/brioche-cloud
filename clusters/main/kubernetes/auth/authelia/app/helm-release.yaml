@@ -228,8 +228,6 @@ spec:
               client_secret: ${OIDC_XO_CLIENT_SECRET}
               public: false
               authorization_policy: "one_factor"
-              grant_types:
-                - authorization_code
               redirect_uris:
                 - https://xo.${DOMAIN_0}/signin/oidc/callback
               scopes:
