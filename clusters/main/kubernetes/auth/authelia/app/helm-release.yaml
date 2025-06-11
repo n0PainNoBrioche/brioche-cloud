@@ -231,7 +231,7 @@ spec:
               grant_types:
                 - authorization_code
               redirect_uris:
-                - https://xo.${DOMAIN_0}/api/oauth/openid
+                - https://xo.${DOMAIN_0}/signin/oidc/callback
               scopes:
                 - 'openid'
                 - 'profile'
