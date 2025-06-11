@@ -224,7 +224,7 @@ spec:
               token_endpoint_auth_method: 'client_secret_basic'
 
             - client_id: ${OIDC_XO_CLIENT_ID}
-              client_name: 'XO'
+              client_name: 'xen-orchestra'
               client_secret: ${OIDC_XO_CLIENT_SECRET}
               public: false
               authorization_policy: "one_factor"
