@@ -222,3 +222,19 @@ spec:
                 - 'email'
               userinfo_signed_response_alg: 'none'
               token_endpoint_auth_method: 'client_secret_basic'
+
+            - client_id: ${OIDC_XO_CLIENT_ID}
+              client_name: 'XO'
+              client_secret: ${OIDC_XO_CLIENT_SECRET}
+              public: false
+              authorization_policy: "one_factor"
+              grant_types:
+                - authorization_code
+              redirect_uris:
+                - https://xo.${DOMAIN_0}/api/oauth/openid
+              scopes:
+                - 'openid'
+                - 'profile'
+                - 'email'
+              userinfo_signed_response_alg: 'none'
+              token_endpoint_auth_method: 'client_secret_basic'
