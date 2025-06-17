@@ -21,3 +21,6 @@ spec:
   upgrade:
     remediation:
       retries: 3
+  values:
+    podOptions:
+      hostUsers: true
