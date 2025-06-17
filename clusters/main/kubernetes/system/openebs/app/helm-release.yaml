@@ -29,6 +29,8 @@ spec:
         volumeSnapshots:
           enabled: false
           keep: false
+    podOptions:
+      hostUsers: true
 
     engines:
       local:
