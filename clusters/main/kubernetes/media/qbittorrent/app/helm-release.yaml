@@ -4,17 +4,6 @@ metadata:
     name: qbittorrent
     namespace: media
 spec:
-    postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              version: v1
-              kind: Deployment
-              name: qbittorrent
-            patch: |
-              - op: add
-                path: /spec/template/spec/containers/1/resources/limits/truecharts.org~1tun
-                value: 1
     interval: 5m
     chart:
         spec:
@@ -98,19 +87,22 @@ spec:
               protocol: "http"
               targetPort: 8888
       addons:
-        vpn:
-          type: gluetun
-          killSwitch: true
-          excludedNetworks_IPv4:
-          - 192.168.1.0/24
-          env:
-            VPN_TYPE: wireguard
-            VPN_SERVICE_PROVIDER: ${WG_VPN_PROVIDER}
-            WIREGUARD_ADDRESSES: ${WG_ADDRESSES}
-            WIREGUARD_PRIVATE_KEY: ${WG_PRIVATE_KEY}
-            WIREGUARD_PUBLIC_KEY: ${WG_PUBLIC_KEY}
-            SERVER_CITIES: ${WG_SERVER_CITIES}
-            WIREGUARD_ENDPOINT_IP: ${WG_ENDPOINT_IP}
-            WIREGUARD_ENDPOINT_PORT: ${WG_ENDPOINT_PORT}
-            HTTPPROXY: "on"
-            FIREWALL_INPUT_PORTS: 10095,8888
+        gluetun:
+          enabled: true
+          container:
+            resources:
+              limits:
+                truecharts.org/tun: 1
+            env:
+              VPN_TYPE: wireguard
+              VPN_SERVICE_PROVIDER: ${WG_VPN_PROVIDER}
+              WIREGUARD_ADDRESSES: ${WG_ADDRESSES}
+              WIREGUARD_PRIVATE_KEY: ${WG_PRIVATE_KEY}
+              WIREGUARD_PUBLIC_KEY: ${WG_PUBLIC_KEY}
+              SERVER_CITIES: ${WG_SERVER_CITIES}
+              WIREGUARD_ENDPOINT_IP: ${WG_ENDPOINT_IP}
+              WIREGUARD_ENDPOINT_PORT: ${WG_ENDPOINT_PORT}
+              HTTPPROXY: "on"
+              FIREWALL_INPUT_PORTS: 10095,8888
+              FIREWALL: "on"
+              FIREWALL_OUTBOUND_SUBNETS: "192.168.1.0/24"
