@@ -11,4 +11,5 @@ resources:
   - romm/ks.yaml
   - n8n/ks.yaml
   - meilisearch/ks.yaml
+  - immich/ks.yaml
 
