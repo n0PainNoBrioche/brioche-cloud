@@ -54,6 +54,7 @@ spec:
           cluster:
             singleNode: true
             credentials: minio
+            revision: "2"
             scheduledBackups:
               - name: daily-backup
                 schedule: "0 5 0 * * *"
