@@ -70,6 +70,8 @@ spec:
                 resources:
                   limits:
                     nvidia.com/gpu: 1
+                env:
+                  OLLAMA_CONTEXT_LENGTH: "8192"
         ui:
           podSpec:
             containers:
