@@ -90,3 +90,19 @@ spec:
           server: "${NAS_IP}"
           path: ${IMMICH_NFS_PATH}/encoded-video
           mountPath: /usr/src/app/upload/encoded-video
+      workload:
+        machinelearning:
+          podSpec:
+            runtimeClassName: "nvidia"
+            containers:
+              immich:
+                resources:
+                  requests:
+                    cpu: "500m"
+                    memory: "2Gi"
+                    nvidia.com/gpu: 1
+                  limits:
+                    cpu: "2"
+                    memory: "4Gi"
+                    nvidia.com/gpu: 1
+
