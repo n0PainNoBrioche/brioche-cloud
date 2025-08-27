@@ -2,3 +2,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - kubernetes-dashboard/ks.yaml
+  - it-tools/ks.yaml
+  - nextcloud/ks.yaml
+  # - kitchenowl/ks.yaml
+  - ollama/ks.yaml
+  - homepage/ks.yaml
+  - wiki/ks.yaml
+  - comfyui/ks.yaml
+  - romm/ks.yaml
+  - n8n/ks.yaml
+  # - meilisearch/ks.yaml
+  # - crafty/ks.yaml
+  - immich/ks.yaml
+

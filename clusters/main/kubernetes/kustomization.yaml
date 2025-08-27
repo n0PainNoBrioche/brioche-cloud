@@ -3,12 +3,10 @@ kind: Kustomization
 resources:
   - apps
   - auth
-  - general
   - core
   - flux-entry.yaml
   - flux-system
   - kube-system
   - system
   - media
-  - gaming
   - external
