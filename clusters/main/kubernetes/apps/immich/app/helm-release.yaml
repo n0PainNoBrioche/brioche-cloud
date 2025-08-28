@@ -115,3 +115,4 @@ spec:
                     cpu: "2"
                     memory: "4Gi"
                     nvidia.com/gpu: 1
+              
