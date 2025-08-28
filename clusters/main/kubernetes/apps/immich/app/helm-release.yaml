@@ -94,10 +94,10 @@ spec:
           podSpec:
             runtimeClassName: "nvidia"
             containers:
-              main:
+              immich:
                 env:
                   IMMICH_API_KEY: ${IMMICH_API_KEY}
-              machinelearning:
+              immich-machinelearning:
                 resources:
                   requests:
                     cpu: "500m"
