@@ -25,19 +25,6 @@ spec:
         remediation:
             retries: 3
     timeout: 20m
-    template:
-      spec:
-        containers:
-          - name: immich-machinelearning
-            resources:
-              requests:
-                cpu: 500m
-                memory: 2Gi
-                nvidia.com/gpu: 1
-              limits:
-                cpu: 2
-                memory: 4Gi
-                nvidia.com/gpu: 1
     values:
       immich:
       enable_ml: true
