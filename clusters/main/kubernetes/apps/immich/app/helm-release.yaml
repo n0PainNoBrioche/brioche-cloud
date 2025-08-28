@@ -99,6 +99,13 @@ spec:
                   IMMICH_API_KEY: ${IMMICH_API_KEY}
               machinelearning:
                 enabled: true
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
                 resources:
                   requests:
                     cpu: "500m"
