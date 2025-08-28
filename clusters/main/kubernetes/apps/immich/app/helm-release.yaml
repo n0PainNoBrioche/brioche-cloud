@@ -90,18 +90,18 @@ spec:
           path: ${IMMICH_NFS_PATH}/encoded-video
           mountPath: /usr/src/app/upload/encoded-video
       workload:
-        main:
-          podSpec:
-            runtimeClassName: "nvidia"
-            containers:
-               main:
-                resources:
-                  requests:
-                    cpu: "500m"
-                    memory: "2Gi"
-                    nvidia.com/gpu: 1
-                  limits:
-                    cpu: "2"
-                    memory: "4Gi"
-                    nvidia.com/gpu: 1
-
+workload:
+  machinelearning:
+    podSpec:
+      runtimeClassName: "nvidia"
+      containers:
+        machinelearning:
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "2Gi"
+              nvidia.com/gpu: 1
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+              nvidia.com/gpu: 1
