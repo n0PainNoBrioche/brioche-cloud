@@ -98,6 +98,7 @@ spec:
                 env:
                   IMMICH_API_KEY: ${IMMICH_API_KEY}
               machinelearning:
+                enabled: true
                 resources:
                   requests:
                     cpu: "500m"
