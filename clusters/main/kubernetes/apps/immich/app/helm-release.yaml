@@ -92,15 +92,12 @@ spec:
       workload:
         main:
           podSpec:
+            runtimeClassName: "nvidia"
             containers:
               main:
                 env:
                   IMMICH_API_KEY: ${IMMICH_API_KEY}
-        machinelearning:
-          podSpec:
-            runtimeClassName: "nvidia"
-            containers:
-              main:
+              machinelearning:
                 resources:
                   requests:
                     cpu: "500m"
