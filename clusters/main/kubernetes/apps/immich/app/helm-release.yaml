@@ -90,24 +90,23 @@ spec:
           path: ${IMMICH_NFS_PATH}/encoded-video
           mountPath: /usr/src/app/upload/encoded-video
       workload:
-workload:
-  main:
-    podSpec:
-      containers:
-        main:
-          env:
-            IMMICH_API_KEY: ${IMMICH_API_KEY}
-  machinelearning:
-    podSpec:
-      runtimeClassName: "nvidia"
-      containers:
+        immich:
+          podSpec:
+            containers:
+              immich:
+                env:
+                  IMMICH_API_KEY: ${IMMICH_API_KEY}
         machinelearning:
-          resources:
-            requests:
-              cpu: "500m"
-              memory: "2Gi"
-              nvidia.com/gpu: 1
-            limits:
-              cpu: "2"
-              memory: "4Gi"
-              nvidia.com/gpu: 1
+          podSpec:
+            runtimeClassName: "nvidia"
+            containers:
+              machinelearning:
+                resources:
+                  requests:
+                    cpu: "500m"
+                    memory: "2Gi"
+                    nvidia.com/gpu: 1
+                  limits:
+                    cpu: "2"
+                    memory: "4Gi"
+                    nvidia.com/gpu: 1
