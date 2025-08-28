@@ -94,7 +94,7 @@ spec:
           podSpec:
             runtimeClassName: "nvidia"
             containers:
-              main:
+               immich:
                 resources:
                   requests:
                     cpu: "500m"
