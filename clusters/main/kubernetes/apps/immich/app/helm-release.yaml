@@ -91,6 +91,12 @@ spec:
           mountPath: /usr/src/app/upload/encoded-video
       workload:
 workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            IMMICH_API_KEY: ${IMMICH_API_KEY}
   machinelearning:
     podSpec:
       runtimeClassName: "nvidia"
