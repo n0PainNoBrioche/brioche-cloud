@@ -100,7 +100,7 @@ spec:
           podSpec:
             runtimeClassName: "nvidia"
             containers:
-              machinelearning:
+              main:
                 resources:
                   requests:
                     cpu: "500m"
