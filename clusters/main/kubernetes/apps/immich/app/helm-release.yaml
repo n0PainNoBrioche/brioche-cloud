@@ -90,7 +90,7 @@ spec:
           path: ${IMMICH_NFS_PATH}/encoded-video
           mountPath: /usr/src/app/upload/encoded-video
       workload:
-        immich-machinelearning:
+        main:
           podSpec:
             runtimeClassName: "nvidia"
             containers:
