@@ -25,7 +25,23 @@ spec:
         remediation:
             retries: 3
     timeout: 20m
+    template:
+      spec:
+        containers:
+          - name: immich-machinelearning
+            resources:
+              requests:
+                cpu: 500m
+                memory: 2Gi
+                nvidia.com/gpu: 1
+              limits:
+                cpu: 2
+                memory: 4Gi
+                nvidia.com/gpu: 1
     values:
+      immich:
+      enable_ml: true
+      mlImageType: mlCudaImag
       credentials:
         minio:
           type: s3
@@ -92,27 +108,7 @@ spec:
       workload:
         main:
           podSpec:
-            runtimeClassName: "nvidia"
             containers:
               main:
                 env:
                   IMMICH_API_KEY: ${IMMICH_API_KEY}
-              machinelearning:
-                enabled: true
-                probes:
-                  liveness:
-                    enabled: false
-                  readiness:
-                    enabled: false
-                  startup:
-                    enabled: false
-                resources:
-                  requests:
-                    cpu: "500m"
-                    memory: "2Gi"
-                    nvidia.com/gpu: 1
-                  limits:
-                    cpu: "2"
-                    memory: "4Gi"
-                    nvidia.com/gpu: 1
-              
