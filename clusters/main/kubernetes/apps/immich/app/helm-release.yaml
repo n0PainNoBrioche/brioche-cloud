@@ -90,10 +90,10 @@ spec:
           path: ${IMMICH_NFS_PATH}/encoded-video
           mountPath: /usr/src/app/upload/encoded-video
       workload:
-        immich:
+        main:
           podSpec:
             containers:
-              immich:
+              main:
                 env:
                   IMMICH_API_KEY: ${IMMICH_API_KEY}
         machinelearning:
