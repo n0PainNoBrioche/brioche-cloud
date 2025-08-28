@@ -27,8 +27,8 @@ spec:
     timeout: 20m
     values:
       immich:
-      enable_ml: true
-      mlImageType: mlCudaImag
+        enable_ml: true
+        mlImageType: mlCudaImag
       credentials:
         minio:
           type: s3
