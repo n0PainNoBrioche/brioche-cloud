@@ -54,7 +54,6 @@ spec:
           cluster:
             singleNode: true
             credentials: minio
-            revision: "2"
             scheduledBackups:
               - name: daily-backup
                 schedule: "0 5 0 * * *"
@@ -65,6 +64,17 @@ spec:
             method: object_store
             credentials: minio
       persistence:
+        config:
+          volsync:
+          - name: config
+            type: restic
+            credentials: minio
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 10 1 * * *
         library:
           type: nfs
           server: "${NAS_IP}"
