@@ -26,6 +26,9 @@ spec:
             retries: 3
     timeout: 20m
     values:
+      resources:
+        limits:
+          nvidia.com/gpu: 1
       credentials:
         minio:
           type: s3
