@@ -63,12 +63,3 @@ spec:
           recovery:
             method: object_store
             credentials: minio
-      workload:
-        main:
-          podSpec:
-            runtimeClassName: "nvidia"
-            containers:
-              main:
-                resources:
-                  limits:
-                    nvidia.com/gpu: 1
