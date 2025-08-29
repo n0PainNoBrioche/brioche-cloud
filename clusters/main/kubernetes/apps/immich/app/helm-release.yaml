@@ -26,9 +26,6 @@ spec:
             retries: 3
     timeout: 20m
     values:
-      resources:
-        limits:
-          nvidia.com/gpu: 1
       credentials:
         minio:
           type: s3
@@ -101,3 +98,12 @@ spec:
                   limits:
                     cpu: 4000m
                     memory: 8Gi
+        machinelearning:
+          podSpec:
+            containers:
+              main:
+                resources:
+                  limits:
+                    nvidia.com/gpu: 1
+                  requests:
+                    nvidia.com/gpu: 1
