@@ -97,5 +97,7 @@ spec:
           podSpec:
             containers:
               main:
-                env:
-                  IMMICH_API_KEY: ${IMMICH_API_KEY}
+                resources:
+                  limits:
+                    cpu: 4000m
+                    memory: 8Gi
