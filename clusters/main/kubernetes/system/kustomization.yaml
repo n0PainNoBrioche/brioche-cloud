@@ -10,6 +10,6 @@ resources:
   - snapshot-controller/ks.yaml
   - spegel/ks.yaml
   - system-upgrade-controller/ks.yaml
-  # - volsync/ks.yaml
+  - volsync/ks.yaml
   - generic-device-plugin/ks.yaml
   - nvidia-device-plugin/ks.yaml
