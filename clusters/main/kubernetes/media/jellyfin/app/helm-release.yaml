@@ -78,6 +78,8 @@ spec:
               main:
                 resources:
                   limits:
+                    cpu: 2000m
+                    memory: 4Gi
                     nvidia.com/gpu: 1
       autodiscovery:
         enabled: true
