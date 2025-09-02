@@ -26,10 +26,10 @@ spec:
             retries: 3
     timeout: 20m
     values:
-      # resources:
-      #   limits:
-      #     cpu: 4000m
-      #     memory: 8Gi
+      resources:
+        limits:
+          cpu: 4000m
+          memory: 8Gi
       #     nvidia.com/gpu: 1
       credentials:
         minio:
@@ -94,12 +94,3 @@ spec:
           server: "${NAS_IP}"
           path: ${IMMICH_NFS_PATH}/encoded-video
           mountPath: /usr/src/app/upload/encoded-video
-      workload:
-        main:
-          podSpec:
-            containers:
-              main:
-                resources:
-                  limits:
-                    cpu: 4000m
-                    memory: 8Gi
