@@ -54,22 +54,6 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
-        forgot:
-          enabled: true
-          ingressClassName: external
-          annotations:
-            nginx.ingress.kubernetes.io/permanent-redirect: "https://auth.${DOMAIN_0}/reset-password/step1"
-          integrations:
-            traefik:
-              enabled: false
-            certManager:
-              enabled: true
-              certificateIssuer: domain-0-le-prod
-          hosts:
-            - host: stream.${DOMAIN_0}
-              paths:
-                - path: /forgotpassword
-                  pathType: Prefix
       persistence:
         config:
           volsync:
