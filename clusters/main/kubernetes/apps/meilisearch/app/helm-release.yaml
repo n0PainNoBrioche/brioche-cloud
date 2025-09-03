@@ -73,3 +73,7 @@ spec:
               env:
                 MEILI_ENV: production
                 MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+              resources:
+                limits:
+                  cpu: 2000m
+                  memory: 2Gi
