@@ -68,7 +68,7 @@ spec:
           hosts:
             - host: stream.${DOMAIN_0}
               paths:
-                - path: /web/#/forgotpassword.html
+                - path: /forgotpassword
                   pathType: Prefix
       persistence:
         config:
