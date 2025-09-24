@@ -35,25 +35,7 @@ spec:
           ports:
             main:
               enabled: true
-              port: 8000
-              protocol: http
-          type: ExternalIP
-        websocket:
-          enabled: true
-          externalIP: ${DOKPLOY_IP}
-          ports:
-            main:
-              enabled: true
-              port: 6001
-              protocol: http
-          type: ExternalIP
-        terminal:
-          enabled: true
-          externalIP: ${DOKPLOY_IP}
-          ports:
-            main:
-              enabled: true
-              port: 6002
+              port: 3000
               protocol: http
           type: ExternalIP
       ingress:
