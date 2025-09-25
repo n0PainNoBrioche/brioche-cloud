@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcp-services
+  namespace: nginx
+data:
+  "443": "external-service/external-service-dokploy:443"
