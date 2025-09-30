@@ -65,7 +65,6 @@ spec:
       extraArgs:
         default-ssl-certificate: "clusterissuer/certificate-issuer-domain-0-wildcard"
         publish-status-address: ${NGINX_EXTERNAL_IP}
-        tcp-services-configmap: "nginx/tcp-services"
       terminationGracePeriodSeconds: 120
       publishService:
         enabled: false
