@@ -4,5 +4,4 @@ metadata:
   name: tcp-services
   namespace: nginx
 data:
-  "80": "external-service/external-service-dokploy:80"
   "443": "external-service/external-service-dokploy:443"
