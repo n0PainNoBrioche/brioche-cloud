@@ -9,7 +9,7 @@ spec:
     chart:
         spec:
             chart: romm
-            version: 14.20.0
+            version: 14.20.2
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
