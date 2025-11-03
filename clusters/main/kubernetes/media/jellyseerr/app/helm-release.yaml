@@ -9,7 +9,7 @@ spec:
         spec:
             # renovate: registryUrl=https://charts.truechartsoci.org
             chart: jellyseerr
-            version: 13.11.1
+            version: 13.11.3
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
