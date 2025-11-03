@@ -9,7 +9,7 @@ spec:
         spec:
             # renovate: registryUrl=https://charts.truechartsoci.org
             chart: kitchenowl
-            version: 12.11.1
+            version: 12.11.3
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
