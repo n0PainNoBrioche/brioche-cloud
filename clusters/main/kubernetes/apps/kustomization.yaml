@@ -13,5 +13,5 @@ resources:
   - n8n/ks.yaml
   - meilisearch/ks.yaml
   # - crafty/ks.yaml
-  - immich/ks.yaml
+  # - immich/ks.yaml
   - home-assistant/ks.yaml
