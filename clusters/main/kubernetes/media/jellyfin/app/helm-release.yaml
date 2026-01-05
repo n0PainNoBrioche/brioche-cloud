@@ -66,6 +66,17 @@ spec:
               enabled: true
               trigger:
                 schedule: 30 0 * * *
+          data:
+            volsync:
+            - name: data
+              type: restic
+              credentials: minio
+              dest:
+                enabled: true
+              src:
+                enabled: true
+                trigger:
+                  schedule: 30 0 * * *
         media:
           enabled: true
           existingClaim: media-nfs-pvc
@@ -76,6 +87,11 @@ spec:
             runtimeClassName: "nvidia"
             containers:
               main:
+                env:
+                  JELLYFIN_DATA_DIR: /data
+                  JELLYFIN_CONFIG_DIR: /config
+                  JELLYFIN_LOG_DIR: /logs
+                  JELLYFIN_CACHE_DIR: /cache
                 resources:
                   limits:
                     cpu: 2000m
