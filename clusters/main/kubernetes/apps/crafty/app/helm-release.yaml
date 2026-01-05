@@ -61,18 +61,18 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
-      persistence:
-        config:
-          volsync:
-          - name: config
-            type: restic
-            credentials: minio
-            dest:
-              enabled: true
-            src:
-              enabled: true
-              trigger:
-                schedule: 30 0 * * *
+      # persistence:
+      #   config:
+      #     volsync:
+      #     - name: config
+      #       type: restic
+      #       credentials: minio
+      #       dest:
+      #         enabled: true
+      #       src:
+      #         enabled: true
+      #         trigger:
+      #           schedule: 30 0 * * *
         backups:
           enabled: true
           type: nfs
