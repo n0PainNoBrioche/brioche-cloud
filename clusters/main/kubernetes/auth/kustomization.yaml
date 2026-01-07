@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - lldap/ks.yaml
   - authelia/ks.yaml
-  # - authentik/ks.yaml
+  - authentik/ks.yaml
