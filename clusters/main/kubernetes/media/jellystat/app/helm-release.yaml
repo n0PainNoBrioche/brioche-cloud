@@ -42,11 +42,6 @@ spec:
         main:
           enabled: true
           ingressClassName: internal
-          annotations:
-            nginx.ingress.kubernetes.io/auth-method: 'GET'
-            nginx.ingress.kubernetes.io/auth-url: 'http://authelia.authelia.svc.cluster.local:9091/api/verify'
-            nginx.ingress.kubernetes.io/auth-signin: 'https://auth.${DOMAIN_0}?rm=$request_method'
-            nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
           integrations:
             traefik:
               enabled: false
@@ -58,6 +53,13 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
+      nginx:
+        enabled: true
+        auth:
+          type: "authentik"
+          internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+          externalHost: "authentik.${DOMAIN_0}"
+          responseHeaders: []
       cnpg:
         main:
           cluster:
