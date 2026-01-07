@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: authentik
+  namespace: authentik
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: authentik
+      version: 33.35.10
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  timeout: 5m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
+ingress:
+  main:
+    enabled: true
+    hosts:
+      - host: authentik.${DOMAIN_0}
+      - host: "*.${DOMAIN_0}"
+        paths:
+          - path: /outpost.goauthentik.io
+            pathType: Prefix
+    integrations:
+      traefik:
+        enabled: true
+      certManager:
+        enabled: true
+        certificateIssuer: domain-0-le-prod
+
+authentik:
+  credentials:
+    email: $AUTHENTIK_ADMIN_EMAIL
+    password: $AUTHENTIK_ADMIN_PASSWORD
