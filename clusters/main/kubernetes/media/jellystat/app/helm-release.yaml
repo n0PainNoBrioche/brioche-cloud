@@ -48,18 +48,18 @@ spec:
             certManager:
               enabled: true
               certificateIssuer: domain-0-le-prod
+            nginx:
+              enabled: true
+              auth:
+                type: "authentik"
+                internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+                externalHost: "authentik.${DOMAIN_0}"
+                responseHeaders: []
           hosts:
             - host: stat.${DOMAIN_0}
               paths:
                 - path: /
                   pathType: Prefix
-      nginx:
-        enabled: true
-        auth:
-          type: "authentik"
-          internalHost: "authentik-http.authentik.svc.cluster.local:10230"
-          externalHost: "authentik.${DOMAIN_0}"
-          responseHeaders: []
       cnpg:
         main:
           cluster:
