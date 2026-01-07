@@ -27,23 +27,24 @@ spec:
   uninstall:
     keepHistory: false
 
-ingress:
-  main:
-    enabled: true
-    hosts:
-      - host: authentik.${DOMAIN_0}
-      - host: "*.${DOMAIN_0}"
-        paths:
-          - path: /outpost.goauthentik.io
-            pathType: Prefix
-    integrations:
-      traefik:
+  values:
+    ingress:
+      main:
         enabled: true
-      certManager:
-        enabled: true
-        certificateIssuer: domain-0-le-prod
+        hosts:
+          - host: authentik.${DOMAIN_0}
+          - host: "*.${DOMAIN_0}"
+            paths:
+              - path: /outpost.goauthentik.io
+                pathType: Prefix
+        integrations:
+          traefik:
+            enabled: true
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
 
-authentik:
-  credentials:
-    email: $AUTHENTIK_ADMIN_EMAIL
-    password: $AUTHENTIK_ADMIN_PASSWORD
+    authentik:
+      credentials:
+        email: $AUTHENTIK_ADMIN_EMAIL
+        password: $AUTHENTIK_ADMIN_PASSWORD
