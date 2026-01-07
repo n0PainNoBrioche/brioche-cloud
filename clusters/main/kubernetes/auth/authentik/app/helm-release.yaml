@@ -28,6 +28,14 @@ spec:
     keepHistory: false
 
   values:
+    credentials:
+      minio:
+          type: s3
+          url: "${S3_URL_MINIO}"
+          bucket: "${S3_BUCKET}-authelia"
+          accessKey: "${S3_ACCESS_KEY}"
+          secretKey: "${S3_SECRET_KEY}"
+          encrKey: "${S3_ENCRYPTION_KEY}"
     ingress:
       main:
         enabled: true
@@ -44,6 +52,23 @@ spec:
             paths:
               - path: /outpost.goauthentik.io
                 pathType: Prefix
+    cnpg:
+      main:
+        cluster:
+          singleNode: true
+          instances: 1
+        backups:
+          enabled: true
+          credentials: minio
+          scheduledBackups:
+            - name: daily-backup
+              schedule: "0 5 0 * * *"
+              backupOwnerReference: self
+              immediate: true
+              suspend: false
+        recovery:
+            method: object_store
+            credentials: minio
         
 
     authentik:
