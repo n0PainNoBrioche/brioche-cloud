@@ -177,36 +177,6 @@ spec:
               id_token:
                 ["email", "email_verified", "alt_emails", "preferred_username", "name"]
           clients:
-            - client_id: ${OIDC_JELLYFIN_CLIENT_ID}
-              client_name: 'Jellyfin'
-              client_secret: ${OIDC_JELLYFIN_CLIENT_SECRET}
-              public: false
-              authorization_policy: 'one_factor'
-              require_pkce: true
-              pkce_challenge_method: 'S256'
-              redirect_uris:
-                - 'https://stream.${DOMAIN_0}/sso/OID/redirect/authelia'
-              scopes:
-                - 'openid'
-                - 'profile'
-                - 'groups'
-              userinfo_signed_response_alg: 'none'
-              token_endpoint_auth_method: 'client_secret_post'
-
-            - client_id: ${OIDC_AI_CLIENT_ID}
-              client_name: 'Open WebUI'
-              client_secret: ${OIDC_AI_CLIENT_SECRET}
-              public: false
-              authorization_policy: "one_factor"
-              redirect_uris:
-                - https://chat.${DOMAIN_0}/oauth/oidc/callback
-              scopes:
-                - 'openid'
-                - 'profile'
-                - 'groups'
-                - 'email'
-              userinfo_signed_response_alg: 'none'
-
             - client_id: ${OIDC_ROMM_CLIENT_ID}
               client_name: 'RomM'
               client_secret: ${OIDC_ROMM_CLIENT_SECRET}
@@ -217,20 +187,6 @@ spec:
               redirect_uris:
                 - https://games.${DOMAIN_0}/api/oauth/openid
               claims_policy: "with_email"
-              scopes:
-                - 'openid'
-                - 'profile'
-                - 'email'
-              userinfo_signed_response_alg: 'none'
-              token_endpoint_auth_method: 'client_secret_basic'
-
-            - client_id: ${OIDC_XO_CLIENT_ID}
-              client_name: 'xen-orchestra'
-              client_secret: ${OIDC_XO_CLIENT_SECRET}
-              public: false
-              authorization_policy: "one_factor"
-              redirect_uris:
-                - https://xo.${DOMAIN_0}/signin/oidc/callback
               scopes:
                 - 'openid'
                 - 'profile'
