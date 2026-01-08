@@ -51,7 +51,7 @@ spec:
             enabled: true
             certificateIssuer: domain-0-le-prod
         hosts:
-          - host: authentik.${DOMAIN_0}
+          - host: portal.${DOMAIN_0}
           - host: "*.${DOMAIN_0}"
             paths:
               - path: /outpost.goauthentik.io
