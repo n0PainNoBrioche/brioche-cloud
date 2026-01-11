@@ -44,7 +44,7 @@ spec:
                   OIDC_CLIENT_ID: ${OIDC_ROMM_CLIENT_ID}
                   OIDC_CLIENT_SECRET: ${OIDC_ROMM_CLIENT_SECRET}
                   OIDC_REDIRECT_URI: "https://games.${DOMAIN_0}/api/oauth/openid"
-                  OIDC_SERVER_APPLICATION_URL: "https://portal.${DOMAIN_0}"
+                  OIDC_SERVER_APPLICATION_URL: "https://portal.${DOMAIN_0}/application/o/romm"
       credentials:
         minio:
           type: s3
