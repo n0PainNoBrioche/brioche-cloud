@@ -40,11 +40,11 @@ spec:
                   IGDB_CLIENT_ID: ${IGDB_CLIENT_ID}
                   IGDB_CLIENT_SECRET: ${IGDB_CLIENT_SECRET}
                   OIDC_ENABLED: "true"
-                  OIDC_PROVIDER: "authelia"
+                  OIDC_PROVIDER: "authentik"
                   OIDC_CLIENT_ID: ${OIDC_ROMM_CLIENT_ID}
-                  OIDC_CLIENT_SECRET: ${OIDC_ROMM_CLIENT_SECRET_INSECURE}
+                  OIDC_CLIENT_SECRET: ${OIDC_ROMM_CLIENT_SECRET}
                   OIDC_REDIRECT_URI: "https://games.${DOMAIN_0}/api/oauth/openid"
-                  OIDC_SERVER_APPLICATION_URL: "https://auth.${DOMAIN_0}"
+                  OIDC_SERVER_APPLICATION_URL: "https://portal.${DOMAIN_0}"
       credentials:
         minio:
           type: s3
@@ -63,6 +63,13 @@ spec:
             certManager:
               enabled: true
               certificateIssuer: domain-0-le-prod
+            nginx:
+              enabled: true
+              auth:
+                type: "authentik"
+                internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+                externalHost: "portal.${DOMAIN_0}"
+                responseHeaders: []
           hosts:
             - host: games.${DOMAIN_0}
               paths:

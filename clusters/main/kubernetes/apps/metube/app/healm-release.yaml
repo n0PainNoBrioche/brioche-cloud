@@ -21,8 +21,17 @@ spec:
         enabled: true
         ingressClassName: internal
         integrations:
+          traefik:
+            enabled: false
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: "authentik"
+              internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+              externalHost: "portal.${DOMAIN_0}"
+              responseHeaders: []
         hosts:
           - host: metube.${DOMAIN_0}

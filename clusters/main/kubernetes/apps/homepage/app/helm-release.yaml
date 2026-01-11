@@ -39,17 +39,19 @@ spec:
         main:
           enabled: true
           ingressClassName: external
-          annotations:
-            nginx.ingress.kubernetes.io/auth-method: 'GET'
-            nginx.ingress.kubernetes.io/auth-url: 'http://authelia.authelia.svc.cluster.local:9091/api/verify'
-            nginx.ingress.kubernetes.io/auth-signin: 'https://auth.${DOMAIN_0}?rm=$request_method'
-            nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
           integrations:
             traefik:
               enabled: false
             certManager:
               enabled: true
               certificateIssuer: domain-0-le-prod
+            nginx:
+              enabled: true
+              auth:
+                type: "authentik"
+                internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+                externalHost: "portal.${DOMAIN_0}"
+                responseHeaders: []
           hosts:
             - host: home.${DOMAIN_0}
               paths:
@@ -66,17 +68,19 @@ spec:
               paths:
               - path: /
                 pathType: Prefix
-            annotations:
-              nginx.ingress.kubernetes.io/auth-method: 'GET'
-              nginx.ingress.kubernetes.io/auth-url: 'http://authelia.authelia.svc.cluster.local:9091/api/verify'
-              nginx.ingress.kubernetes.io/auth-signin: 'https://auth.${DOMAIN_0}?rm=$request_method'
-              nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
             integrations:
               certManager:
                 certificateIssuer: domain-0-le-prod
                 enabled: true
               traefik:
                 enabled: false
+              nginx:
+                enabled: true
+                auth:
+                  type: "authentik"
+                  internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+                  externalHost: "portal.${DOMAIN_0}"
+                  responseHeaders: []
       persistence:
         config:
           volsync:
