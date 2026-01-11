@@ -102,12 +102,14 @@ spec:
       credentials:
         email: ${AUTHENTIK_ADMIN_EMAIL}
         password: ${AUTHENTIK_ADMIN_PASSWORD}
-      email:
-        host: ${SMTP_HOST}
-        port: ${SMTP_PORT}
-        username: ${SMTP_USER}
-        password: ${SMTP_PASSWORD}
-        use_tls: true
-        use_ssl: false
-        timeout: 10
-        from: ${SMTP_USER}
+
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                AUTHENTIK_EMAIL__HOST: ${SMTP_HOST}
+                AUTHENTIK_EMAIL__USERNAME: ${SMTP_USER}
+                AUTHENTIK_EMAIL__PASSWORD: "${SMTP_PASSWORD}"
+                AUTHENTIK_EMAIL__FROM: "${SMTP_USER}"
