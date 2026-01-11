@@ -109,11 +109,11 @@ spec:
           containers:
             main:
               env:
-                AUTHENTIK_EMAIL__HOST: "${SMTP_HOST}"
-                AUTHENTIK_EMAIL__PORT: "${SMTP_PORT}"
-                AUTHENTIK_EMAIL__USERNAME: "${SMTP_USER}"
-                AUTHENTIK_EMAIL__PASSWORD: "${SMTP_PASSWORD}"
-                AUTHENTIK_EMAIL__USE_TLS: "true"
-                AUTHENTIK_EMAIL__USE_SSL: "false"
-                AUTHENTIK_EMAIL__TIMEOUT: "10"
-                AUTHENTIK_EMAIL__FROM: "${SMTP_USER}"
+                AUTHENTIK_EMAIL__HOST: ${SMTP_HOST}
+                AUTHENTIK_EMAIL__PORT: ${SMTP_PORT}
+                AUTHENTIK_EMAIL__USERNAME: ${SMTP_USER}
+                AUTHENTIK_EMAIL__PASSWORD: ${SMTP_PASSWORD}
+                AUTHENTIK_EMAIL__USE_TLS: true
+                AUTHENTIK_EMAIL__USE_SSL: false
+                AUTHENTIK_EMAIL__TIMEOUT: 10
+                AUTHENTIK_EMAIL__FROM: ${SMTP_USER}
