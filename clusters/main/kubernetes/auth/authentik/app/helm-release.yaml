@@ -56,6 +56,30 @@ spec:
             paths:
               - path: /outpost.goauthentik.io
                 pathType: Prefix
+    addons:
+        codeserver:
+          enabled: true
+          ingress:
+            enabled: true
+            ingressClassName: internal
+            hosts:
+            - host: code-portal.${DOMAIN_0}
+              paths:
+              - path: /
+                pathType: Prefix
+            integrations:
+              certManager:
+                certificateIssuer: domain-0-le-prod
+                enabled: true
+              traefik:
+                enabled: false
+              nginx:
+                enabled: true
+                auth:
+                  type: "authentik"
+                  internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+                  externalHost: "portal.${DOMAIN_0}"
+                  responseHeaders: []
     cnpg:
       main:
         cluster:
