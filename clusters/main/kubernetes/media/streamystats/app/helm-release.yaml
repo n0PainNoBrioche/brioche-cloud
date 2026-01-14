@@ -1,0 +1,165 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: streamystats
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 15.29.54
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+
+  # ---------------------------
+  # Pod principal : NextJS + AIO
+  # ---------------------------
+  values:
+    service:
+      main:
+        ports:
+          nextjs:
+            enabled: true
+            protocol: http
+            port: 3000
+            targetPort: 3000
+          aio:
+            enabled: true
+            protocol: http
+            port: 5000
+            targetPort: 5000
+
+    workload:
+      main:
+        podSpec:
+          containers:
+            nextjs:
+              image:
+                repository: ghcr.io/n0painnobrioche/streamystats-nextjs
+                tag: latest
+                pullPolicy: IfNotPresent
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 250m
+                  memory: 256Mi
+              volumeMounts:
+                - name: nextjs-data
+                  mountPath: /app/data
+            aio:
+              image:
+                repository: ghcr.io/n0painnobrioche/streamystats-aio
+                tag: latest
+                pullPolicy: IfNotPresent
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+                limits:
+                  cpu: 500m
+                  memory: 512Mi
+              volumeMounts:
+                - name: aio-data
+                  mountPath: /app/data
+          volumes:
+            - name: nextjs-data
+              persistentVolumeClaim:
+                claimName: nextjs-pvc
+            - name: aio-data
+              persistentVolumeClaim:
+                claimName: aio-pvc
+
+    persistence:
+      enabled: true
+      size: 2Gi
+      storageClass: longhorn   # adapte selon ton cluster
+      accessModes:
+        - ReadWriteOnce
+
+    securityContext:
+      container:
+        PUID: 0
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: false
+      pod:
+        fsGroup: 0
+
+    # ---------------------------
+    # Jobs Kubernetes
+    # ---------------------------
+    jobs:
+      jobServer:
+        enabled: true
+        schedule: "@every 5m"  # exécution périodique
+        template:
+          spec:
+            containers:
+              - name: job-server
+                image: ghcr.io/n0painnobrioche/streamystats-job-server:latest
+                resources:
+                  requests:
+                    cpu: 50m
+                    memory: 128Mi
+                  limits:
+                    cpu: 250m
+                    memory: 256Mi
+            restartPolicy: OnFailure
+
+      migrate:
+        enabled: true
+        template:
+          spec:
+            containers:
+              - name: migrate
+                image: ghcr.io/n0painnobrioche/streamystats-migrate:latest
+                resources:
+                  requests:
+                    cpu: 50m
+                    memory: 128Mi
+                  limits:
+                    cpu: 250m
+                    memory: 256Mi
+            restartPolicy: OnFailure
+
+    # ---------------------------
+    # Ingress NGINX + Authentik + Cert-Manager
+    # ---------------------------
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        integrations:
+          traefik:
+            enabled: false
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: "authentik"
+              internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+              externalHost: "portal.${DOMAIN_0}"
+              responseHeaders: []
+        hosts:
+          - host: streamystats.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
