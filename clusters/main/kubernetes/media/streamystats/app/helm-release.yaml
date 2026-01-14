@@ -131,14 +131,7 @@ spec:
                   path: /api/health
                   port: 3000
                 startup:
-                  enabled: true
-                  type: http
-                  path: /api/health
-                  port: 3000
-                  initialDelaySeconds: 10
-                  periodSeconds: 5
-                  timeoutSeconds: 2
-                  failureThreshold: 30
+                  enabled: false
       
       # Job Server
       job-server:
@@ -185,14 +178,7 @@ spec:
                   path: /health
                   port: 3005
                 startup:
-                  enabled: true
-                  type: http
-                  path: /health
-                  port: 3005
-                  initialDelaySeconds: 10
-                  periodSeconds: 5
-                  timeoutSeconds: 2
-                  failureThreshold: 30
+                  enabled: false
     
     # Configuration des images
     image:
