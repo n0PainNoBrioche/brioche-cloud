@@ -12,8 +12,6 @@ fisher install nickeb96/puffer-fish
 fisher install PatrickF1/fzf.fish
 "
 
-kubectl krew install pv-mounter
-
 # Create/update virtual environment
 if ! grep -q "venv /workspaces/" .venv/pyvenv.cfg; then
     rm -rf .venv
