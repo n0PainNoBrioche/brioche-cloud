@@ -23,105 +23,40 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-
   values:
-    # ---------------------------
-    # Pod principal : NextJS + AIO
-    # ---------------------------
+    # Variables d'environnement globales
+    global:
+      env:
+        SESSION_SECRET: "changeme_session_secret_64chars"
+        VERSION: "latest"
+    
+    # Configuration de la base de données VectorChord/PostgreSQL
+    cnpg:
+      main:
+        enabled: true
+        user: postgres
+        database: streamystats
+        type: postgresql
+    
+    # Configuration du service principal (Next.js)
     service:
       main:
         ports:
-          nextjs:
+          main:
             enabled: true
             protocol: http
             port: 3000
             targetPort: 3000
-          aio:
+      job-server:
+        enabled: true
+        ports:
+          job-server:
             enabled: true
             protocol: http
-            port: 5000
-            targetPort: 5000
-
-    workload:
-      main:
-        resources:
-          requests:
-            cpu: 100m
-            memory: 256Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
-        containers:
-          nextjs:
-            image:
-              repository: ghcr.io/n0painnobrioche/streamystats-nextjs
-              tag: latest
-              pullPolicy: IfNotPresent
-          aio:
-            image:
-              repository: ghcr.io/n0painnobrioche/streamystats-aio
-              tag: latest
-              pullPolicy: IfNotPresent
-
-        # ---------------------------
-        # Jobs Kubernetes
-        # ---------------------------
-        jobs:
-          jobServer:
-            enabled: true
-            schedule: "@every 5m"
-            resources:
-              requests:
-                cpu: 50m
-                memory: 128Mi
-              limits:
-                cpu: 250m
-                memory: 256Mi
-            image:
-              repository: ghcr.io/n0painnobrioche/streamystats-job-server
-              tag: latest
-              pullPolicy: IfNotPresent
-
-          migrate:
-            enabled: true
-            resources:
-              requests:
-                cpu: 50m
-                memory: 128Mi
-              limits:
-                cpu: 250m
-                memory: 256Mi
-            image:
-              repository: ghcr.io/n0painnobrioche/streamystats-migrate
-              tag: latest
-              pullPolicy: IfNotPresent
-
-    # ---------------------------
-    # Persistence gérée par app-template
-    # ---------------------------
-    persistence:
-      enabled: true
-      size: 2Gi
-      storageClass: longhorn
-      accessModes:
-        - ReadWriteOnce
-
-    # ---------------------------
-    # Security
-    # ---------------------------
-    securityContext:
-      container:
-        PUID: 0
-        runAsNonRoot: false
-        runAsUser: 0
-        runAsGroup: 0
-        readOnlyRootFilesystem: false
-      pod:
-        fsGroup: 0
-
-    # ---------------------------
-    # Ingress NGINX + Authentik + Cert-Manager
-    # ---------------------------
+            port: 3005
+            targetPort: 3005
+    
+    # Configuration de l'ingress
     ingress:
       main:
         enabled: true
@@ -144,3 +79,137 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+    
+    # Configuration des workloads
+    workload:
+      # Job de migration (s'exécute une seule fois)
+      migrate:
+        enabled: true
+        type: Job
+        podSpec:
+          restartPolicy: Never
+          containers:
+            migrate:
+              enabled: true
+              primary: true
+              imageSelector: migrateImage
+              env:
+                DATABASE_URL:
+                  secretKeyRef:
+                    name: cnpg-main-urls
+                    key: std
+      
+      # Application Next.js principale
+      main:
+        enabled: true
+        type: Deployment
+        replicas: 1
+        podSpec:
+          containers:
+            main:
+              enabled: true
+              primary: true
+              imageSelector: image
+              env:
+                NODE_ENV: "production"
+                DATABASE_URL:
+                  secretKeyRef:
+                    name: cnpg-main-urls
+                    key: std
+                JOB_SERVER_URL: "http://{{ .Release.Name }}-job-server:3005"
+                HOSTNAME: "0.0.0.0"
+                SESSION_SECRET: "{{ .Values.global.env.SESSION_SECRET }}"
+              probes:
+                liveness:
+                  enabled: true
+                  type: http
+                  path: /api/health
+                  port: 3000
+                readiness:
+                  enabled: true
+                  type: http
+                  path: /api/health
+                  port: 3000
+                startup:
+                  enabled: true
+                  type: http
+                  path: /api/health
+                  port: 3000
+      
+      # Job Server
+      job-server:
+        enabled: true
+        type: Deployment
+        replicas: 1
+        podSpec:
+          containers:
+            job-server:
+              enabled: true
+              primary: true
+              imageSelector: jobServerImage
+              env:
+                NODE_ENV: "production"
+                DATABASE_URL:
+                  secretKeyRef:
+                    name: cnpg-main-urls
+                    key: std
+                PORT: "3005"
+                HOST: "0.0.0.0"
+                # Intervalles de polling et cron
+                SESSION_POLL_INTERVAL_MS: "5000"
+                CRON_ACTIVITY_SYNC: "*/1 * * * *"
+                CRON_RECENT_ITEMS_SYNC: "*/1 * * * *"
+                CRON_USER_SYNC: "*/1 * * * *"
+                CRON_PEOPLE_SYNC: "*/15 * * * *"
+                CRON_EMBEDDINGS_SYNC: "*/15 * * * *"
+                CRON_GEOLOCATION_SYNC: "*/5 * * * *"
+                CRON_FINGERPRINT_SYNC: "0 4 * * *"
+                CRON_JOB_CLEANUP: "*/1 * * * *"
+                CRON_OLD_JOB_CLEANUP: "0 3 * * *"
+                CRON_FULL_SYNC: "0 2 * * *"
+                CRON_DELETED_ITEMS_CLEANUP: "0 * * * *"
+                SKIP_STARTUP_FULL_SYNC: "false"
+              probes:
+                liveness:
+                  enabled: true
+                  type: http
+                  path: /health
+                  port: 3005
+                readiness:
+                  enabled: true
+                  type: http
+                  path: /health
+                  port: 3005
+    
+    # Configuration des images
+    image:
+      repository: fredrikburmester/streamystats-v2-nextjs
+      tag: "{{ .Values.global.env.VERSION }}"
+      pullPolicy: IfNotPresent
+    
+    migrateImage:
+      repository: fredrikburmester/streamystats-v2-migrate
+      tag: "{{ .Values.global.env.VERSION }}"
+      pullPolicy: IfNotPresent
+    
+    jobServerImage:
+      repository: fredrikburmester/streamystats-v2-job-server
+      tag: "{{ .Values.global.env.VERSION }}"
+      pullPolicy: IfNotPresent
+    
+    # Configuration de sécurité
+    securityContext:
+      container:
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: false
+      pod:
+        fsGroup: 0
+    
+    # Persistence (si nécessaire pour des données locales)
+    persistence:
+      config:
+        enabled: false
+        type: emptyDir
+        mountPath: /config
