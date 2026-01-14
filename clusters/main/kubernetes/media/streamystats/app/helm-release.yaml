@@ -93,6 +93,13 @@ spec:
               enabled: true
               primary: true
               imageSelector: migrateImage
+              probes:
+                liveness:
+                  enabled: false
+                readiness:
+                  enabled: false
+                startup:
+                  enabled: false
               env:
                 DATABASE_URL:
                   secretKeyRef:
