@@ -28,7 +28,6 @@ spec:
     global:
       env:
         SESSION_SECRET: "changeme_session_secret_64chars"
-        VERSION: "latest"
     
     # Configuration de la base de données VectorChord/PostgreSQL
     cnpg:
@@ -190,17 +189,17 @@ spec:
     # Configuration des images
     image:
       repository: fredrikburmester/streamystats-v2-nextjs
-      tag: "{{ .Values.global.env.VERSION }}"
+      tag: latest
       pullPolicy: IfNotPresent
     
     migrateImage:
       repository: fredrikburmester/streamystats-v2-migrate
-      tag: "{{ .Values.global.env.VERSION }}"
+      tag: latest
       pullPolicy: IfNotPresent
     
     jobServerImage:
       repository: fredrikburmester/streamystats-v2-job-server
-      tag: "{{ .Values.global.env.VERSION }}"
+      tag: latest
       pullPolicy: IfNotPresent
     
     # Configuration de sécurité
