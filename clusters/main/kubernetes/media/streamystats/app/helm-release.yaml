@@ -36,6 +36,7 @@ spec:
         user: postgres
         database: streamystats
         type: postgres
+        instances: 1
     
     # Configuration du service principal (Next.js)
     service:
