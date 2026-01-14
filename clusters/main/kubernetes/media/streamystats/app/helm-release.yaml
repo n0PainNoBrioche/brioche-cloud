@@ -24,10 +24,10 @@ spec:
     remediation:
       retries: 3
 
-  # ---------------------------
-  # Pod principal : NextJS + AIO
-  # ---------------------------
   values:
+    # ---------------------------
+    # Pod principal : NextJS + AIO
+    # ---------------------------
     service:
       main:
         ports:
@@ -84,13 +84,56 @@ spec:
               persistentVolumeClaim:
                 claimName: aio-pvc
 
+        # ---------------------------
+        # Jobs Kubernetes
+        # ---------------------------
+        jobs:
+          jobServer:
+            enabled: true
+            schedule: "@every 5m"
+            template:
+              spec:
+                containers:
+                  - name: job-server
+                    image: ghcr.io/n0painnobrioche/streamystats-job-server:latest
+                    resources:
+                      requests:
+                        cpu: 50m
+                        memory: 128Mi
+                      limits:
+                        cpu: 250m
+                        memory: 256Mi
+                restartPolicy: OnFailure
+
+          migrate:
+            enabled: true
+            template:
+              spec:
+                containers:
+                  - name: migrate
+                    image: ghcr.io/n0painnobrioche/streamystats-migrate:latest
+                    resources:
+                      requests:
+                        cpu: 50m
+                        memory: 128Mi
+                      limits:
+                        cpu: 250m
+                        memory: 256Mi
+                restartPolicy: OnFailure
+
+    # ---------------------------
+    # Persistence
+    # ---------------------------
     persistence:
       enabled: true
       size: 2Gi
-      storageClass: longhorn   # adapte selon ton cluster
+      storageClass: longhorn
       accessModes:
         - ReadWriteOnce
 
+    # ---------------------------
+    # Security
+    # ---------------------------
     securityContext:
       container:
         PUID: 0
@@ -100,43 +143,6 @@ spec:
         readOnlyRootFilesystem: false
       pod:
         fsGroup: 0
-
-    # ---------------------------
-    # Jobs Kubernetes
-    # ---------------------------
-    jobs:
-      jobServer:
-        enabled: true
-        schedule: "@every 5m"  # exécution périodique
-        template:
-          spec:
-            containers:
-              - name: job-server
-                image: ghcr.io/n0painnobrioche/streamystats-job-server:latest
-                resources:
-                  requests:
-                    cpu: 50m
-                    memory: 128Mi
-                  limits:
-                    cpu: 250m
-                    memory: 256Mi
-            restartPolicy: OnFailure
-
-      migrate:
-        enabled: true
-        template:
-          spec:
-            containers:
-              - name: migrate
-                image: ghcr.io/n0painnobrioche/streamystats-migrate:latest
-                resources:
-                  requests:
-                    cpu: 50m
-                    memory: 128Mi
-                  limits:
-                    cpu: 250m
-                    memory: 256Mi
-            restartPolicy: OnFailure
 
     # ---------------------------
     # Ingress NGINX + Authentik + Cert-Manager
@@ -159,7 +165,7 @@ spec:
               externalHost: "portal.${DOMAIN_0}"
               responseHeaders: []
         hosts:
-          - host: streamystats.${DOMAIN_0}
+          - host: art.${DOMAIN_0}
             paths:
               - path: /
                 pathType: Prefix
