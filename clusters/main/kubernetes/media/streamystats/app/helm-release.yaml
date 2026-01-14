@@ -36,7 +36,9 @@ spec:
         user: postgres
         database: streamystats
         type: postgres
-        instances: 1
+        cluster:
+          singleNode: true
+          instances: 1
     
     # Configuration du service principal (Next.js)
     service:
@@ -123,7 +125,7 @@ spec:
                   secretKeyRef:
                     name: cnpg-main-urls
                     key: std
-                JOB_SERVER_URL: "http://{{ .Release.Name }}-job-server:3005"
+                JOB_SERVER_URL: "http://streamystats-app-template-job-server.media.svc.cluster.local:3005"
                 HOSTNAME: "0.0.0.0"
                 SESSION_SECRET: "{{ .Values.global.env.SESSION_SECRET }}"
               probes:
