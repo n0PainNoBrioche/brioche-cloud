@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: streamystats
-  namespace: media
+  namespace: streamystats
 spec:
   interval: 5m
   chart:
@@ -44,45 +44,24 @@ spec:
 
     workload:
       main:
-        podSpec:
-          containers:
-            nextjs:
-              image:
-                repository: ghcr.io/n0painnobrioche/streamystats-nextjs
-                tag: latest
-                pullPolicy: IfNotPresent
-              resources:
-                requests:
-                  cpu: 50m
-                  memory: 128Mi
-                limits:
-                  cpu: 250m
-                  memory: 256Mi
-              volumeMounts:
-                - name: nextjs-data
-                  mountPath: /app/data
-            aio:
-              image:
-                repository: ghcr.io/n0painnobrioche/streamystats-aio
-                tag: latest
-                pullPolicy: IfNotPresent
-              resources:
-                requests:
-                  cpu: 100m
-                  memory: 256Mi
-                limits:
-                  cpu: 500m
-                  memory: 512Mi
-              volumeMounts:
-                - name: aio-data
-                  mountPath: /app/data
-          volumes:
-            - name: nextjs-data
-              persistentVolumeClaim:
-                claimName: nextjs-pvc
-            - name: aio-data
-              persistentVolumeClaim:
-                claimName: aio-pvc
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        containers:
+          nextjs:
+            image:
+              repository: ghcr.io/n0painnobrioche/streamystats-nextjs
+              tag: latest
+              pullPolicy: IfNotPresent
+          aio:
+            image:
+              repository: ghcr.io/n0painnobrioche/streamystats-aio
+              tag: latest
+              pullPolicy: IfNotPresent
 
         # ---------------------------
         # Jobs Kubernetes
@@ -91,38 +70,34 @@ spec:
           jobServer:
             enabled: true
             schedule: "@every 5m"
-            template:
-              spec:
-                containers:
-                  - name: job-server
-                    image: ghcr.io/n0painnobrioche/streamystats-job-server:latest
-                    resources:
-                      requests:
-                        cpu: 50m
-                        memory: 128Mi
-                      limits:
-                        cpu: 250m
-                        memory: 256Mi
-                restartPolicy: OnFailure
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 250m
+                memory: 256Mi
+            image:
+              repository: ghcr.io/n0painnobrioche/streamystats-job-server
+              tag: latest
+              pullPolicy: IfNotPresent
 
           migrate:
             enabled: true
-            template:
-              spec:
-                containers:
-                  - name: migrate
-                    image: ghcr.io/n0painnobrioche/streamystats-migrate:latest
-                    resources:
-                      requests:
-                        cpu: 50m
-                        memory: 128Mi
-                      limits:
-                        cpu: 250m
-                        memory: 256Mi
-                restartPolicy: OnFailure
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 250m
+                memory: 256Mi
+            image:
+              repository: ghcr.io/n0painnobrioche/streamystats-migrate
+              tag: latest
+              pullPolicy: IfNotPresent
 
     # ---------------------------
-    # Persistence
+    # Persistence gérée par app-template
     # ---------------------------
     persistence:
       enabled: true
@@ -165,7 +140,7 @@ spec:
               externalHost: "portal.${DOMAIN_0}"
               responseHeaders: []
         hosts:
-          - host: art.${DOMAIN_0}
+          - host: streamystats.${DOMAIN_0}
             paths:
               - path: /
                 pathType: Prefix
