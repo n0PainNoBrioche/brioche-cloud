@@ -27,7 +27,7 @@ spec:
     # Variables d'environnement globales
     global:
       env:
-        SESSION_SECRET: "changeme_session_secret_64chars"
+        SESSION_SECRET: "${STREAMYSTATS_SESSION_SECRET}"
     
     # Configuration de la base de données VectorChord/PostgreSQL
     cnpg:
