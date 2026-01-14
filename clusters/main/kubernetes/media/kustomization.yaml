@@ -9,5 +9,5 @@ resources:
   - sonarr/ks.yaml
   - jellyfin/ks.yaml
   - jellyseerr/ks.yaml
-  - jellystat/ks.yaml
+  # - jellystat/ks.yaml
   - streamystats/ks.yaml
