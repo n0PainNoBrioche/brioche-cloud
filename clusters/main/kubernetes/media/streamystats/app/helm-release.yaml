@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: streamystats
-  namespace: media
+  namespace: streamystats
 spec:
   interval: 5m
   chart:
@@ -135,6 +135,10 @@ spec:
                   type: http
                   path: /api/health
                   port: 3000
+                  initialDelaySeconds: 10
+                  periodSeconds: 5
+                  timeoutSeconds: 2
+                  failureThreshold: 30
       
       # Job Server
       job-server:
@@ -180,6 +184,15 @@ spec:
                   type: http
                   path: /health
                   port: 3005
+                startup:
+                  enabled: true
+                  type: http
+                  path: /health
+                  port: 3005
+                  initialDelaySeconds: 10
+                  periodSeconds: 5
+                  timeoutSeconds: 2
+                  failureThreshold: 30
     
     # Configuration des images
     image:
