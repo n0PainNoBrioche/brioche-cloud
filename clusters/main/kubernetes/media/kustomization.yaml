@@ -10,4 +10,4 @@ resources:
   - jellyfin/ks.yaml
   - jellyseerr/ks.yaml
   - jellystat/ks.yaml
-  - streamystats/ks.yaml
+  # - streamystats/ks.yaml
