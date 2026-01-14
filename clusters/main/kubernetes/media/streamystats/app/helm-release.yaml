@@ -63,7 +63,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external
+        ingressClassName: internal
         integrations:
           traefik:
             enabled: false
