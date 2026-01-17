@@ -50,17 +50,6 @@ spec:
                 - path: /
                   pathType: Prefix
       persistence:
-        config:
-          volsync:
-          - name: config
-            type: restic
-            credentials: minio
-            dest:
-              enabled: true
-            src:
-              enabled: true
-              trigger:
-                schedule: 10 1 * * *
         data:
           enabled: true
           type: nfs
