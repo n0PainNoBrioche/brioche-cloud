@@ -50,10 +50,15 @@ spec:
                 - path: /
                   pathType: Prefix
       persistence:
+        config:
+          enabled: true
+          type: nfs
+          path: ${AI_NFS_PATH}/config
+          server: ${NAS_IP}
         data:
           enabled: true
           type: nfs
-          path: ${AI_NFS_PATH}
+          path: ${AI_NFS_PATH}/data
           server: ${NAS_IP}
       workload:
         main:
