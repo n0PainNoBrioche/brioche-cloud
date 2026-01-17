@@ -16,3 +16,4 @@ resources:
   - immich/ks.yaml
   - home-assistant/ks.yaml
   - metube/ks.yaml
+  - outline/ks.yaml
