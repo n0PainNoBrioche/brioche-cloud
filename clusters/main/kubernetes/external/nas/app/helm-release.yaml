@@ -42,6 +42,9 @@ spec:
         main:
           enabled: true
           ingressClassName: internal
+          annotations:
+            nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+            nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           hosts:
           - host: nas.${DOMAIN_0}
             paths:
