@@ -47,11 +47,11 @@ spec:
               certificateIssuer: domain-0-le-prod
             nginx:
               enabled: true
-          #     auth:
-          #       type: "authentik"
-          #       internalHost: "authentik-http.authentik.svc.cluster.local:10230"
-          #       externalHost: "portal.${DOMAIN_0}"
-          #       responseHeaders: []
+              auth:
+                type: "authentik"
+                internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+                externalHost: "portal.${DOMAIN_0}"
+                responseHeaders: []
           hosts:
             - host: home.${DOMAIN_0}
               paths:
