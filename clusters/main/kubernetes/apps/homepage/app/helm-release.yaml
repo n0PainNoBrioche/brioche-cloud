@@ -52,7 +52,7 @@ spec:
           #       internalHost: "authentik-http.authentik.svc.cluster.local:10230"
           #       externalHost: "portal.${DOMAIN_0}"
           #       responseHeaders: []
-          # hosts:
+          hosts:
             - host: home.${DOMAIN_0}
               paths:
                 - path: /
