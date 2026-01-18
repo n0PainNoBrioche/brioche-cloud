@@ -52,6 +52,10 @@ spec:
             certificateIssuer: domain-0-le-prod
         hosts:
           - host: portal.${DOMAIN_0}
+          - host: "*.${DOMAIN_0}"
+            paths:
+              - path: /outpost.goauthentik.io
+                pathType: Prefix
     addons:
       codeserver:
         enabled: true
