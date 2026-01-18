@@ -75,7 +75,7 @@ spec:
             auth:
               type: "authentik"
               internalHost: "authentik-http.authentik.svc.cluster.local:10230"
-              externalHost: "stats.${DOMAIN_0}"
+              externalHost: "portal.${DOMAIN_0}"
               responseHeaders: []
         hosts:
           - host: stats.${DOMAIN_0}
