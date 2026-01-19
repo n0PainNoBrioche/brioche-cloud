@@ -70,6 +70,7 @@ spec:
             containers:
               main:
                 env:
+                  URL: "https://wiki1.${DOMAIN_0}"
                   DEFAULT_LANGUAGE: "fr_FR"
                   OIDC_CLIENT_ID: ${OIDC_OT_CLIENT_ID}
                   OIDC_CLIENT_SECRET: ${OIDC_OT_CLIENT_SECRET}
