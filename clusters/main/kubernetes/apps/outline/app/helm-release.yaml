@@ -84,19 +84,23 @@ spec:
                   # Critical database and Redis connections
                   DATABASE_URL:
                     secretKeyRef:
-                      name: outline-cnpg-main-urls
+                      expandObjectName: true
+                      name: cnpg-main-urls
                       key: std
                   REDIS_URL:
                     secretKeyRef:
-                      name: outline-rediscreds
+                      expandObjectName: true
+                      name: rediscreds
                       key: url
                   SECRET_KEY:
                     secretKeyRef:
-                      name: outline-secrets
+                      expandObjectName: true
+                      name: secrets
                       key: SECRET_KEY
                   UTILS_SECRET:
                     secretKeyRef:
-                      name: outline-secrets
+                      expandObjectName: true
+                      name: secrets
                       key: UTILS_SECRET
                   # OIDC_CLIENT_ID: ""
                   # OIDC_CLIENT_SECRET: ""
