@@ -64,26 +64,13 @@ spec:
           recovery:
             method: object_store
             credentials: minio
-      redis:
-        enabled: true
-        includeCommon: true
       workload:
         main:
           podSpec:
             containers:
               main:
                 env:
-                  FORCE_HTTPS: false
-                  PGSSLMODE: "disable"
-                  PORT: "10196"
-                  URL: "https://wiki1.${DOMAIN_0}"
-                  SLACK_MESSAGE_ACTIONS: true
-                  ENABLE_UPDATES: true
-                  WEB_CONCURRENCY: 1
-                  MAXIMUM_IMPORT_SIZE: 5120000
                   DEFAULT_LANGUAGE: "fr_FR"
-                  FILE_STORAGE: ""
-                  FILE_STORAGE_UPLOAD_MAX_SIZE: ""
                   # Critical database and Redis connections
                   DATABASE_URL:
                     secretKeyRef:
