@@ -71,27 +71,6 @@ spec:
               main:
                 env:
                   DEFAULT_LANGUAGE: "fr_FR"
-                  # Critical database and Redis connections
-                  DATABASE_URL:
-                    secretKeyRef:
-                      expandObjectName: true
-                      name: cnpg-main-urls
-                      key: std
-                  REDIS_URL:
-                    secretKeyRef:
-                      expandObjectName: true
-                      name: rediscreds
-                      key: url
-                  SECRET_KEY:
-                    secretKeyRef:
-                      expandObjectName: true
-                      name: secrets
-                      key: SECRET_KEY
-                  UTILS_SECRET:
-                    secretKeyRef:
-                      expandObjectName: true
-                      name: secrets
-                      key: UTILS_SECRET
                   # OIDC_CLIENT_ID: ""
                   # OIDC_CLIENT_SECRET: ""
                   # OIDC_AUTH_URI: ""
