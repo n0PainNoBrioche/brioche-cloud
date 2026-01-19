@@ -70,6 +70,10 @@ spec:
             containers:
               main:
                 env:
+                  DATABASE_URL:
+                    secretKeyRef:
+                      name: '{{ printf "%s-%s" .Release.Name "cnpg-main-urls" }}'
+                      key: url
                   # OIDC_CLIENT_ID: ""
                   # OIDC_CLIENT_SECRET: ""
                   # OIDC_AUTH_URI: ""
