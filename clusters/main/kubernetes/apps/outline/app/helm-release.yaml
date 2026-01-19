@@ -72,6 +72,7 @@ spec:
                 env:
                   DATABASE_URL:
                     secretKeyRef:
+                      expandObjectName: false
                       name: outline-cnpg-main-1
                       key: url
                   # OIDC_CLIENT_ID: ""
