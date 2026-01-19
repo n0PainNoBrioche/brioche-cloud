@@ -64,6 +64,9 @@ spec:
           recovery:
             method: object_store
             credentials: minio
+      redis:
+        enabled: true
+        includeCommon: true
       workload:
         main:
           podSpec:
