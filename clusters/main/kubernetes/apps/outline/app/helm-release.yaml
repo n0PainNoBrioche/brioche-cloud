@@ -78,7 +78,7 @@ spec:
                   ENABLE_UPDATES: true
                   WEB_CONCURRENCY: 1
                   MAXIMUM_IMPORT_SIZE: 5120000
-                  DEFAULT_LANGUAGE: "en_US"
+                  DEFAULT_LANGUAGE: "fr_FR"
                   FILE_STORAGE: ""
                   FILE_STORAGE_UPLOAD_MAX_SIZE: ""
                   # Critical database and Redis connections
