@@ -9,7 +9,7 @@ spec:
         spec:
             # renovate: registryUrl=https://charts.truechartsoci.org
             chart: jellyfin
-            version: 22.2.34
+            version: 22.3.2
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
