@@ -78,7 +78,7 @@ spec:
               externalHost: "portal.${DOMAIN_0}"
               responseHeaders: []
         hosts:
-          - host: streamystats.${DOMAIN_0}
+          - host: stats.${DOMAIN_0}
             paths:
               - path: /
                 pathType: Prefix
