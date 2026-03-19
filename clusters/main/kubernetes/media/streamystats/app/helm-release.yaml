@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 15.31.3
+      version: 15.29.54
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -78,37 +78,13 @@ spec:
               externalHost: "portal.${DOMAIN_0}"
               responseHeaders: []
         hosts:
-          - host: stats.${DOMAIN_0}
+          - host: streamystats.${DOMAIN_0}
             paths:
               - path: /
                 pathType: Prefix
     
     # Configuration des workloads
     workload:
-      # Job de migration (s'exécute une seule fois)
-      migrate:
-        enabled: true
-        type: Job
-        podSpec:
-          restartPolicy: Never
-          containers:
-            migrate:
-              enabled: true
-              primary: true
-              imageSelector: migrateImage
-              probes:
-                liveness:
-                  enabled: false
-                readiness:
-                  enabled: false
-                startup:
-                  enabled: false
-              env:
-                DATABASE_URL:
-                  secretKeyRef:
-                    name: cnpg-main-urls
-                    key: std
-      
       # Application Next.js principale
       main:
         enabled: true
@@ -143,7 +119,7 @@ spec:
                 startup:
                   enabled: false
       
-      # Job Server
+      # Job Server (avec migrations automatiques au démarrage)
       job-server:
         enabled: true
         type: Deployment
@@ -192,17 +168,12 @@ spec:
     
     # Configuration des images
     image:
-      repository: fredrikburmester/streamystats-v2-nextjs
-      tag: latest
-      pullPolicy: IfNotPresent
-    
-    migrateImage:
-      repository: fredrikburmester/streamystats-v2-migrate
+      repository: ghcr.io/fredrikburmester/streamystats-nextjs
       tag: latest
       pullPolicy: IfNotPresent
     
     jobServerImage:
-      repository: fredrikburmester/streamystats-v2-job-server
+      repository: ghcr.io/fredrikburmester/streamystats-job-server
       tag: latest
       pullPolicy: IfNotPresent
     
