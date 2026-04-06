@@ -80,12 +80,6 @@ spec:
         qbitportforward:
           enabled: false
       service:
-        main:
-          type: LoadBalancer
-          loadBalancerIP: ${QBITTORRENT_IP}
-          ports:
-            main:
-              port: 8080
         proxy:
           enabled: true
           ports:
