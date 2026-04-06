@@ -1,0 +1,195 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: streamystats
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 17.0.6
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  values:
+    # Variables d'environnement globales
+    global:
+      env:
+        SESSION_SECRET: "${STREAMYSTATS_SESSION_SECRET}"
+    
+    # Configuration de la base de données VectorChord/PostgreSQL
+    cnpg:
+      main:
+        enabled: true
+        user: postgres
+        database: streamystats
+        type: postgres
+        cluster:
+          singleNode: true
+          instances: 1
+    
+    # Configuration du service principal (Next.js)
+    service:
+      main:
+        ports:
+          main:
+            enabled: true
+            protocol: http
+            port: 3000
+            targetPort: 3000
+      job-server:
+        enabled: true
+        targetSelector: job-server
+        ports:
+          job-server:
+            enabled: true
+            protocol: http
+            port: 3005
+            targetPort: 3005
+    
+    # Configuration de l'ingress
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        integrations:
+          traefik:
+            enabled: false
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: "authentik"
+              internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+              externalHost: "portal.${DOMAIN_0}"
+              responseHeaders: []
+        hosts:
+          - host: stats.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+    
+    # Configuration des workloads
+    workload:
+      # Application Next.js principale
+      main:
+        enabled: true
+        type: Deployment
+        replicas: 1
+        podSpec:
+          containers:
+            main:
+              enabled: true
+              primary: true
+              imageSelector: image
+              env:
+                NODE_ENV: "production"
+                DATABASE_URL:
+                  secretKeyRef:
+                    name: cnpg-main-urls
+                    key: std
+                JOB_SERVER_URL: "http://streamystats-app-template-job-server.media.svc.cluster.local:3005"
+                HOSTNAME: "0.0.0.0"
+                SESSION_SECRET: "{{ .Values.global.env.SESSION_SECRET }}"
+              probes:
+                liveness:
+                  enabled: true
+                  type: http
+                  path: /api/health
+                  port: 3000
+                readiness:
+                  enabled: true
+                  type: http
+                  path: /api/health
+                  port: 3000
+                startup:
+                  enabled: false
+      
+      # Job Server (avec migrations automatiques au démarrage)
+      job-server:
+        enabled: true
+        type: Deployment
+        replicas: 1
+        podSpec:
+          containers:
+            job-server:
+              enabled: true
+              primary: true
+              imageSelector: jobServerImage
+              env:
+                NODE_ENV: "production"
+                DATABASE_URL:
+                  secretKeyRef:
+                    name: cnpg-main-urls
+                    key: std
+                PORT: "3005"
+                HOST: "0.0.0.0"
+                # Intervalles de polling et cron
+                SESSION_POLL_INTERVAL_MS: "5000"
+                CRON_ACTIVITY_SYNC: "*/1 * * * *"
+                CRON_RECENT_ITEMS_SYNC: "*/1 * * * *"
+                CRON_USER_SYNC: "*/1 * * * *"
+                CRON_PEOPLE_SYNC: "*/15 * * * *"
+                CRON_EMBEDDINGS_SYNC: "*/15 * * * *"
+                CRON_GEOLOCATION_SYNC: "*/5 * * * *"
+                CRON_FINGERPRINT_SYNC: "0 4 * * *"
+                CRON_JOB_CLEANUP: "*/1 * * * *"
+                CRON_OLD_JOB_CLEANUP: "0 3 * * *"
+                CRON_FULL_SYNC: "0 2 * * *"
+                CRON_DELETED_ITEMS_CLEANUP: "0 * * * *"
+                SKIP_STARTUP_FULL_SYNC: "false"
+              probes:
+                liveness:
+                  enabled: true
+                  type: http
+                  path: /health
+                  port: 3005
+                readiness:
+                  enabled: true
+                  type: http
+                  path: /health
+                  port: 3005
+                startup:
+                  enabled: false
+    
+    # Configuration des images
+    image:
+      repository: ghcr.io/fredrikburmester/streamystats-nextjs
+      tag: latest
+      pullPolicy: IfNotPresent
+    
+    jobServerImage:
+      repository: ghcr.io/fredrikburmester/streamystats-job-server
+      tag: latest
+      pullPolicy: IfNotPresent
+    
+    # Configuration de sécurité
+    securityContext:
+      container:
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: false
+      pod:
+        fsGroup: 0
+    
+    # Persistence (si nécessaire pour des données locales)
+    persistence:
+      config:
+        enabled: false
+        type: emptyDir
+        mountPath: /config

@@ -1,0 +1,37 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: metube
+  namespace: metube
+spec:
+  interval: 15m
+  timeout: 20m
+  chart:
+    spec:
+      chart: metube
+      version: 18.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  values:
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        integrations:
+          traefik:
+            enabled: false
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: "authentik"
+              internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+              externalHost: "portal.${DOMAIN_0}"
+              responseHeaders: []
+        hosts:
+          - host: metube.${DOMAIN_0}

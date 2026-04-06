@@ -1,0 +1,63 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kubernetes-dashboard
+      version: 4.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  timeout: 20m
+  maxHistory: 3
+  driftDetection:
+    mode: warn
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    podOptions:
+      hostUsers: true
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: ${DASHBOARD_IP}
+        ports:
+          main:
+            port: 80
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        integrations:
+          traefik:
+            enabled: false
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: "authentik"
+              internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+              externalHost: "portal.${DOMAIN_0}"
+              responseHeaders: []
+        hosts:
+          - host: kube.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix

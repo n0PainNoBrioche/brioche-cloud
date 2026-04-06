@@ -1,0 +1,96 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: crafty
+    namespace: gaming
+spec:
+    interval: 5m
+    chart:
+        spec:
+            chart: crafty-4
+            version: 11.0.1
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+            interval: 5m
+    install:
+        createNamespace: true
+        crds: CreateReplace
+        remediation:
+            retries: 3
+    upgrade:
+        crds: CreateReplace
+        remediation:
+            retries: 3
+    timeout: 20m
+    values:
+      portal:
+        open:
+          enabled: false
+      global:
+        stopAll: false
+      credentials:
+        minio:
+          type: s3
+          url: "${S3_URL_MINIO}"
+          bucket: "${S3_BUCKET}-crafty"
+          accessKey: "${S3_ACCESS_KEY}"
+          secretKey: "${S3_SECRET_KEY}"
+          encrKey: "${S3_ENCRYPTION_KEY}"
+      ingress:
+        main:
+          enabled: true
+          ingressClassName: internal
+          annotations:
+            nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+            nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          integrations:
+            traefik:
+              enabled: false
+            certManager:
+              enabled: true
+              certificateIssuer: domain-0-le-prod
+            nginx:
+              enabled: true
+              auth:
+                type: "authentik"
+                internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+                externalHost: "portal.${DOMAIN_0}"
+                responseHeaders: []
+          hosts:
+            - host: crafty.${DOMAIN_0}
+              paths:
+                - path: /
+                  pathType: Prefix
+      # persistence:
+      #   config:
+      #     volsync:
+      #     - name: config
+      #       type: restic
+      #       credentials: minio
+      #       dest:
+      #         enabled: true
+      #       src:
+      #         enabled: true
+      #         trigger:
+      #           schedule: 30 0 * * *
+        backups:
+          enabled: true
+          type: nfs
+          path: ${MINECRAFT_NFS_PATH}
+          server: ${NAS_IP}
+      service:
+        minecraft:
+          type: LoadBalancer
+          loadBalancerIP: ${crafty_IP}
+          ports:
+            voice:
+              enabled: true
+              port: 24454
+              protocol: udp
+              targetPort: 24454
+      metrics:
+        main:
+          enabled: false

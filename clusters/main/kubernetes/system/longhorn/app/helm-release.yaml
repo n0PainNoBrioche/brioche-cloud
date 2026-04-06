@@ -1,0 +1,65 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  interval: 5m
+  releaseName: longhorn
+  chart:
+    spec:
+      chart: longhorn
+      version: 1.11.1
+      sourceRef:
+        kind: HelmRepository
+        name: home-ops-mirror
+        namespace: flux-system
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  values:
+    defaultSettings:
+      # Increase to 3 for a multi-node cluster
+      defaultReplicaCount: 1
+      # Overprovisioning might be needed when using volsync
+      storageMinimalAvailablePercentage: 10
+      storageOverProvisioningPercentage: 300
+      storageReservedPercentageForDefaultDisk: 5
+      # v2DataEngine: true
+    persistence:
+      # Set to false to pick another CSI as default
+      defaultClass: true
+      # Increase to 3 for a multi-node cluster
+      defaultClassReplicaCount: 1
+    longhornUI:
+            replicas: 1
+    service:
+      ui:
+        type: LoadBalancer
+        loadBalancerIP: ${LONGHORN_IP}
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          nginx.ingress.kubernetes.io/auth-method: 'GET'
+          nginx.ingress.kubernetes.io/auth-url: 'http://authelia.authelia.svc.cluster.local:9091/api/verify'
+          nginx.ingress.kubernetes.io/auth-signin: 'https://auth.${DOMAIN_0}?rm=$request_method'
+          nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
+        integrations:
+          traefik:
+            enabled: false
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+        hosts:
+          - host: longhorn.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix

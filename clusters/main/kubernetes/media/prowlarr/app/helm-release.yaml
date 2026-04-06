@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: prowlarr
+    namespace: media
+spec:
+    interval: 5m
+    chart:
+        spec:
+            # renovate: registryUrl=https://charts.truechartsoci.org
+            chart: prowlarr
+            version: 22.0.3
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+            interval: 5m
+    install:
+        createNamespace: true
+        crds: CreateReplace
+        remediation:
+            retries: 3
+    upgrade:
+        crds: CreateReplace
+        remediation:
+            retries: 3
+    values:
+      portal:
+        open:
+          enabled: false
+      global:
+        stopAll: false
+      ingress:
+        main:
+          enabled: true
+          ingressClassName: internal
+          integrations:
+            traefik:
+              enabled: false
+            certManager:
+              enabled: true
+              certificateIssuer: domain-0-le-prod
+            nginx:
+              enabled: true
+              auth:
+                type: "authentik"
+                internalHost: "authentik-http.authentik.svc.cluster.local:10230"
+                externalHost: "portal.${DOMAIN_0}"
+                responseHeaders: []
+          hosts:
+            - host: prowlarr.${DOMAIN_0}
+              paths:
+                - path: /
+                  pathType: Prefix
+      metrics:
+        main:
+          enabled: false
