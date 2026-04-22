@@ -25,3 +25,15 @@ spec:
         remediation:
             retries: 3
     values:
+        storageClass:
+            create: true
+            name: nfs-csi
+            defaultClass: false
+            reclaimPolicy: Delete
+            volumeBindingMode: Immediate
+            mountOptions:
+            - nfsvers=4.1
+            parameters:
+            server: ${NAS_IP}
+            share: /exports/talos
+            subDir: ${pvc.metadata.name}
