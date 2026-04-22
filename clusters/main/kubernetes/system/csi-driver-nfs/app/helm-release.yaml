@@ -11,9 +11,9 @@ spec:
             chart: csi-driver-nfs
             version: 4.9.0
             sourceRef:
-                kind: HelmRepository
-                name: truecharts
-                namespace: flux-system
+              kind: HelmRepository
+              name: csi-driver-nfs
+              namespace: flux-system
             interval: 5m
     install:
         createNamespace: true
