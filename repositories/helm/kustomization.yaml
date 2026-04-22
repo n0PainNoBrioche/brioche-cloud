@@ -15,4 +15,4 @@ resources:
   - ingress-nginx.yaml
   - home-ops-mirror.yaml
   - csi-driver-nfs.yaml
-# more goes here!
+  - vmware-tanzu.yaml
