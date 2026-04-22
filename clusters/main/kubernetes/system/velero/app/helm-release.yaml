@@ -29,7 +29,7 @@ spec:
           bucket: "${S3_BUCKET}-velero"
           default: true
           config:
-            region: france
+            region: eu-west-3
             s3ForcePathStyle: "true"
             s3Url: "${S3_URL_MINIO}"
             insecureSkipTLSVerify: "true"
