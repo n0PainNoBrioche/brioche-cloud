@@ -35,9 +35,11 @@ spec:
             insecureSkipTLSVerify: "true"
 
       volumeSnapshotLocation:
-        - name: default
-          provider: aws
-      
+      - name: default
+        provider: aws
+        config:
+          region: eu-west-3
+          
     initContainers:
     - name: velero-plugin-for-aws
       image: velero/velero-plugin-for-aws:v1.10.0
