@@ -36,6 +36,13 @@ spec:
       volumeSnapshotLocation:
         - name: default
           provider: aws
+      
+    initContainers:
+    - name: velero-plugin-for-aws
+      image: velero/velero-plugin-for-aws:v1.10.0
+      volumeMounts:
+        - mountPath: /target
+          name: plugins
 
     credentials:
       useSecret: true
