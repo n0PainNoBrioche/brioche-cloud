@@ -10,4 +10,4 @@ mountOptions:
   - nfsvers=4.1
 parameters:
   server: 192.168.1.50
-  share: /vm/talos
+  share: /talos
