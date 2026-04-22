@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: csi-driver-nfs
+  namespace: flux-system
+spec:
+  type: oci
+  interval: 2h
+  url: oci://registry.k8s.io/sig-storage/csi-driver-nfs/charts
