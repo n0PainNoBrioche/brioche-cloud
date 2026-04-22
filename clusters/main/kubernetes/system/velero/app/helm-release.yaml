@@ -32,6 +32,7 @@ spec:
             region: minio
             s3ForcePathStyle: "true"
             s3Url: "${S3_URL_MINIO}"
+            insecureSkipTLSVerify: "true"
 
       volumeSnapshotLocation:
         - name: default
