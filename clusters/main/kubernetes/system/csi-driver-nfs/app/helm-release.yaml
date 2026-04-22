@@ -34,6 +34,6 @@ spec:
             mountOptions:
             - nfsvers=4.1
             parameters:
-            server: ${NAS_IP}
-            share: /exports/talos
+            server: 192.168.1.50
+            share: /vm/talos
             subDir: ${pvc.metadata.name}
