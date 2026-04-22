@@ -14,4 +14,5 @@ resources:
   - truecharts.yaml
   - ingress-nginx.yaml
   - home-ops-mirror.yaml
+  - csi-driver-nfs.yaml
 # more goes here!
