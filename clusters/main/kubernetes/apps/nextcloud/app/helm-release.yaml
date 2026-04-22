@@ -84,7 +84,7 @@ spec:
           type: nfs
           path: ${NEXTCLOUD_NFS_PATH}
           server: ${NAS_IP}
-        html:
+        # html:
           # volsync:
           # - name: html
           #   type: restic
