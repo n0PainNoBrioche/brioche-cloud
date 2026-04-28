@@ -60,6 +60,12 @@ spec:
         cluster:
           singleNode: true
           instances: 1
+          storage:
+            storageClass: nfs-csi
+            size: 5Gi 
+        cluster:
+          singleNode: true
+          instances: 1
         backups:
           credentials: minio
           scheduledBackups:
@@ -73,6 +79,10 @@ spec:
           credentials: minio
     persistence:
       config:
+        enabled: true
+        storageClass: nfs-csi
+        accessMode: ReadWriteOnce
+        size: 10Gi  
         volsync:
         - name: config
           type: restic
