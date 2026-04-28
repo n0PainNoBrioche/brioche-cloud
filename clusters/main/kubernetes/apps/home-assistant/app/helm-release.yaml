@@ -7,6 +7,7 @@ spec:
   interval: 15m
   chart:
     spec:
+      # renovate: registryUrl=https://charts.truechartsoci.org
       chart: home-assistant
       version: 30.0.6
       sourceRef:
@@ -72,9 +73,6 @@ spec:
           credentials: minio
     persistence:
       config:
-        enabled: true
-        type: pvc
-        existingClaim: home-assistant-config-nfs
         volsync:
         - name: config
           type: restic
