@@ -7,7 +7,6 @@ spec:
   interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://charts.truechartsoci.org
       chart: home-assistant
       version: 30.0.6
       sourceRef:
@@ -60,12 +59,6 @@ spec:
         cluster:
           singleNode: true
           instances: 1
-          storage:
-            storageClass: nfs-csi
-            size: 5Gi 
-        cluster:
-          singleNode: true
-          instances: 1
         backups:
           credentials: minio
           scheduledBackups:
@@ -80,9 +73,8 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: nfs-csi
-        accessMode: ReadWriteOnce
-        size: 10Gi  
+        type: pvc
+        existingClaim: home-assistant-config-nfs
         volsync:
         - name: config
           type: restic
