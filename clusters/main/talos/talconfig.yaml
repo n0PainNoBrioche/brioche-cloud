@@ -18,6 +18,7 @@ clusterSvcNets:
     - ${SVCNET}
 cniConfig:
     name: none
+patches:
 nodes:
     # We would adivce to always stick to a "k8s-something-1" style naming scheme
     - hostname: k8s-control-1
@@ -48,6 +49,7 @@ nodes:
               - siderolabs/nvidia-container-toolkit-lts
       patches:
         - '@./patches/nvidia.yaml'
+        - '@./patches/gc.yaml'
 controlPlane:
     kernelModules:
      - name: nvme_tcp
