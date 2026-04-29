@@ -29,7 +29,7 @@ spec:
       defaultReplicaCount: 1
       # Overprovisioning might be needed when using volsync
       storageMinimalAvailablePercentage: 10
-      storageOverProvisioningPercentage: 300
+      storageOverProvisioningPercentage: 100000
       storageReservedPercentageForDefaultDisk: 5
       # v2DataEngine: true
     persistence:
