@@ -5,10 +5,10 @@ metadata:
   namespace: longhorn-system
   annotations:
     cert-manager.io/cluster-issuer: domain-0-le-prod
-
-    # Authentik (nginx forward auth)
     nginx.ingress.kubernetes.io/auth-url: "http://authentik-http.authentik.svc.cluster.local:10230/outpost.goauthentik.io/auth/nginx"
     nginx.ingress.kubernetes.io/auth-signin: "https://portal.${DOMAIN_0}/outpost.goauthentik.io/start?rd=$scheme://$host$request_uri"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
 
 spec:
   ingressClassName: internal
