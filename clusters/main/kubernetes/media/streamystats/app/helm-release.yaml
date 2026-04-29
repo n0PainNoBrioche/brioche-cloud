@@ -28,6 +28,15 @@ spec:
     global:
       env:
         SESSION_SECRET: "${STREAMYSTATS_SESSION_SECRET}"
+
+    credentials:
+        minio:
+          type: s3
+          url: "${S3_URL_MINIO}"
+          bucket: "${S3_BUCKET}-streamystats"
+          accessKey: "${S3_ACCESS_KEY}"
+          secretKey: "${S3_SECRET_KEY}"
+          encrKey: "${S3_ENCRYPTION_KEY}"
     
     # Configuration de la base de données VectorChord/PostgreSQL
     cnpg:
@@ -193,3 +202,13 @@ spec:
         enabled: false
         type: emptyDir
         mountPath: /config
+        volsync:
+          - name: config
+            type: restic
+            credentials: minio
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 40 0 * * *
