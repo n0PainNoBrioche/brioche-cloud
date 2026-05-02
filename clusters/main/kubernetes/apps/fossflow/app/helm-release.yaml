@@ -74,3 +74,7 @@ spec:
         accessMode: ReadWriteOnce
         size: 5Gi
         mountPath: /data/diagrams
+      nginx-run:
+        enabled: true
+        type: emptyDir
+        mountPath: /run/nginx
