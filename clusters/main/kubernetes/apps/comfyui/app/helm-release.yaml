@@ -26,7 +26,7 @@ spec:
   values:
     image:
       repository: yanwk/comfyui-boot
-      tag: cu128-slim
+      tag: cu128
       pullPolicy: IfNotPresent
     service:
       main:
@@ -68,14 +68,18 @@ spec:
                 - path: /
                   pathType: Prefix
     workload:
-        main:
-          podSpec:
-            runtimeClassName: "nvidia"
-            containers:
-              main:
-                resources:
-                  limits:
-                    nvidia.com/gpu: 1
+      main:
+        podSpec:
+          runtimeClassName: "nvidia"
+          containers:
+            main:
+              env:
+                EXTRA_ARGS: "--lowvram --bf16-vae"
+              resources:
+                requests:
+                  nvidia.com/gpu: 1  # manquant — le scheduler k8s en a besoin
+                limits:
+                  nvidia.com/gpu: 1
     persistence:
       comfyui-data:
         enabled: true
@@ -83,3 +87,8 @@ spec:
         accessMode: ReadWriteOnce
         size: 10Gi
         mountPath: /home/runner
+      comfyui-models:
+          enabled: true
+          type: nfs
+          path: ${AI_NFS_PATH}/comfyui-models
+          server: ${NAS_IP}

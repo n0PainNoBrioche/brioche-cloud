@@ -49,17 +49,17 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
-      persistence:
-        config:
-          enabled: true
-          type: nfs
-          path: ${AI_NFS_PATH}/config
-          server: ${NAS_IP}
-        data:
-          enabled: true
-          type: nfs
-          path: ${AI_NFS_PATH}/data
-          server: ${NAS_IP}
+      # persistence:
+      #   config:
+      #     enabled: true
+      #     type: nfs
+      #     path: ${AI_NFS_PATH}/ollama/config
+      #     server: ${NAS_IP}
+      #   data:
+      #     enabled: true
+      #     type: nfs
+      #     path: ${AI_NFS_PATH}/ollama/data
+      #     server: ${NAS_IP}
       workload:
         main:
           podSpec:
@@ -68,22 +68,22 @@ spec:
               main:
                 resources:
                   requests:
-                    memory: 2Gi
+                    memory: 4Gi
                     cpu: "1"
                   limits:
-                    memory: 4Gi
+                    memory: 8Gi
                     cpu: "2"
                     nvidia.com/gpu: 1
-                # env:
-                #   OLLAMA_CONTEXT_LENGTH: "4096"
+                env:
+                  OLLAMA_CONTEXT_LENGTH: "4096"
         ui:
           podSpec:
             containers:
               ui:
                 env:
-                  ENABLE_OAUTH_SIGNUP: true
-                  ENABLE_LOGIN_FORM: false
-                  OAUTH_MERGE_ACCOUNTS_BY_EMAIL: true
+                  ENABLE_OAUTH_SIGNUP: "true"
+                  ENABLE_LOGIN_FORM: "false"
+                  OAUTH_MERGE_ACCOUNTS_BY_EMAIL: "true"
                   OAUTH_CLIENT_ID: ${OIDC_AI_CLIENT_ID}
                   OAUTH_CLIENT_SECRET: ${OIDC_AI_CLIENT_SECRET}
                   OAUTH_PROVIDER_NAME: "authentik"
