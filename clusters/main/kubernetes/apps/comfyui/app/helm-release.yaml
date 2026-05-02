@@ -86,10 +86,10 @@ spec:
         type: pvc
         accessMode: ReadWriteOnce
         size: 10Gi
-        mountPath: /home/runner
+        mountPath: /root
       comfyui-models:
         enabled: true
         type: nfs
         path: ${AI_NFS_PATH}/comfyui-models
         server: ${NAS_IP}
-        mountPath: /home/runner/ComfyUI/models
+        mountPath: /root/ComfyUI/models
