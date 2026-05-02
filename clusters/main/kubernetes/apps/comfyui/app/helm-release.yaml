@@ -26,7 +26,7 @@ spec:
   values:
     image:
       repository: yanwk/comfyui-boot
-      tag: cu128
+      tag: cu128-megapak
       pullPolicy: IfNotPresent
     service:
       main:
