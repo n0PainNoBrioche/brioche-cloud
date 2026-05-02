@@ -88,7 +88,8 @@ spec:
         size: 10Gi
         mountPath: /home/runner
       comfyui-models:
-          enabled: true
-          type: nfs
-          path: ${AI_NFS_PATH}/comfyui-models
-          server: ${NAS_IP}
+        enabled: true
+        type: nfs
+        path: ${AI_NFS_PATH}/comfyui-models
+        server: ${NAS_IP}
+        mountPath: /home/runner/ComfyUI/models
