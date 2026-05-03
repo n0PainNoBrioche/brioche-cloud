@@ -77,8 +77,12 @@ spec:
                 EXTRA_ARGS: "--lowvram --bf16-vae"
               resources:
                 requests:
-                  nvidia.com/gpu: 1  # manquant — le scheduler k8s en a besoin
+                  memory: 4Gi
+                  cpu: "500m"
+                  nvidia.com/gpu: 1
                 limits:
+                  memory: 10Gi
+                  cpu: "2"
                   nvidia.com/gpu: 1
     persistence:
       comfyui-data:
