@@ -49,30 +49,18 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
-      # persistence:
-      #   config:
-      #     enabled: true
-      #     type: nfs
-      #     path: ${AI_NFS_PATH}/ollama/config
-      #     server: ${NAS_IP}
-      #   data:
-      #     enabled: true
-      #     type: nfs
-      #     path: ${AI_NFS_PATH}/ollama/data
-      #     server: ${NAS_IP}
       persistence:
-        open-webui-data:
-          enabled: true
-          type: pvc
-          storageClass: longhorn
-          size: 10Gi
-          accessModes:
-            - ReadWriteOnce
-          targetSelectAll: false
-          targetSelector:
-            ui:
-              ui:
-                mountPath: /app/backend/data
+        config:
+          volsync:
+          - name: config
+            type: restic
+            credentials: minio
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 30 0 * * *
       workload:
         main:
           podSpec:
