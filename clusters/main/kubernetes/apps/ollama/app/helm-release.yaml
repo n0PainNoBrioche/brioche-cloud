@@ -60,6 +60,19 @@ spec:
       #     type: nfs
       #     path: ${AI_NFS_PATH}/ollama/data
       #     server: ${NAS_IP}
+      persistence:
+        open-webui-data:
+          enabled: true
+          type: pvc
+          storageClass: longhorn
+          size: 10Gi
+          accessModes:
+            - ReadWriteOnce
+          targetSelectAll: false
+          targetSelector:
+            ui:
+              ui:
+                mountPath: /app/backend/data
       workload:
         main:
           podSpec:
