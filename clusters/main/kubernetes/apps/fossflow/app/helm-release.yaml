@@ -36,19 +36,19 @@ spec:
             protocol: http
             port: 7702
             targetPort: 80
-    # securityContext:
-    #   container:
-    #     runAsNonRoot: false
-    #     runAsUser: 0
-    #     runAsGroup: 0
-    #     readOnlyRootFilesystem: false
-    #     allowPrivilegeEscalation: true
-    #     capabilities:
-    #       add:
-    #         - NET_BIND_SERVICE  # needed if nginx binds port 80
-    #   pod:
-    #     fsGroup: 0
-    #     runAsNonRoot: false
+    securityContext:
+      container:
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: false
+        allowPrivilegeEscalation: true
+        capabilities:
+          add:
+            - NET_BIND_SERVICE  # needed if nginx binds port 80
+      pod:
+        fsGroup: 0
+        runAsNonRoot: false
     ingress:
         main:
           enabled: true
