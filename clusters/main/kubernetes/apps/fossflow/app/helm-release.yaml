@@ -36,6 +36,18 @@ spec:
             protocol: http
             port: 7702
             targetPort: 80
+      initContainers:
+        fix-dirs:
+          image:
+            repository: busybox
+            tag: latest
+          command:
+            - sh
+            - -c
+            - mkdir -p /run/nginx && mkdir -p /var/lib/nginx/tmp/client_body
+      securityContext:
+        runAsUser: 0
+        readOnlyRootFilesystem: false
     securityContext:
       container:
         runAsNonRoot: false
