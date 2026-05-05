@@ -15,4 +15,4 @@ resources:
   - home-assistant/ks.yaml
   - metube/ks.yaml
   - outline/ks.yaml
-  # - fossflow/ks.yaml
+  - fossflow/ks.yaml
