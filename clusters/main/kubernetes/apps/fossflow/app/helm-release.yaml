@@ -36,14 +36,10 @@ spec:
             protocol: http
             port: 7702
             targetPort: 80
-    initContainers:
-      init-nginx:
-        image: busybox
-        command:
-          - sh
-          - -c
-          - mkdir -p /run/nginx
-        volumeMounts: []
+    command:
+      - /bin/sh
+      - -c
+      - "mkdir -p /run/nginx && nginx -g 'daemon off;'"
     securityContext:
       container:
         PUID: 0 # Run as root
