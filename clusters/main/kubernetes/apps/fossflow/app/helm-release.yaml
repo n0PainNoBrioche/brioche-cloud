@@ -30,13 +30,17 @@ spec:
       pullPolicy: IfNotPresent
     securityContext:
       container:
-        PUID: 0 # Run as root
-        runAsNonRoot: false # Allow running as root
-        runAsUser: 0 # root user
-        runAsGroup: 0 # root group
-        readOnlyRootFilesystem: false # Needs to write to root FS? Set to false
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: false
+        allowPrivilegeEscalation: true
+        capabilities:
+          add:
+            - NET_BIND_SERVICE  # needed if nginx binds port 80
       pod:
-        fsGroup: 0 # Use root group for volume permissions
+        fsGroup: 0
+        runAsNonRoot: false
     ingress:
         main:
           enabled: true
