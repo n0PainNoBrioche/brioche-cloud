@@ -36,6 +36,14 @@ spec:
             protocol: http
             port: 7702
             targetPort: 80
+    initContainers:
+      init-nginx:
+        image: busybox
+        command:
+          - sh
+          - -c
+          - mkdir -p /run/nginx
+        volumeMounts: []
     securityContext:
       container:
         PUID: 0 # Run as root
@@ -74,7 +82,3 @@ spec:
         accessMode: ReadWriteOnce
         size: 5Gi
         mountPath: /data/diagrams
-      nginx-run:
-        enabled: true
-        type: emptyDir
-        mountPath: /run/nginx
