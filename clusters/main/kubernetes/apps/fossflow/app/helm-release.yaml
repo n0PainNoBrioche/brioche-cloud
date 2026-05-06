@@ -36,20 +36,15 @@ spec:
             protocol: http
             port: 7702
             targetPort: 80
-    initContainers:
-      - name: fix-dirs
-        image: busybox
-        command:
-          - sh
-          - -c
-          - mkdir -p /run/nginx && mkdir -p /var/lib/nginx/tmp/client_body
-        securityContext:
-          runAsUser: 0
-        volumeMounts:
-          - name: nginx-run
-            mountPath: /run/nginx
-          - name: nginx-tmp
-            mountPath: /var/lib/nginx/tmp
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              command:
+                - /bin/sh
+                - -c
+                - mkdir -p /run/nginx /var/lib/nginx/tmp/client_body && /entrypoint.sh
     securityContext:
       container:
         runAsNonRoot: false
@@ -89,11 +84,3 @@ spec:
         accessMode: ReadWriteOnce
         size: 5Gi
         mountPath: /data/diagrams
-      nginx-run:
-        enabled: true
-        type: emptyDir
-        mountPath: /run/nginx
-      nginx-tmp:
-        enabled: true
-        type: emptyDir
-        mountPath: /var/lib/nginx/tmp
