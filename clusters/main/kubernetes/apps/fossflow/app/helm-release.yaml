@@ -45,6 +45,11 @@ spec:
           - mkdir -p /run/nginx && mkdir -p /var/lib/nginx/tmp/client_body
         securityContext:
           runAsUser: 0
+        volumeMounts:
+          - name: nginx-run
+            mountPath: /run/nginx
+          - name: nginx-tmp
+            mountPath: /var/lib/nginx/tmp
     securityContext:
       container:
         runAsNonRoot: false
