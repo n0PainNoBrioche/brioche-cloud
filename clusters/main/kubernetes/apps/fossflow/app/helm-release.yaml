@@ -44,7 +44,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - mkdir -p /run/nginx /var/lib/nginx/tmp/client_body && /entrypoint.sh
+                - mkdir -p /run/nginx /var/lib/nginx/tmp/client_body && /docker-entrypoint.sh
     securityContext:
       container:
         runAsNonRoot: false
