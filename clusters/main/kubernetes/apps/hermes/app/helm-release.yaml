@@ -1,8 +1,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: hermes-agent
-  namespace: hermes-agent
+  name: hermes
+  namespace: hermes
 spec:
   interval: 5m
   chart:
