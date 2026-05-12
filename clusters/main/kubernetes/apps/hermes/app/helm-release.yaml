@@ -50,42 +50,6 @@ spec:
     workload:
       main:
         podSpec:
-          initContainers:
-            init-config:
-              enabled: true
-              type: init
-              image:
-                repository: busybox
-                tag: latest
-              command:
-                - sh
-                - -c
-                - |
-                  # Patch config.yaml
-                  sed -i 's|provider: "auto"|provider: "openai-compatible"|' /opt/data/config.yaml
-                  sed -i 's|base_url: "https://openrouter.ai/api/v1"|base_url: "http://ollama-api.ollama.svc.cluster.local:11434/v1"|' /opt/data/config.yaml
-
-                  # Patch .env
-                  grep -q "OPENAI_API_KEY" /opt/data/.env && \
-                    sed -i 's|.*OPENAI_API_KEY.*|OPENAI_API_KEY=ollama|' /opt/data/.env || \
-                    echo "OPENAI_API_KEY=ollama" >> /opt/data/.env
-
-                  grep -q "OPENAI_BASE_URL" /opt/data/.env && \
-                    sed -i 's|.*OPENAI_BASE_URL.*|OPENAI_BASE_URL=http://ollama-api.ollama.svc.cluster.local:11434/v1|' /opt/data/.env || \
-                    echo "OPENAI_BASE_URL=http://ollama-api.ollama.svc.cluster.local:11434/v1" >> /opt/data/.env
-
-                  grep -q "HERMES_MODEL" /opt/data/.env && \
-                    sed -i 's|.*HERMES_MODEL.*|HERMES_MODEL=gemma3:4b|' /opt/data/.env || \
-                    echo "HERMES_MODEL=gemma3:4b" >> /opt/data/.env
-
-                  grep -q "GATEWAY_ALLOW_ALL_USERS" /opt/data/.env && \
-                    sed -i 's|.*GATEWAY_ALLOW_ALL_USERS.*|GATEWAY_ALLOW_ALL_USERS=true|' /opt/data/.env || \
-                    echo "GATEWAY_ALLOW_ALL_USERS=true" >> /opt/data/.env
-
-                  chown 568:568 /opt/data/config.yaml /opt/data/.env
-              volumeMounts:
-                - name: hermes-data
-                  mountPath: /opt/data
           containers:
             main:
               args:
