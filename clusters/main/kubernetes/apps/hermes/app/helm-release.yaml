@@ -61,7 +61,8 @@ spec:
                 HERMES_HOME: "/opt/data"
                 OLLAMA_BASE_URL: "http://ollama-api.ollama.svc.cluster.local:11434/v1"
                 OLLAMA_API_KEY: "ollama"
-                HERMES_MODEL: "gemma3:4b"
+                HERMES_MODEL: "ollama/gemma3:4b"
+                HERMES_INFERENCE_PROVIDER: "ollama"
                 API_SERVER_HOST: "0.0.0.0"
                 API_SERVER_KEY: "${AI_API_KEY}"
               resources:
