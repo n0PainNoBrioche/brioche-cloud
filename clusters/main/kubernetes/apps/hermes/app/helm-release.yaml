@@ -4,7 +4,6 @@ metadata:
   name: hermes
   namespace: hermes
 spec:
-  interval: 5m
   chart:
     spec:
       chart: app-template
@@ -14,91 +13,90 @@ spec:
         name: truecharts
         namespace: flux-system
       interval: 5m
+  interval: 5m
   install:
-    createNamespace: true
     crds: CreateReplace
+    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     crds: CreateReplace
     remediation:
       retries: 3
+  timeout: 20m
   values:
     image:
+      pullPolicy: Always
       repository: nousresearch/hermes-agent
       tag: latest
-      pullPolicy: Always
-
+    persistence:
+      hermes-data:
+        accessMode: ReadWriteOnce
+        enabled: true
+        mountPath: /opt/data
+        size: 5Gi
+        type: pvc
+    securityContext:
+      container:
+        readOnlyRootFilesystem: false
+        runAsGroup: 0
+        runAsNonRoot: false
+        runAsUser: 0
+      pod:
+        fsGroup: 568
     service:
       main:
         ports:
           main:
             enabled: true
-            protocol: http
             port: 8642
+            protocol: http
             targetPort: 8642
-
-    securityContext:
-      container:
-        runAsNonRoot: false
-        runAsUser: 0
-        runAsGroup: 0
-        readOnlyRootFilesystem: false
-      pod:
-        fsGroup: 568
-
     workload:
       main:
         podSpec:
-          initContainers:
-            init-config:
-              enabled: true
-              type: init
-              image:
-                repository: nousresearch/hermes-agent
-                tag: latest
-              command:
-                - sh
-                - -c
-                - |
-                  /opt/hermes/.venv/bin/hermes config set model.provider openai-compatible
-                  /opt/hermes/.venv/bin/hermes config set model.name gemma3:4b
-                  /opt/hermes/.venv/bin/hermes config set model.base_url http://ollama-api.ollama.svc.cluster.local:11434/v1
-
-                  echo "OPENAI_API_KEY=ollama" >> /opt/data/.env
-                  echo "OPENAI_BASE_URL=http://ollama-api.ollama.svc.cluster.local:11434/v1" >> /opt/data/.env
-                  echo "HERMES_MODEL=gemma3:4b" >> /opt/data/.env
-              env:
-                HERMES_HOME: "/opt/data"
-              volumeMounts:
-                - name: hermes-data
-                  mountPath: /opt/data
           containers:
             main:
               args:
-                - "gateway"
-                - "run"
+              - gateway
+              - run
               env:
-                HERMES_UID: "568"
-                HERMES_GID: "568"
-                HERMES_HOME: "/opt/data"
-                OPENAI_API_KEY: "ollama"
-                OPENAI_BASE_URL: "http://ollama-api.ollama.svc.cluster.local:11434/v1"
-                HERMES_MODEL: "gemma3:4b"
-                API_SERVER_HOST: "0.0.0.0"
+                API_SERVER_HOST: 0.0.0.0
                 API_SERVER_KEY: "${AI_API_KEY}"
+                HERMES_GID: "568"
+                HERMES_HOME: /opt/data
+                HERMES_MODEL: qwen3.5:4b-ext
+                HERMES_UID: "568"
+                OPENAI_API_KEY: ollama
+                OPENAI_BASE_URL: http://ollama-api.ollama.svc.cluster.local:11434/v1
               resources:
-                requests:
-                  memory: 512Mi
-                  cpu: "100m"
                 limits:
-                  memory: 2Gi
                   cpu: "1"
+                  memory: 2Gi
+                requests:
+                  cpu: 100m
+                  memory: 512Mi
+          initContainers:
+            init-config:
+              command:
+              - sh
+              - -c
+              - |
+                /opt/hermes/.venv/bin/hermes config set model.provider openai-compatible
+                /opt/hermes/.venv/bin/hermes config set model.name qwen3.5:4b
+                /opt/hermes/.venv/bin/hermes config set model.base_url http://ollama-api.ollama.svc.cluster.local:11434/v1
+                /opt/hermes/.venv/bin/hermes config set model.context_length 262144
 
-    persistence:
-      hermes-data:
-        enabled: true
-        type: pvc
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        mountPath: /opt/data
+                echo "OPENAI_API_KEY=ollama" >> /opt/data/.env
+                echo "OPENAI_BASE_URL=http://ollama-api.ollama.svc.cluster.local:11434/v1" >> /opt/data/.env
+                echo "HERMES_MODEL=qwen3.5:4b" >> /opt/data/.env
+              enabled: true
+              env:
+                HERMES_HOME: /opt/data
+              image:
+                repository: nousresearch/hermes-agent
+                tag: latest
+              type: init
+              volumeMounts:
+              - mountPath: /opt/data
+                name: hermes-data
