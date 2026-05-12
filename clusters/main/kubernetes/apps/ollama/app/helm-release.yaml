@@ -75,6 +75,8 @@ spec:
                     memory: 8Gi
                     cpu: "2"
                     nvidia.com/gpu: 1
+                env:
+                  OLLAMA_CONTEXT_LENGTH: "65536"
         ui:
           podSpec:
             containers:
