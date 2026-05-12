@@ -52,6 +52,7 @@ spec:
         podSpec:
           initContainers:
             init-config:
+              enabled: true
               image:
                 repository: busybox
                 tag: latest
