@@ -61,53 +61,28 @@ spec:
                 - sh
                 - -c
                 - |
-                  cat > /opt/data/.env << 'EOF'
-                  OPENAI_API_KEY=ollama
-                  OPENAI_BASE_URL=http://ollama-api.ollama.svc.cluster.local:11434/v1
-                  HERMES_MODEL=gemma3:4b
-                  GATEWAY_ALLOW_ALL_USERS=true
-                  TERMINAL_MODAL_IMAGE=nikolaik/python-nodejs:python3.11-nodejs20
-                  TERMINAL_TIMEOUT=60
-                  TERMINAL_LIFETIME_SECONDS=300
-                  BROWSERBASE_PROXIES=true
-                  BROWSERBASE_ADVANCED_STEALTH=false
-                  BROWSER_SESSION_TIMEOUT=300
-                  BROWSER_INACTIVITY_TIMEOUT=120
-                  WEB_TOOLS_DEBUG=false
-                  VISION_TOOLS_DEBUG=false
-                  MOA_TOOLS_DEBUG=false
-                  IMAGE_TOOLS_DEBUG=false
-                  EOF
-                  cat > /opt/data/auth.json << 'EOF'
-                  {
-                    "version": 1,
-                    "providers": {
-                      "default": "openai-compatible"
-                    },
-                    "credential_pool": {
-                      "openai-compatible": [
-                        {
-                          "id": "local-ollama",
-                          "label": "OPENAI_API_KEY",
-                          "auth_type": "api_key",
-                          "priority": 0,
-                          "source": "env:OPENAI_API_KEY",
-                          "access_token": "ollama",
-                          "last_status": null,
-                          "last_status_at": null,
-                          "last_error_code": null,
-                          "last_error_reason": null,
-                          "last_error_message": null,
-                          "last_error_reset_at": null,
-                          "base_url": "http://ollama-api.ollama.svc.cluster.local:11434/v1",
-                          "request_count": 0
-                        }
-                      ]
-                    },
-                    "updated_at": "2026-05-12T00:00:00.000000+00:00"
-                  }
-                  EOF
-                  chown 568:568 /opt/data/.env /opt/data/auth.json
+                  # Patch config.yaml
+                  sed -i 's|provider: "auto"|provider: "openai-compatible"|' /opt/data/config.yaml
+                  sed -i 's|base_url: "https://openrouter.ai/api/v1"|base_url: "http://ollama-api.ollama.svc.cluster.local:11434/v1"|' /opt/data/config.yaml
+
+                  # Patch .env
+                  grep -q "OPENAI_API_KEY" /opt/data/.env && \
+                    sed -i 's|.*OPENAI_API_KEY.*|OPENAI_API_KEY=ollama|' /opt/data/.env || \
+                    echo "OPENAI_API_KEY=ollama" >> /opt/data/.env
+
+                  grep -q "OPENAI_BASE_URL" /opt/data/.env && \
+                    sed -i 's|.*OPENAI_BASE_URL.*|OPENAI_BASE_URL=http://ollama-api.ollama.svc.cluster.local:11434/v1|' /opt/data/.env || \
+                    echo "OPENAI_BASE_URL=http://ollama-api.ollama.svc.cluster.local:11434/v1" >> /opt/data/.env
+
+                  grep -q "HERMES_MODEL" /opt/data/.env && \
+                    sed -i 's|.*HERMES_MODEL.*|HERMES_MODEL=gemma3:4b|' /opt/data/.env || \
+                    echo "HERMES_MODEL=gemma3:4b" >> /opt/data/.env
+
+                  grep -q "GATEWAY_ALLOW_ALL_USERS" /opt/data/.env && \
+                    sed -i 's|.*GATEWAY_ALLOW_ALL_USERS.*|GATEWAY_ALLOW_ALL_USERS=true|' /opt/data/.env || \
+                    echo "GATEWAY_ALLOW_ALL_USERS=true" >> /opt/data/.env
+
+                  chown 568:568 /opt/data/config.yaml /opt/data/.env
               volumeMounts:
                 - name: hermes-data
                   mountPath: /opt/data
