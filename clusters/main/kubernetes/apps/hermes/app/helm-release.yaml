@@ -53,6 +53,7 @@ spec:
           initContainers:
             init-config:
               enabled: true
+              type: init
               image:
                 repository: busybox
                 tag: latest
