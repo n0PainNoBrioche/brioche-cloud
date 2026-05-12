@@ -50,6 +50,65 @@ spec:
     workload:
       main:
         podSpec:
+          initContainers:
+            init-config:
+              image:
+                repository: busybox
+                tag: latest
+              command:
+                - sh
+                - -c
+                - |
+                  cat > /opt/data/.env << 'EOF'
+                  OPENAI_API_KEY=ollama
+                  OPENAI_BASE_URL=http://ollama-api.ollama.svc.cluster.local:11434/v1
+                  HERMES_MODEL=gemma3:4b
+                  GATEWAY_ALLOW_ALL_USERS=true
+                  TERMINAL_MODAL_IMAGE=nikolaik/python-nodejs:python3.11-nodejs20
+                  TERMINAL_TIMEOUT=60
+                  TERMINAL_LIFETIME_SECONDS=300
+                  BROWSERBASE_PROXIES=true
+                  BROWSERBASE_ADVANCED_STEALTH=false
+                  BROWSER_SESSION_TIMEOUT=300
+                  BROWSER_INACTIVITY_TIMEOUT=120
+                  WEB_TOOLS_DEBUG=false
+                  VISION_TOOLS_DEBUG=false
+                  MOA_TOOLS_DEBUG=false
+                  IMAGE_TOOLS_DEBUG=false
+                  EOF
+                  cat > /opt/data/auth.json << 'EOF'
+                  {
+                    "version": 1,
+                    "providers": {
+                      "default": "openai-compatible"
+                    },
+                    "credential_pool": {
+                      "openai-compatible": [
+                        {
+                          "id": "local-ollama",
+                          "label": "OPENAI_API_KEY",
+                          "auth_type": "api_key",
+                          "priority": 0,
+                          "source": "env:OPENAI_API_KEY",
+                          "access_token": "ollama",
+                          "last_status": null,
+                          "last_status_at": null,
+                          "last_error_code": null,
+                          "last_error_reason": null,
+                          "last_error_message": null,
+                          "last_error_reset_at": null,
+                          "base_url": "http://ollama-api.ollama.svc.cluster.local:11434/v1",
+                          "request_count": 0
+                        }
+                      ]
+                    },
+                    "updated_at": "2026-05-12T00:00:00.000000+00:00"
+                  }
+                  EOF
+                  chown 568:568 /opt/data/.env /opt/data/auth.json
+              volumeMounts:
+                - name: hermes-data
+                  mountPath: /opt/data
           containers:
             main:
               args:
@@ -59,10 +118,10 @@ spec:
                 HERMES_UID: "568"
                 HERMES_GID: "568"
                 HERMES_HOME: "/opt/data"
-                OLLAMA_BASE_URL: "http://ollama-api.ollama.svc.cluster.local:11434/v1"
-                OLLAMA_API_KEY: "ollama"
-                HERMES_MODEL: "ollama/gemma3:4b"
-                HERMES_INFERENCE_PROVIDER: "ollama"
+                OPENAI_API_KEY: "ollama"
+                OPENAI_BASE_URL: "http://ollama-api.ollama.svc.cluster.local:11434/v1"
+                HERMES_MODEL: "gemma3:4b"
+                GATEWAY_ALLOW_ALL_USERS: "true"
                 API_SERVER_HOST: "0.0.0.0"
                 API_SERVER_KEY: "${AI_API_KEY}"
               resources:
