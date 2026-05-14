@@ -43,7 +43,7 @@ spec:
         runAsNonRoot: false
         runAsUser: 0
       pod:
-        fsGroup: 568
+        fsGroup: 0
     service:
       main:
         ports:
@@ -63,10 +63,8 @@ spec:
               env:
                 API_SERVER_HOST: 0.0.0.0
                 API_SERVER_KEY: "${AI_API_KEY}"
-                HERMES_GID: "568"
                 HERMES_HOME: /opt/data
                 HERMES_MODEL: qwen3.5:4b-ext
-                HERMES_UID: "568"
                 OPENAI_API_KEY: ollama
                 OPENAI_BASE_URL: http://ollama-api.ollama.svc.cluster.local:11434/v1
               resources:
