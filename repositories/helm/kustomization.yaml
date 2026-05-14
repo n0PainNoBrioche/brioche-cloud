@@ -16,3 +16,4 @@ resources:
   - home-ops-mirror.yaml
   - csi-driver-nfs.yaml
   - vmware-tanzu.yaml
+  - cilium.yaml
