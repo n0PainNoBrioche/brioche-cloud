@@ -17,3 +17,4 @@ resources:
   - csi-driver-nfs.yaml
   - vmware-tanzu.yaml
   - cilium.yaml
+  - node-feature-discovery.yaml
