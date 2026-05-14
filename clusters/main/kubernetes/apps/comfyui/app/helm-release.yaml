@@ -74,15 +74,15 @@ spec:
           containers:
             main:
               env:
-                EXTRA_ARGS: "--lowvram --bf16-vae"
+                EXTRA_ARGS: "--bf16-vae"
               resources:
                 requests:
                   memory: 4Gi
                   cpu: "500m"
                   nvidia.com/gpu: 1
                 limits:
-                  memory: 10Gi
-                  cpu: "2"
+                  memory: 14Gi
+                  cpu: "4"
                   nvidia.com/gpu: 1
     persistence:
       comfyui-data:
