@@ -18,3 +18,4 @@ resources:
   - vmware-tanzu.yaml
   - cilium.yaml
   - node-feature-discovery.yaml
+  - headlamp.yaml
