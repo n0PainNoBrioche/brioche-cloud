@@ -2,14 +2,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
+  name: headlamp
+  namespace: headlamp
 spec:
   interval: 15m
   chart:
     spec:
-      chart: kubernetes-dashboard
-      version: 4.3.0
+      chart: app-template
+      version: 18.6.2
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -30,12 +30,14 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    podOptions:
-      hostUsers: true
+    image:
+      repository: headlamp-k8s/headlamp
+      tag: latest
+      pullPolicy: IfNotPresent
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: ${DASHBOARD_IP}
+        loadBalancerIP: ${HEADLAMP_IP}
         ports:
           main:
             port: 80
@@ -45,6 +47,7 @@ spec:
         ingressClassName: internal
         integrations:
           nginx:
+            enabled: true
             auth:
               type: "authentik"
               internalHost: "authentik-http.authentik.svc.cluster.local:10230"
