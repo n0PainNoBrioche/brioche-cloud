@@ -12,7 +12,6 @@ resources:
   - nvdp.yaml
   - spegel.yaml
   - truecharts.yaml
-  - ingress-nginx.yaml
   - home-ops-mirror.yaml
   - csi-driver-nfs.yaml
   - vmware-tanzu.yaml
