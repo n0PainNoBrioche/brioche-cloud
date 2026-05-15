@@ -93,5 +93,5 @@ spec:
                   OPENID_PROVIDER_URL: "https://portal.${DOMAIN_0}/application/o/brioche-chat/.well-known/openid-configuration"
                   OPENID_REDIRECT_URI: "https://chat.${DOMAIN_0}/oauth/oidc/callback"
                   WEBUI_URL: "https://chat.${DOMAIN_0}"
-                  OPENAI_API_BASE_URLS: "http://hermes-app-template.hermes.svc.cluster.local:8642/v1,https://opencode.ai/zen/go/v1,https://opencode.ai/zen/go"
-                  OPENAI_API_KEYS: "${AI_API_KEY},${GO_API_KEY},${GO_API_KEY}"
+                  OPENAI_API_BASE_URLS: "http://hermes-app-template.hermes.svc.cluster.local:8642/v1;https://opencode.ai/zen/go/v1;https://opencode.ai/zen/go"
+                  OPENAI_API_KEYS: "${AI_API_KEY};${GO_API_KEY};${GO_API_KEY}"
