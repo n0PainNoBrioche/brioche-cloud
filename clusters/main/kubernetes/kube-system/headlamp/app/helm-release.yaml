@@ -46,5 +46,5 @@ spec:
         - host: kube.${DOMAIN_0}
           paths:
             - path: /
-              pathType: Prefix
+              type: Prefix
       tls: []
