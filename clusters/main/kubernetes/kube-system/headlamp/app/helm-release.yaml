@@ -47,4 +47,3 @@ spec:
           paths:
             - path: /
               type: Prefix
-      tls: []
