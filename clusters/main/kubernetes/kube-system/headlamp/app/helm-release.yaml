@@ -28,6 +28,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    args:
+      - --plugin-dir=/build/plugins
+      
     service:
       type: LoadBalancer
       loadBalancerIP: ${HEADLAMP_IP}
