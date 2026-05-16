@@ -4,9 +4,7 @@ resources:
   # - it-tools/ks.yaml
   - nextcloud/ks.yaml
   - kitchenowl/ks.yaml
-  - ollama/ks.yaml
   - homepage/ks.yaml
-  - comfyui/ks.yaml
   - romm/ks.yaml
   - n8n/ks.yaml
   - meilisearch/ks.yaml
@@ -15,4 +13,3 @@ resources:
   - metube/ks.yaml
   - outline/ks.yaml
   - fossflow/ks.yaml
-  - hermes/ks.yaml

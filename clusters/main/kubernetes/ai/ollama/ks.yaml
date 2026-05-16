@@ -1,11 +1,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: comfyui
+  name: ollama
   namespace: flux-system
 spec:
   interval: 10m
-  path: clusters/main/kubernetes/apps/comfyui/app
+  path: clusters/main/kubernetes/ai/ollama/app
   prune: true
   sourceRef:
     kind: GitRepository
