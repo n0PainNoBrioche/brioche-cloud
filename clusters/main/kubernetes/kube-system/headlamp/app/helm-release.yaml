@@ -30,7 +30,8 @@ spec:
   values:
     args:
       - --plugin-dir=/build/plugins
-      
+      - --enable-plugin-catalog=true
+
     service:
       type: LoadBalancer
       loadBalancerIP: ${HEADLAMP_IP}
