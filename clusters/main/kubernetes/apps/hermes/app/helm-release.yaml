@@ -29,13 +29,6 @@ spec:
       pullPolicy: Always
       repository: nousresearch/hermes-agent
       tag: latest
-    persistence:
-      hermes-data:
-        accessMode: ReadWriteOnce
-        enabled: true
-        mountPath: /opt/data
-        size: 5Gi
-        type: pvc
     securityContext:
       container:
         readOnlyRootFilesystem: false
@@ -64,7 +57,6 @@ spec:
                 API_SERVER_HOST: 0.0.0.0
                 API_SERVER_KEY: "${AI_API_KEY}"
                 HERMES_HOME: /opt/data
-                HERMES_MODEL: qwen3.5:4b-ext
                 OPENAI_API_KEY: ollama
                 OPENAI_BASE_URL: http://ollama-api.ollama.svc.cluster.local:11434/v1
               resources:
@@ -74,27 +66,10 @@ spec:
                 requests:
                   cpu: 100m
                   memory: 512Mi
-          initContainers:
-            init-config:
-              command:
-              - sh
-              - -c
-              - |
-                /opt/hermes/.venv/bin/hermes config set model.provider openai-compatible
-                /opt/hermes/.venv/bin/hermes config set model.name qwen3.5:4b
-                /opt/hermes/.venv/bin/hermes config set model.base_url http://ollama-api.ollama.svc.cluster.local:11434/v1
-                /opt/hermes/.venv/bin/hermes config set model.context_length 262144
-
-                echo "OPENAI_API_KEY=ollama" >> /opt/data/.env
-                echo "OPENAI_BASE_URL=http://ollama-api.ollama.svc.cluster.local:11434/v1" >> /opt/data/.env
-                echo "HERMES_MODEL=qwen3.5:4b" >> /opt/data/.env
-              enabled: true
-              env:
-                HERMES_HOME: /opt/data
-              image:
-                repository: nousresearch/hermes-agent
-                tag: latest
-              type: init
-              volumeMounts:
-              - mountPath: /opt/data
-                name: hermes-data
+    persistence:
+      hermes-data:
+        accessMode: ReadWriteOnce
+        enabled: true
+        mountPath: /opt/data
+        size: 5Gi
+        type: pvc
