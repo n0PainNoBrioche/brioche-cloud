@@ -29,3 +29,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    args:
+      - --kubelet-insecure-tls
+      - --kubelet-preferred-address-types=InternalIP
