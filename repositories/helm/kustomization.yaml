@@ -18,3 +18,4 @@ resources:
   - cilium.yaml
   - node-feature-discovery.yaml
   - headlamp.yaml
+  - metallb.yaml
