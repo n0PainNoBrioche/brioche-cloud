@@ -77,6 +77,7 @@ spec:
                   OAUTH_CLIENT_SECRET: ${OIDC_AI_CLIENT_SECRET}
                   OAUTH_SCOPES: "openid email profile"
                   OAUTH_PICTURE_CLAIM: "picture"
+                  OAUTH_UPDATE_PICTURE_ON_LOGIN: "true"
                   OAUTH_PROVIDER_NAME: "authentik"
                   OPENID_PROVIDER_URL: "https://portal.${DOMAIN_0}/application/o/brioche-chat/.well-known/openid-configuration"
                   OPENID_REDIRECT_URI: "https://chat.${DOMAIN_0}/oauth/oidc/callback"
