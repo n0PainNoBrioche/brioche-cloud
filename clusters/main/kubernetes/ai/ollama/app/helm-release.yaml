@@ -75,7 +75,7 @@ spec:
                   OAUTH_MERGE_ACCOUNTS_BY_EMAIL: "true"
                   OAUTH_CLIENT_ID: ${OIDC_AI_CLIENT_ID}
                   OAUTH_CLIENT_SECRET: ${OIDC_AI_CLIENT_SECRET}
-                  OAUTH_SCOPES: "openid email profile"
+                  OAUTH_SCOPES: "openid email profile picture"
                   OAUTH_PICTURE_CLAIM: "picture"
                   OAUTH_UPDATE_PICTURE_ON_LOGIN: "true"
                   OAUTH_PROVIDER_NAME: "authentik"
