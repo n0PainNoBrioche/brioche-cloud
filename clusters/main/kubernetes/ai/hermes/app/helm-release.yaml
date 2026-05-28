@@ -49,16 +49,12 @@ spec:
       main:
         podSpec:
           initContainers:
-            fix-permissions:
-              image:
-                repository: busybox
-                tag: latest
+            - name: fix-permissions
+              image: busybox:latest
               command:
                 - sh
                 - -c
-                - |
-                  rm -f /opt/data/gateway.lock
-                  chown -R 1000:1000 /opt/data
+                - "rm -f /opt/data/gateway.lock && chown -R 1000:1000 /opt/data"
               volumeMounts:
                 - name: hermes-data
                   mountPath: /opt/data
