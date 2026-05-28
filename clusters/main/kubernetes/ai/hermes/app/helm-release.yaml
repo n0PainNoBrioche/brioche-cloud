@@ -48,11 +48,25 @@ spec:
     workload:
       main:
         podSpec:
+          initContainers:
+            fix-permissions:
+              image:
+                repository: busybox
+                tag: latest
+              command:
+                - sh
+                - -c
+                - |
+                  rm -f /opt/data/gateway.lock
+                  chown -R 1000:1000 /opt/data
+              volumeMounts:
+                - name: hermes-data
+                  mountPath: /opt/data
           containers:
             main:
               args:
-              - gateway
-              - run
+                - gateway
+                - run
               env:
                 API_SERVER_HOST: 0.0.0.0
                 API_SERVER_KEY: "${AI_API_KEY}"
