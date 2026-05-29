@@ -49,8 +49,11 @@ spec:
       main:
         podSpec:
           initContainers:
-            - name: fix-permissions
-              image: busybox:latest
+            fix-permissions:
+              enabled: true
+              image:
+                repository: busybox
+                tag: latest
               command:
                 - sh
                 - -c
