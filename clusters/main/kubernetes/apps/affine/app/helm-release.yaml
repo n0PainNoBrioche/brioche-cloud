@@ -1,0 +1,61 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: affine
+  namespace: affine
+spec:
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.truechartsoci.org
+      chart: affine
+      version: 0.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  timeout: 20m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    credentials:
+      minio:
+        type: s3
+        url: "${S3_URL_MINIO}"
+        bucket: "${S3_BUCKET}-affine"
+        accessKey: "${S3_ACCESS_KEY}"
+        secretKey: "${S3_SECRET_KEY}"
+        encrKey: "${S3_ENCRYPTION_KEY}"
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+        hosts:
+          - host: affine.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                AFFINE_SERVER_EXTERNAL_URL: "https://affine.${DOMAIN_0}"
+                AFFINE_SERVER_HOST: "affine.${DOMAIN_0}"
+                AFFINE_SERVER_HTTPS: "true"
+                AFFINE_INDEXER_ENABLED: "false"
