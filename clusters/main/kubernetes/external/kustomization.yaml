@@ -6,3 +6,4 @@ resources:
   - minio/ks.yaml
   - netdata/ks.yaml
   - openchamber/ks.yaml
+  - dokploy/ks.yaml
