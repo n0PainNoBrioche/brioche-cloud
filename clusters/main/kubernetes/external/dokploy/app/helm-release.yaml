@@ -7,7 +7,6 @@ spec:
     interval: 5m
     chart:
         spec:
-            # renovate: registryUrl=https://charts.truechartsoci.org
             chart: external-service
             version: 17.3.0
             sourceRef:
@@ -39,7 +38,7 @@ spec:
               protocol: http
           type: ExternalIP
       ingress:
-        main:
+        internal:
           enabled: true
           ingressClassName: internal
           hosts:
@@ -51,8 +50,6 @@ spec:
             certManager:
               certificateIssuer: domain-0-le-prod
               enabled: true
-            traefik:
-              enabled: false
             nginx:
               enabled: true
               auth:
@@ -60,3 +57,18 @@ spec:
                 internalHost: "authentik-http.authentik.svc.cluster.local:10230"
                 externalHost: "portal.${DOMAIN_0}"
                 responseHeaders: []
+        external:
+          enabled: true
+          ingressClassName: external
+          hosts:
+          - host: dokploy.${DOMAIN_0}
+            paths:
+            - path: /api
+              pathType: Prefix
+          integrations:
+            certManager:
+              certificateIssuer: domain-0-le-prod
+              enabled: true
+          annotations:
+            nginx.ingress.kubernetes.io/auth-url: ""
+            nginx.ingress.kubernetes.io/auth-response-headers: ""
