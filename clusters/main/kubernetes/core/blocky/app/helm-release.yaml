@@ -56,10 +56,6 @@ spec:
         dnsChallenge:
           enabled: false
           domain: dns01.clouddns.com
-      - domain: "${DOMAIN_1}"
-        dnsChallenge:
-          enabled: false
-          domain: dns01.clouddns.com
     defaultUpstreams:
     - "https://1.1.1.1/dns-query"
     bootstrapDns:
