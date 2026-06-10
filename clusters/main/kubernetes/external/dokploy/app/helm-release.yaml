@@ -64,7 +64,7 @@ spec:
           hosts:
           - host: dokploy.${DOMAIN_0}
             paths:
-            - path: /api
+            - path: /api(/|$)(.*)
               pathType: Prefix
           integrations:
             certManager:
@@ -73,3 +73,5 @@ spec:
           annotations:
             nginx.ingress.kubernetes.io/auth-url: ""
             nginx.ingress.kubernetes.io/auth-response-headers: ""
+            nginx.ingress.kubernetes.io/rewrite-target: /$2
+            nginx.ingress.kubernetes.io/use-regex: "true"
