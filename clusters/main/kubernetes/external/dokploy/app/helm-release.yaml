@@ -40,6 +40,7 @@ spec:
       ingress:
         internal:
           enabled: true
+          primary: true
           ingressClassName: internal
           hosts:
           - host: dokploy.${DOMAIN_0}
