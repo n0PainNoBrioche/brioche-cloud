@@ -41,7 +41,7 @@ spec:
       ingress:
         main:
           enabled: true
-          ingressClassName: bhealthy
+          ingressClassName: external
           hosts:
           - host: bhealthy.${DOMAIN_0}
             paths:
