@@ -43,11 +43,11 @@ spec:
           enabled: true
           ingressClassName: external
           hosts:
-          - host: bhealthy.${DOMAIN_0}
+          - host: ${DOMAIN_1}
             paths:
             - path: /
               pathType: Prefix
           integrations:
             certManager:
-              certificateIssuer: domain-0-le-prod
+              certificateIssuer: domain-1-le-prod
               enabled: true
