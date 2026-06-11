@@ -71,5 +71,4 @@ spec:
               certificateIssuer: domain-0-le-prod
               enabled: true
           annotations:
-            nginx.ingress.kubernetes.io/auth-url: "off"
             nginx.ingress.kubernetes.io/enable-global-auth: "false"
