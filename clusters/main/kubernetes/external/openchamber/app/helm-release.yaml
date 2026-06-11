@@ -41,7 +41,7 @@ spec:
       ingress:
         main:
           enabled: true
-          ingressClassName: internal
+          ingressClassName: external
           hosts:
           - host: code.${DOMAIN_0}
             paths:

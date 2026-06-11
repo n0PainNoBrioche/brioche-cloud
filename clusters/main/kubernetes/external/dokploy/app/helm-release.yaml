@@ -38,10 +38,10 @@ spec:
               protocol: http
           type: ExternalIP
       ingress:
-        internal:
+        main:
           enabled: true
           primary: true
-          ingressClassName: internal
+          ingressClassName: external
           hosts:
           - host: dokploy.${DOMAIN_0}
             paths:
@@ -58,7 +58,7 @@ spec:
                 internalHost: "authentik-http.authentik.svc.cluster.local:10230"
                 externalHost: "portal.${DOMAIN_0}"
                 responseHeaders: []
-        external:
+        api:
           enabled: true
           ingressClassName: external
           hosts:
