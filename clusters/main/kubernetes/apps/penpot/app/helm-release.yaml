@@ -1,4 +1,5 @@
 ---
+# 1. PostgreSQL Credentials Secret
 apiVersion: v1
 kind: Secret
 metadata:
@@ -10,6 +11,7 @@ stringData:
   password: "${PENPOT_DB_PASSWORD}"
 
 ---
+# 2. CNPG PostgreSQL Cluster
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
@@ -18,7 +20,7 @@ metadata:
 spec:
   instances: 1
   storage:
-    size: 5Gi
+    size: 2Gi
   bootstrap:
     initdb:
       database: penpot
@@ -27,6 +29,50 @@ spec:
         name: penpot-pg-credentials
 
 ---
+# 3. Redis Deployment + Service (with resources)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: penpot-redis
+  namespace: penpot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7
+        ports:
+        - containerPort: 6379
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: penpot-redis
+  namespace: penpot
+spec:
+  selector:
+    app: redis
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+
+---
+# 4. Penpot HelmRelease (with Redis URI fix)
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -55,14 +101,13 @@ spec:
   uninstall:
     keepHistory: false
   timeout: 20m
-
   values:
     global:
       env:
         PENPOT_PUBLIC_URI: "http://penpot.${DOMAIN_0}"
 
     valkey:
-      enabled: true
+      enabled: false
 
     config:
       publicUri: "http://penpot.${DOMAIN_0}"
@@ -70,7 +115,7 @@ spec:
       apiSecretKey: "${PENPOT_API_SECRET_KEY}"
       telemetryEnabled: false
       redis:
-        uri: "redis://penpot-valkey:6379/0"
+        uri: "redis://penpot-redis:6379/0"
       postgresql:
         host: "penpot-pg-rw"
         port: 5432
