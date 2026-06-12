@@ -1,5 +1,4 @@
 ---
-# 1. PostgreSQL Credentials Secret
 apiVersion: v1
 kind: Secret
 metadata:
@@ -11,7 +10,6 @@ stringData:
   password: "${PENPOT_DB_PASSWORD}"
 
 ---
-# 2. CNPG PostgreSQL Cluster
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
@@ -20,7 +18,7 @@ metadata:
 spec:
   instances: 1
   storage:
-    size: 2Gi
+    size: 5Gi
   bootstrap:
     initdb:
       database: penpot
@@ -29,7 +27,6 @@ spec:
         name: penpot-pg-credentials
 
 ---
-# 3. Redis Deployment + Service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -72,7 +69,6 @@ spec:
       targetPort: 6379
 
 ---
-# 4. Penpot HelmRelease
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -118,23 +114,8 @@ spec:
         host: "penpot-redis"
         port: 6379
         database: "0"
-      postgresql:
-        host: "penpot-pg-rw"
-        port: 5432
-        username: "penpot"
-        password: "${PENPOT_DB_PASSWORD}"
-        database: "penpot"
-      objectsStorage:
-        storageBackend: "fs"
-        filesystem:
-          directory: "/opt/data/assets"
-      smtp:
-        enabled: false
 
     backend:
-      extraEnvs:
-        - name: PENPOT_REDIS_URI
-          value: "redis://penpot-redis:6379/0"
       replicaCount: 1
       image:
         repository: penpotapp/backend
@@ -169,10 +150,25 @@ spec:
         accessModes:
           - ReadWriteOnce
 
+    postgresql:
+      host: "penpot-pg-rw"
+      port: 5432
+      username: "penpot"
+      password: "${PENPOT_DB_PASSWORD}"
+      database: "penpot"
+
+    objectsStorage:
+      storageBackend: "fs"
+      filesystem:
+        directory: "/opt/data/assets"
+
+    smtp:
+      enabled: false
+
     ingress:
       main:
         enabled: true
-        ingressClassName: external
+        ingressClassName: internal
         hosts:
           - host: penpot.${DOMAIN_0}
             paths:
