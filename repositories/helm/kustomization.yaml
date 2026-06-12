@@ -19,3 +19,4 @@ resources:
   - node-feature-discovery.yaml
   - headlamp.yaml
   - metallb.yaml
+  - penpot.yaml
