@@ -72,6 +72,7 @@ spec:
       targetPort: 6379
 
 ---
+# 4. Penpot HelmRelease (CORRIGÉ)
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
