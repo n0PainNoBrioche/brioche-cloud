@@ -14,4 +14,4 @@ resources:
   - outline/ks.yaml
   - fossflow/ks.yaml
   - affine/ks.yaml  
-  - penpot/ks.yaml
+  # - penpot/ks.yaml
