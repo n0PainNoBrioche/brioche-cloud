@@ -1,104 +1,118 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-    name: nextcloud
-    namespace: nextcloud
+  name: penpot
+  namespace: penpot
 spec:
-    interval: 5m
-    chart:
-        spec:
-            # renovate: registryUrl=https://charts.truechartsoci.org
-            chart: nextcloud
-            version: 45.2.0
-            sourceRef:
-                kind: HelmRepository
-                name: truecharts
-                namespace: flux-system
-            interval: 5m
-    install:
-        createNamespace: true
-        crds: CreateReplace
-        remediation:
-            retries: 3
-    upgrade:
-        crds: CreateReplace
-        remediation:
-            retries: 3
-    timeout: 20m
-    values:
-      podOptions:
-        hostUsers: true
-      credentials:
-        minio:
-          type: s3
-          url: "${S3_URL_MINIO}"
-          bucket: "${S3_BUCKET}-nextcloud"
-          accessKey: "${S3_ACCESS_KEY}"
-          secretKey: "${S3_SECRET_KEY}"
-          encrKey: "${S3_ENCRYPTION_KEY}"
+  interval: 5m
+  chart:
+    spec:
+      chart: penpot
+      version: 1.3.0
+      sourceRef:
+        kind: HelmRepository
+        name: penpot
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  timeout: 20m
+
+  values:
+    global:
+      env:
+        PENPOT_PUBLIC_URI: "http://penpot.${DOMAIN_0}"
+
+    cnpg:
+      main:
+        enabled: true
+        user: penpot
+        database: penpot
+        cluster:
+          singleNode: true
+          instances: 1
+
+    redis:
+      enabled: true
+
+    config:
+      publicUri: "http://penpot.${DOMAIN_0}"
+      flags: "enable-registration enable-login-with-password disable-email-verification enable-mcp"
+      apiSecretKey: "${PENPOT_API_SECRET_KEY}"
+      telemetryEnabled: false
+
+      objectsStorage:
+        storageBackend: "fs"
+        filesystem:
+          directory: "/opt/data/assets"
+
+      smtp:
+        enabled: false
+
+    persistence:
+      assets:
+        enabled: true
+        size: 10Gi
+        accessModes:
+          - ReadWriteOnce
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - host: penpot.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+
+    backend:
+      replicaCount: 1
+      image:
+        repository: penpotapp/backend
+        tag: latest
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 2Gi
+
+    frontend:
+      replicaCount: 1
+      image:
+        repository: penpotapp/frontend
+        tag: latest
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 500m
+          memory: 1Gi
+
+    exporter:
+      enabled: false
+
+    mcp:
+      enabled: true
       ingress:
-        main:
-          enabled: true
-          ingressClassName: external
-          integrations:
-            traefik:
-              enabled: false
-            certManager:
-              enabled: true
-              certificateIssuer: domain-0-le-prod
-          hosts:
-            - host: cloud.${DOMAIN_0}
-              paths:
-                - path: /
-                  pathType: Prefix
-      cnpg:
-        main:
-          cluster:
-            singleNode: true
-            instances: 1
-          backups:
-            credentials: minio
-            scheduledBackups:
-              - name: daily-backup
-                schedule: "0 5 0 * * *"
-                backupOwnerReference: self
-                immediate: true
-                suspend: false
-          recovery:
-            method: object_store
-            credentials: minio
-      persistence:
-        config:
-          volsync:
-          - name: config
-            type: restic
-            credentials: minio
-            dest:
-              enabled: true
-            src:
-              enabled: true
-              trigger:
-                schedule: 10 1 * * *
-        data:
-          enabled: true
-          type: nfs
-          path: ${NEXTCLOUD_NFS_PATH}
-          server: ${NAS_IP}
-        html:
-          volsync:
-          - name: html
-            type: restic
-            credentials: minio
-            dest:
-              enabled: true
-            src:
-              enabled: true
-              trigger:
-                schedule: 20 1 * * *
-      nextcloud:
-        credentials:
-          initialAdminUser: "${NEXTCLOUD_USER}"
-          initialAdminPassword: "${NEXTCLOUD_PASSWORD}"
-        general:
-          accessIP: ${NGINX_EXTERNAL_IP}
-          default_phone_region: FR
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - host: mcp-penpot.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
