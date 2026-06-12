@@ -13,4 +13,5 @@ resources:
   - metube/ks.yaml
   - outline/ks.yaml
   - fossflow/ks.yaml
-  - affine/ks.yaml
+  - affine/ks.yaml  
+  - penpot/ks.yaml
