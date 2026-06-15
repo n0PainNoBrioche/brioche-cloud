@@ -74,9 +74,9 @@ spec:
             type: restic
             credentials: minio
             dest:
-              enabled: true
+              enabled: false
             src:
-              enabled: true
+              enabled: false
               trigger:
                 schedule: 10 1 * * *
         data:
@@ -90,9 +90,9 @@ spec:
             type: restic
             credentials: minio
             dest:
-              enabled: true
+              enabled: false
             src:
-              enabled: true
+              enabled: false
               trigger:
                 schedule: 20 1 * * *
       nextcloud:
