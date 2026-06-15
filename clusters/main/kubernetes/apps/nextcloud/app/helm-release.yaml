@@ -102,3 +102,5 @@ spec:
         general:
           accessIP: ${NGINX_EXTERNAL_IP}
           default_phone_region: FR
+        clamav:
+          enabled: false
