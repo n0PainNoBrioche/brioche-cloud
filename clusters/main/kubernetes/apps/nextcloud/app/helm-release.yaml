@@ -97,7 +97,7 @@ spec:
                 schedule: 20 1 * * *
       nextcloud:
         credentials:
-          initialAdminUser: "${NEXTCLOUD_USER}"
+          initialAdminUser: "admin2"
           initialAdminPassword: "${NEXTCLOUD_PASSWORD}"
         general:
           accessIP: ${NGINX_EXTERNAL_IP}
