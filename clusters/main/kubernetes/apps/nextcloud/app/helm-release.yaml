@@ -76,7 +76,7 @@ spec:
             dest:
               enabled: false
             src:
-              enabled: false
+              enabled: true
               trigger:
                 schedule: 10 1 * * *
         data:
@@ -92,12 +92,12 @@ spec:
             dest:
               enabled: false
             src:
-              enabled: false
+              enabled: true
               trigger:
                 schedule: 20 1 * * *
       nextcloud:
         credentials:
-          initialAdminUser: "admin2"
+          initialAdminUser: "${NEXTCLOUD_USER}"
           initialAdminPassword: "${NEXTCLOUD_PASSWORD}"
         general:
           accessIP: ${NGINX_EXTERNAL_IP}
