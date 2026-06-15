@@ -57,6 +57,7 @@ spec:
             singleNode: true
             instances: 1
           backups:
+            enabled: true
             credentials: minio
             scheduledBackups:
               - name: daily-backup
