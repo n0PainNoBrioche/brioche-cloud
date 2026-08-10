@@ -43,7 +43,7 @@ spec:
           enabled: true
           ingressClassName: external
           hosts:
-          - host: ${DOMAIN_1}
+          - host: ${DOMAIN_2}
             paths:
             - path: /
               pathType: Prefix
