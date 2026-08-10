@@ -8,3 +8,4 @@ resources:
   - openchamber/ks.yaml
   - dokploy/ks.yaml
   - bhealthy/ks.yaml
+  - j-portofolio/ks.yaml
