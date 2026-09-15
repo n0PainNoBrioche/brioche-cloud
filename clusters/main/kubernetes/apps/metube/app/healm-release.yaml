@@ -35,3 +35,10 @@ spec:
               responseHeaders: []
         hosts:
           - host: metube.${DOMAIN_0}
+    workload:
+        main:
+          podSpec:
+            containers:
+              main:
+                env:
+                  ALLOW_YTDL_OPTIONS_OVERRIDES: true  
