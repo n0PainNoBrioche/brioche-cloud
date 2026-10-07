@@ -108,7 +108,6 @@ spec:
                     curl -fsSL https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/scripts/spotlight/spotlight.css -o /web/ui/spotlight.css
                     curl -fsSL https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/scripts/spotlight/spotlight-loader.js -o /web/ui/spotlight-loader.js
                     grep -q data-abyss-spotlight /web/index.html || sed -i 's#</body>#<script src="ui/spotlight-loader.js" data-abyss-spotlight></script></body>#' /web/index.html
-                    grep -q abyss.css /web/index.html || sed -i 's#</head>#<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css"></head>#' /web/index.html
             runtimeClassName: "nvidia"
             containers:
               main:
