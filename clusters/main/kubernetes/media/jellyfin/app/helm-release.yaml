@@ -81,9 +81,34 @@ spec:
           enabled: true
           existingClaim: media-nfs-pvc
           mountPath: /Media
+        jellyfin-web:
+          enabled: true
+          type: emptyDir
+          targetSelector:
+            main:
+              main:
+                mountPath: /usr/share/jellyfin/web
+              abyss:
+                mountPath: /web
       workload:
         main:
           podSpec:
+            initContainers:
+              abyss:
+                enabled: true
+                type: init
+                imageSelector: image
+                command: ["/bin/sh", "-c"]
+                args:
+                  - |
+                    set -e
+                    cp -a /usr/share/jellyfin/web/. /web/
+                    mkdir -p /web/ui
+                    curl -fsSL https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/scripts/spotlight/spotlight.html -o /web/ui/spotlight.html
+                    curl -fsSL https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/scripts/spotlight/spotlight.css -o /web/ui/spotlight.css
+                    curl -fsSL https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/scripts/spotlight/spotlight-loader.js -o /web/ui/spotlight-loader.js
+                    grep -q data-abyss-spotlight /web/index.html || sed -i 's#</body>#<script src="ui/spotlight-loader.js" data-abyss-spotlight></script></body>#' /web/index.html
+                    grep -q abyss.css /web/index.html || sed -i 's#</head>#<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css"></head>#' /web/index.html
             runtimeClassName: "nvidia"
             containers:
               main:
