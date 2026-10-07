@@ -102,7 +102,7 @@ spec:
                 args:
                   - |
                     set -e
-                    cp -a /usr/share/jellyfin/web/. /web/
+                    cp -R /usr/share/jellyfin/web/. /web/
                     mkdir -p /web/ui
                     curl -fsSL https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/scripts/spotlight/spotlight.html -o /web/ui/spotlight.html
                     curl -fsSL https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/scripts/spotlight/spotlight.css -o /web/ui/spotlight.css
