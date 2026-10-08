@@ -22,8 +22,9 @@ spec:
             retries: 3
     upgrade:
         crds: CreateReplace
+        cleanupOnFail: false
         remediation:
-            retries: 3
+            retries: 0
     timeout: 20m
     values:
       portal:
