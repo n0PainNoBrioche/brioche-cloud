@@ -77,6 +77,15 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
+      configmap:
+        romm-config:
+          enabled: true
+          data:
+            config.yml: |
+              filesystem:
+                structure:
+                  default: "{platform}/roms/{game}"
+                  firmware: "{platform}/bios"
       persistence:
         config:
           volsync:
@@ -94,6 +103,13 @@ spec:
           type: nfs
           path: ${GAMES_NFS_PATH}
           server: ${NAS_IP}
+        romm-config-file:
+          enabled: true
+          type: configmap
+          objectName: romm-config
+          mountPath: /romm/config/config.yml
+          subPath: config.yml
+          readOnly: true
       metrics:
         main:
           enabled: false
