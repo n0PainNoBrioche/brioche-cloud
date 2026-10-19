@@ -19,18 +19,16 @@ clusterSvcNets:
 cniConfig:
     name: none
 nodes:
-    # We would adivce to always stick to a "k8s-something-1" style naming scheme
-    - hostname: k8s-control-1
+    - hostname: k8s-control-2
       ipAddress: ${MASTER1IP_IP}
       controlPlane: true
-      nameservers:
-        - 1.1.1.1
+      nameservers: 
+        - 1.1.1.1 
         - 1.0.0.1
       installDisk: /dev/xvda
       networkInterfaces:
-        # suffix is the adapter mac adres.
         - interface: enX0
-          addresses:
+          addresses: 
             - ${MASTER1IP_CIDR}
           routes:
             - network: 0.0.0.0/0
@@ -48,7 +46,7 @@ nodes:
               - siderolabs/nvidia-container-toolkit-lts
       patches:
         - '@./patches/nvidia.yaml'
-        - '@./patches/gc.yaml'
+        - '@./patches/gc-500g.yaml'
         - '@./patches/kubelet-maxpods.yaml'
 controlPlane:
     kernelModules:
