@@ -9,7 +9,7 @@ spec:
         spec:
             # renovate: registryUrl=https://charts.truechartsoci.org
             chart: immich
-            version: 35.0.6
+            version: 35.0.9
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
