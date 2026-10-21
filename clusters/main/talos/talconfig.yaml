@@ -25,9 +25,9 @@ nodes:
       nameservers: 
         - 1.1.1.1 
         - 1.0.0.1
-      installDisk: /dev/xvda
+      installDisk: /dev/sda
       networkInterfaces:
-        - interface: enX0
+        - interface: ens18
           addresses: 
             - ${MASTER1IP_CIDR}
           routes:
@@ -41,7 +41,7 @@ nodes:
             officialExtensions:
               - siderolabs/util-linux-tools
               - siderolabs/iscsi-tools
-              - siderolabs/xen-guest-agent
+              - siderolabs/qemu-guest-agent
               - siderolabs/nonfree-kmod-nvidia-lts
               - siderolabs/nvidia-container-toolkit-lts
       patches:
@@ -61,7 +61,7 @@ controlPlane:
                 officialExtensions:
                     - siderolabs/util-linux-tools
                     - siderolabs/iscsi-tools
-                    - siderolabs/xen-guest-agent
+                    - siderolabs/qemu-guest-agent
     machineFiles:
     - content: |
         [plugins."io.containerd.grpc.v1.cri"]
@@ -98,7 +98,7 @@ worker:
                 officialExtensions:
                     - siderolabs/util-linux-tools
                     - siderolabs/iscsi-tools
-                    - siderolabs/xen-guest-agent
+                    - siderolabs/qemu-guest-agent
     machineFiles:
     - content: |
         [plugins."io.containerd.grpc.v1.cri"]
