@@ -35,7 +35,8 @@ spec:
           ports:
             main:
               enabled: true
-              port: 8006
+              port: 443
+              targetPort: 8006
               protocol: https
           type: ExternalIP
       ingress:
@@ -43,7 +44,7 @@ spec:
           enabled: true
           ingressClassName: internal
           annotations:
-            nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+            nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
             nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           hosts:
           - host: proxmox.${DOMAIN_0}
