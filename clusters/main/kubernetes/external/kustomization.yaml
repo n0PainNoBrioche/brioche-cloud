@@ -4,7 +4,6 @@ resources:
   - nas/ks.yaml
   - proxmox/ks.yaml
   - minio/ks.yaml
-  - netdata/ks.yaml
   - openchamber/ks.yaml
   - dokploy/ks.yaml
   - bhealthy/ks.yaml
