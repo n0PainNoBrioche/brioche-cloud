@@ -7,4 +7,4 @@ resources:
   - openchamber/ks.yaml
   - dokploy/ks.yaml
   - bhealthy/ks.yaml
-  - mamie.yaml
+  - mamie/ks.yaml
