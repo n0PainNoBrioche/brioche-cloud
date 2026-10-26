@@ -35,7 +35,7 @@ spec:
           ports:
             main:
               enabled: true
-              port: 3001
+              port: 5846
               protocol: http
           type: ExternalIP
       ingress:
