@@ -8,3 +8,4 @@ resources:
   - dokploy/ks.yaml
   - bhealthy/ks.yaml
   - mamie/ks.yaml
+  - rpg/ks.yaml
